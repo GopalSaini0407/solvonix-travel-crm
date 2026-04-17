@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solvonix Travel CRM - Quotations | Quote & Negotiation</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Solvonix <span>CRM</span></h3>
+                <p>Travel Pipeline Intelligence</p>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="leads.html" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <span>Leads</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="quotations.html" class="nav-link">
+                        <i class="fas fa-file-invoice"></i>
+                        <span>Quotations</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="bookings.html" class="nav-link">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span>Bookings</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="customers.html" class="nav-link">
+                        <i class="fas fa-address-book"></i>
+                        <span>Customers</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="payments.html" class="nav-link">
+                        <i class="fas fa-hand-holding-usd"></i>
+                        <span>Payments</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="itinerary.html" class="nav-link">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <span>Itinerary</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="vouchers.html" class="nav-link">
+                        <i class="fas fa-receipt"></i>
+                        <span>Vouchers</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="campaigns.html" class="nav-link">
+                        <i class="fas fa-envelope-open-text"></i>
+                        <span>Campaigns</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="support.html" class="nav-link">
+                        <i class="fas fa-headset"></i>
+                        <span>Support</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="feedback.html" class="nav-link">
+                        <i class="fas fa-star"></i>
+                        <span>Feedback</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="reports.html" class="nav-link">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>Reports</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <div class="page-title">
+                    <h1>Quotations & Negotiation</h1>
+                    <p>Generate Quotes • Send Follow-ups • Negotiate Deals</p>
+                </div>
+                <div class="user-area">
+                    <div class="notification-badge">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge-dot"></span>
+                    </div>
+                    <div class="avatar">
+                        <span>RK</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid" style="margin-bottom: 20px;">
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3 id="totalQuotes">0</h3>
+                        <p>Total Quotes</p>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="fas fa-file-invoice"></i>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3 id="pendingQuotes">0</h3>
+                        <p>Pending Response</p>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3 id="negotiatingQuotes">0</h3>
+                        <p>Under Negotiation</p>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3 id="acceptedQuotes">0</h3>
+                        <p>Accepted</p>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quotations Table -->
+            <div class="table-container">
+                <div class="table-header">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchQuotes" placeholder="Search by customer, destination...">
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <select id="filterQuoteStatus" class="form-control" style="padding: 8px 12px; border-radius: 40px;">
+                            <option value="">All Status</option>
+                            <option value="sent">Sent</option>
+                            <option value="negotiating">Negotiating</option>
+                            <option value="accepted">Accepted</option>
+                            <option value="expired">Expired</option>
+                        </select>
+                        <button class="btn-primary" data-onclick="openNewQuoteModal()">
+                            <i class="fas fa-plus"></i> New Quotation
+                        </button>
+                    </div>
+                </div>
+
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>Quote ID</th>
+                                <th>Customer</th>
+                                <th>Destination</th>
+                                <th>Package</th>
+                                <th>Base Amount</th>
+                                <th>Tax (5%)</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Version</th>
+                                <th>Valid Till</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="quotationsTableBody">
+                            <tr><td colspan="11" style="text-align: center;">Loading quotations...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Follow-up Reminders Card -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+                <div class="table-container">
+                    <h3 style="font-size: 16px; margin-bottom: 15px;">
+                        <i class="fas fa-bell"></i> Follow-up Reminders
+                    </h3>
+                    <div id="followupReminders">
+                        <div style="padding: 12px; background: #fef3c7; border-radius: 12px; margin-bottom: 10px;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <div><strong>Sneha Reddy</strong> - ₹68,250</div>
+                                <span class="status-badge status-negotiation">Follow-up Today</span>
+                            </div>
+                            <div style="font-size: 12px; color: #92400e; margin-top: 5px;">Quote sent on 2024-02-08 | No response yet</div>
+                            <button class="btn-outline" style="margin-top: 10px; padding: 4px 12px;" data-onclick="sendFollowUp(5001)">Send Reminder</button>
+                        </div>
+                        <div style="padding: 12px; background: #fef3c7; border-radius: 12px;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <div><strong>Vikram Singh</strong> - ₹93,450</div>
+                                <span class="status-badge status-negotiation">Negotiation Stage</span>
+                            </div>
+                            <div style="font-size: 12px; color: #92400e; margin-top: 5px;">Version 2 sent | Customer asking for discount</div>
+                            <button class="btn-outline" style="margin-top: 10px; padding: 4px 12px;" data-onclick="openNegotiationModal(5002)">Negotiate</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <h3 style="font-size: 16px; margin-bottom: 15px;">
+                        <i class="fas fa-chart-line"></i> Negotiation Analytics
+                    </h3>
+                    <div style="font-size: 14px;">
+                        <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                            <span>Average Negotiation Time</span>
+                            <strong>3.2 days</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                            <span>Average Discount Given</span>
+                            <strong>8.5%</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                            <span>Quote to Booking Ratio</span>
+                            <strong>64%</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 10px 0;">
+                            <span>Most Negotiated Destinations</span>
+                            <strong>Goa, Andaman, Thailand</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Negotiation Tips Card -->
+            <div style="background: linear-gradient(135deg, #e94560 0%, #c62a47 100%); border-radius: 16px; padding: 20px; margin-top: 20px; color: white;">
+                <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                    <i class="fas fa-lightbulb" style="font-size: 32px;"></i>
+                    <div style="flex: 1;">
+                        <strong>Negotiation Tips</strong>
+                        <p style="font-size: 13px; opacity: 0.9; margin-top: 5px;">Offer early bird discount, group discount, or free add-ons like airport transfer to close deals faster.</p>
+                    </div>
+                    <button class="btn-outline" style="background: white; color: #e94560; border: none;" data-onclick="showNegotiationTips()">View All Tips</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- New Quotation Modal -->
+    <div id="newQuoteModal" class="modal">
+        <div class="modal-content" style="width: 600px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-file-invoice"></i> Generate New Quotation</h3>
+                <button class="close-modal" data-onclick="closeModal('newQuoteModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="quoteForm">
+                    <div class="form-group">
+                        <label>Select Lead *</label>
+                        <select id="quoteLeadId" class="form-control" required data-onchange="loadLeadDetails()">
+                            <option value="">-- Select Customer --</option>
+                        </select>
+                    </div>
+                    <div id="leadDetailsPreview" style="background: #f1f5f9; padding: 12px; border-radius: 12px; margin-bottom: 15px; display: none;">
+                        <!-- Dynamic lead details -->
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div class="form-group">
+                            <label>Package Type</label>
+                            <select id="packageType" class="form-control">
+                                <option value="standard">Standard Package</option>
+                                <option value="deluxe">Deluxe Package (+20%)</option>
+                                <option value="premium">Premium Package (+40%)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Trip Type</label>
+                            <select id="quoteTripType" class="form-control">
+                                <option value="domestic">Domestic</option>
+                                <option value="international">International</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Base Amount (₹)</label>
+                            <input type="number" id="baseAmount" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Nights</label>
+                            <input type="number" id="quoteNights" class="form-control" value="4" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Discount (₹)</label>
+                            <input type="number" id="discount" class="form-control" value="0" data-onchange="updateTotals()">
+                        </div>
+                        <div class="form-group">
+                            <label>Valid Until</label>
+                            <input type="date" id="validUntil" class="form-control">
+                        </div>
+                    </div>
+                 <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 15px;">
+    
+    <div class="form-group">
+        <label>Adults (12+ yrs)</label>
+        <input type="number" id="travelerAdults" class="form-control" value="2" min="0">
+    </div>
+
+    <div class="form-group">
+        <label>Children (2–11 yrs)</label>
+        <input type="number" id="travelerChildren" class="form-control" value="0" min="0">
+    </div>
+
+    <div class="form-group">
+        <label>Infants (0–2 yrs)</label>
+        <input type="number" id="travelerInfants" class="form-control" value="0" min="0">
+    </div>
+
+    <div class="form-group">
+        <label>Total Travelers</label>
+        <input type="number" id="travelerTotal" class="form-control" value="2" readonly>
+    </div>
+
+</div>
+                    <div style="background: #f1f5f9; padding: 15px; border-radius: 12px; margin-top: 15px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span>Base Amount:</span>
+                            <strong id="displayBaseAmount">₹0</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span>Discount:</span>
+                            <strong id="displayDiscount" style="color: #10b981;">-₹0</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span>Subtotal:</span>
+                            <strong id="displaySubtotal">₹0</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span>GST (5%):</span>
+                            <strong id="displayTax">₹0</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px solid #cbd5e1;">
+                            <span style="font-size: 16px;">Total Amount:</span>
+                            <strong style="font-size: 18px; color: #e94560;" id="displayTotal">₹0</strong>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label>Itinerary Title</label>
+                        <input id="itinerary" class="form-control" placeholder="Hotel, flights, transfers, sightseeing...">
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div class="form-group" style="margin-top: 15px;">
+                            <label>Inclusions</label>
+                            <textarea id="quoteInclusions" rows="4" class="form-control" placeholder="Hotel&#10;Breakfast&#10;Transfers"></textarea>
+                        </div>
+                        <div class="form-group" style="margin-top: 15px;">
+                            <label>Exclusions</label>
+                            <textarea id="quoteExclusions" rows="4" class="form-control" placeholder="Lunch&#10;Airfare&#10;Visa"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-outline" data-onclick="closeModal('newQuoteModal')">Cancel</button>
+                <button class="btn-primary" data-onclick="generateQuotation()">Generate & Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Negotiation Modal -->
+    <div id="negotiationModal" class="modal">
+        <div class="modal-content" style="width: 500px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-handshake"></i> Negotiate Deal</h3>
+                <button class="close-modal" data-onclick="closeModal('negotiationModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="negotiateQuoteId">
+                <div style="background: #f1f5f9; padding: 15px; border-radius: 12px; margin-bottom: 15px;">
+                    <div><strong>Current Quote:</strong> ₹<span id="currentQuoteAmount">0</span></div>
+                    <div><strong>Customer:</strong> <span id="negotiateCustomerName"></span></div>
+                </div>
+                <div class="form-group">
+                    <label>New Offer Amount (₹)</label>
+                    <input type="number" id="newOfferAmount" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Counter Offer Message</label>
+                    <textarea id="counterMessage" rows="3" class="form-control" placeholder="Special discount for early booking..."></textarea>
+                </div>
+                <div style="background: #fef3c7; padding: 12px; border-radius: 12px;">
+                    <i class="fas fa-info-circle"></i> Revised quotation will be sent to customer for approval
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-outline" data-onclick="closeModal('negotiationModal')">Cancel</button>
+                <button class="btn-primary" data-onclick="sendRevisedQuotation()">Send Revised Quote</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Follow-up Modal -->
+    <div id="followupModal" class="modal">
+        <div class="modal-content" style="width: 450px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-envelope"></i> Send Follow-up</h3>
+                <button class="close-modal" data-onclick="closeModal('followupModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="followupQuoteId">
+                <div class="form-group">
+                    <label>Follow-up Type</label>
+                    <select id="followupType" class="form-control">
+                        <option value="reminder">Gentle Reminder</option>
+                        <option value="offer">Special Offer</option>
+                        <option value="expiry">Expiry Warning</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Message Template</label>
+                    <textarea id="followupMessage" rows="4" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Send via</label>
+                    <div style="display: flex; gap: 15px;">
+                        <label><input type="checkbox" value="email" checked> Email</label>
+                        <label><input type="checkbox" value="whatsapp"> WhatsApp</label>
+                        <label><input type="checkbox" value="sms"> SMS</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-outline" data-onclick="closeModal('followupModal')">Cancel</button>
+                <button class="btn-primary" data-onclick="sendFollowupMessage()">Send Follow-up</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Quotation Modal -->
+    <div id="viewQuoteModal" class="modal"></div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="js/app.js"></script>
+    <script src="js/layout.js"></script>
+    <script src="js/dom-events.js"></script>
+    <script src="js/quotations.js"></script>
+</body>
+</html>

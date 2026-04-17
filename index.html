@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solvonix Travel CRM - Dashboard | Travel Operations Overview</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Solvonix <span>CRM</span></h3>
+                <p>Travel Pipeline Intelligence</p>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item active"><a href="index.html" class="nav-link"><i class="fas fa-chart-line"></i><span>Dashboard</span></a></li>
+                <li class="nav-item"><a href="leads.html" class="nav-link"><i class="fas fa-users"></i><span>Leads</span></a></li>
+                <li class="nav-item"><a href="quotations.html" class="nav-link"><i class="fas fa-file-invoice"></i><span>Quotations</span></a></li>
+                <li class="nav-item"><a href="bookings.html" class="nav-link"><i class="fas fa-ticket-alt"></i><span>Bookings</span></a></li>
+                <li class="nav-item"><a href="customers.html" class="nav-link"><i class="fas fa-address-book"></i><span>Customers</span></a></li>
+                <li class="nav-item"><a href="payments.html" class="nav-link"><i class="fas fa-hand-holding-usd"></i><span>Payments</span></a></li>
+                <li class="nav-item"><a href="itinerary.html" class="nav-link"><i class="fas fa-map-marked-alt"></i><span>Itinerary</span></a></li>
+                <li class="nav-item"><a href="vouchers.html" class="nav-link"><i class="fas fa-receipt"></i><span>Vouchers</span></a></li>
+                <li class="nav-item"><a href="campaigns.html" class="nav-link"><i class="fas fa-envelope-open-text"></i><span>Campaigns</span></a></li>
+                <li class="nav-item"><a href="support.html" class="nav-link"><i class="fas fa-headset"></i><span>Support</span></a></li>
+                <li class="nav-item"><a href="feedback.html" class="nav-link"><i class="fas fa-star"></i><span>Feedback</span></a></li>
+                <li class="nav-item"><a href="reports.html" class="nav-link"><i class="fas fa-chart-pie"></i><span>Reports</span></a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="top-bar">
+                <div class="page-title">
+                    <h1>Dashboard</h1>
+                    <p>Live overview of lead flow, bookings, revenue, and team activity</p>
+                </div>
+                <div class="user-area">
+                    <div class="notification-badge">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge-dot"></span>
+                    </div>
+                    <div class="avatar">
+                        <span>RK</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-grid">
+
+                <section class="kpi-grid">
+                    <article class="kpi-card">
+                        <div>
+                            <h3>248</h3>
+                            <p>Total Leads</p>
+                            <div class="trend-up"><i class="fas fa-arrow-up"></i> 18% this month</div>
+                        </div>
+                        <div class="icon-pill icon-primary"><i class="fas fa-user-plus"></i></div>
+                    </article>
+                    <article class="kpi-card">
+                        <div>
+                            <h3>87</h3>
+                            <p>Active Bookings</p>
+                            <div class="trend-up"><i class="fas fa-arrow-up"></i> 5 new bookings</div>
+                        </div>
+                        <div class="icon-pill icon-success"><i class="fas fa-calendar-check"></i></div>
+                    </article>
+                    <article class="kpi-card">
+                        <div>
+                            <h3>₹48.2L</h3>
+                            <p>Revenue MTD</p>
+                            <div class="trend-up"><i class="fas fa-arrow-up"></i> 12% growth</div>
+                        </div>
+                        <div class="icon-pill icon-warning"><i class="fas fa-rupee-sign"></i></div>
+                    </article>
+                    <article class="kpi-card">
+                        <div>
+                            <h3>₹8.4L</h3>
+                            <p>Payment Pending</p>
+                            <div class="trend-down"><i class="fas fa-arrow-down"></i> 14 follow-ups</div>
+                        </div>
+                        <div class="icon-pill icon-info"><i class="fas fa-clock"></i></div>
+                    </article>
+                </section>
+                     <section class="dashboard-grid">
+                   <div class="panel-card">
+    <div class="panel-header">
+        <h3>Quick Follow-Ups</h3>
+        <a href="leads.html" class="muted-link">View all</a>
+    </div>
+    <div class="panel-body panel-body-pt-0">
+        <div class="table-wrap">
+            <table class="lead-table table-full">
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Destination</th>
+                        <th>Last Contact</th>
+                        <th>Next Follow-Up</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <strong>Rahul Mehta</strong>
+                            <small class="muted-13">+91 98765 43210</small>
+                        </td>
+                        <td>Switzerland</td>
+                        <td>2 days ago</td>
+                        <td><span class="text-danger">Today</span></td>
+                        <td><span class="status-badge status-quotation">Quote Sent</span></td>
+                        <td><i class="fas fa-phone text-primary-icon"></i></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <strong>Neha Sharma</strong>
+                            <small class="muted-13">neha@email.com</small>
+                        </td>
+                        <td>Bali</td>
+                        <td>1 day ago</td>
+                        <td>Tomorrow</td>
+                        <td><span class="status-badge status-interested">Qualified</span></td>
+                        <td><i class="fas fa-comment-dots text-primary-icon"></i></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <strong>Amit Singh</strong>
+                            <small class="muted-13">+91 99887 66554</small>
+                        </td>
+                        <td>Thailand</td>
+                        <td>3 days ago</td>
+                        <td><span class="text-danger">Overdue</span></td>
+                        <td><span class="status-badge status-negotiation">Negotiation</span></td>
+                        <td><i class="fas fa-exclamation-circle text-danger"></i></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <strong>Kavya Nair</strong>
+                            <small class="muted-13">Corporate travel</small>
+                        </td>
+                        <td>Singapore</td>
+                        <td>Today</td>
+                        <td>Next Week</td>
+                        <td><span class="status-badge status-paid">Booked</span></td>
+                        <td><i class="fas fa-check-circle text-success-icon"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+                    <div class="panel-stack">
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3>Quick Access</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="quick-grid">
+                                    <a class="quick-link" href="customers.html"><i class="fas fa-users"></i><div><strong>Customers</strong></div><small>Profiles and loyalty</small></a>
+                                    <a class="quick-link" href="payments.html"><i class="fas fa-wallet"></i><div><strong>Payments</strong></div><small>Collections and dues</small></a>
+                                    <a class="quick-link" href="itinerary.html"><i class="fas fa-map"></i><div><strong>Itinerary</strong></div><small>Day-wise trip plans</small></a>
+                                    <a class="quick-link" href="bookings.html"><i class="fas fa-plane-departure"></i><div><strong>Bookings</strong></div><small>Confirmed departures</small></a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <section class="dashboard-grid">
+                    <div class="panel-card">
+                        <div class="panel-header">
+                            <h3>Lead Conversion Funnel</h3>
+                            <select class="form-control select-compact">
+                                <option>This Month</option>
+                                <option>Last Month</option>
+                            </select>
+                        </div>
+                        <div class="panel-body">
+                            <canvas id="funnelChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="panel-card">
+                        <div class="panel-header">
+                            <h3>Lead Sources</h3>
+                            <span class="meta-small">Current split</span>
+                        </div>
+                        <div class="panel-body">
+                            <div class="source-item">
+                                <div class="source-line"><span>Google Ads</span><strong>38%</strong></div>
+                                <div class="progress-track"><div class="progress-fill fill-primary"></div></div>
+                            </div>
+                            <div class="source-item">
+                                <div class="source-line"><span>Referral</span><strong>29%</strong></div>
+                                <div class="progress-track"><div class="progress-fill fill-success"></div></div>
+                            </div>
+                            <div class="source-item">
+                                <div class="source-line"><span>Social Media</span><strong>21%</strong></div>
+                                <div class="progress-track"><div class="progress-fill fill-info"></div></div>
+                            </div>
+                            <div class="source-item source-item-last">
+                                <div class="source-line"><span>Website</span><strong>12%</strong></div>
+                                <div class="progress-track"><div class="progress-fill fill-warning"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="dashboard-grid">
+                    <div class="panel-card">
+                        <div class="panel-header">
+                            <h3>Recent Leads</h3>
+                            <a href="leads.html" class="muted-link">View all</a>
+                        </div>
+                        <div class="panel-body panel-body-pt-0">
+                            <div class="table-wrap">
+                                <table class="lead-table table-full">
+                                    <thead>
+                                        <tr>
+                                            <th>Customer</th>
+                                            <th>Destination</th>
+                                            <th>Budget</th>
+                                            <th>Status</th>
+                                            <th>Agent</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Rahul Mehta</strong><small class="muted-13">+91 98765 43210</small></td>
+                                            <td>Switzerland</td>
+                                            <td>₹2.5L</td>
+                                            <td><span class="status-badge status-quotation">Quote Sent</span></td>
+                                            <td>Priya</td>
+                                            <td><i class="fas fa-comment-dots text-primary-icon"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Neha Sharma</strong><small class="muted-13">neha@email.com</small></td>
+                                            <td>Bali</td>
+                                            <td>₹1.8L</td>
+                                            <td><span class="status-badge status-interested">Qualified</span></td>
+                                            <td>Arjun</td>
+                                            <td><i class="fas fa-eye text-primary-icon"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Amit Singh</strong><small class="muted-13">+91 99887 66554</small></td>
+                                            <td>Thailand</td>
+                                            <td>₹3.2L</td>
+                                            <td><span class="status-badge status-negotiation">Negotiation</span></td>
+                                            <td>Rohit</td>
+                                            <td><i class="fas fa-pen text-primary-icon"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Kavya Nair</strong><small class="muted-13">Corporate travel</small></td>
+                                            <td>Singapore</td>
+                                            <td>₹8.5L</td>
+                                            <td><span class="status-badge status-paid">Booked</span></td>
+                                            <td>Sneha</td>
+                                            <td><i class="fas fa-check-circle text-success-icon"></i></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-stack">
+
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3>Today's Activity</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="activity-feed">
+                                    <div class="activity-row">
+                                        <div class="activity-dot"><i class="fas fa-money-bill-wave"></i></div>
+                                        <div><strong>Rahul paid ₹1,25,000</strong><div class="muted-13">10:30 AM via UPI</div></div>
+                                    </div>
+                                    <div class="activity-row">
+                                        <div class="activity-dot"><i class="fas fa-user-plus"></i></div>
+                                        <div><strong>New Bali lead assigned</strong><div class="muted-13">09:10 AM to Arjun Singh</div></div>
+                                    </div>
+                                    <div class="activity-row">
+                                        <div class="activity-dot"><i class="fas fa-bell"></i></div>
+                                        <div><strong>Commission reminder sent</strong><div class="muted-13">08:45 AM to 3 vendors</div></div>
+                                    </div>
+                                    <div class="activity-row">
+                                        <div class="activity-dot"><i class="fas fa-file-signature"></i></div>
+                                        <div><strong>Voucher approved</strong><div class="muted-13">08:00 AM for Singapore booking</div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="dashboard-grid">
+                    <div class="panel-card">
+                        <div class="panel-header">
+                            <h3>Revenue Snapshot</h3>
+                            <span class="text-success-strong">+14.6%</span>
+                        </div>
+                        <div class="panel-body">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="panel-card">
+                        <div class="panel-header">
+                            <h3>Team Performance</h3>
+                            <a href="reports.html" class="muted-link">Detailed report</a>
+                        </div>
+                        <div class="panel-body">
+                            <div class="mini-kpi-grid">
+                                <div class="mini-kpi">
+                                    <h4>48</h4>
+                                    <div>Arjun Leads</div>
+                                    <small class="muted-13">₹12.8L revenue</small>
+                                </div>
+                                <div class="mini-kpi">
+                                    <h4>41</h4>
+                                    <div>Priya Leads</div>
+                                    <small class="muted-13">₹10.2L revenue</small>
+                                </div>
+                                <div class="mini-kpi">
+                                    <h4>36</h4>
+                                    <div>Sneha Leads</div>
+                                    <small class="muted-13">₹9.4L revenue</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/layout.js"></script>
+    <script src="js/dom-events.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>

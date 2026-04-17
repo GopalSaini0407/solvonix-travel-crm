@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solvonix Travel CRM - Leads | Lead Capture & Qualification</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Solvonix <span>CRM</span></h3>
+                <p>Travel Pipeline Intelligence</p>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="leads.html" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <span>Leads</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="quotations.html" class="nav-link">
+                        <i class="fas fa-file-invoice"></i>
+                        <span>Quotations</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="bookings.html" class="nav-link">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span>Bookings</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="customers.html" class="nav-link">
+                        <i class="fas fa-address-book"></i>
+                        <span>Customers</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="payments.html" class="nav-link">
+                        <i class="fas fa-hand-holding-usd"></i>
+                        <span>Payments</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="itinerary.html" class="nav-link">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <span>Itinerary</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="vouchers.html" class="nav-link">
+                        <i class="fas fa-receipt"></i>
+                        <span>Vouchers</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="campaigns.html" class="nav-link">
+                        <i class="fas fa-envelope-open-text"></i>
+                        <span>Campaigns</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="support.html" class="nav-link">
+                        <i class="fas fa-headset"></i>
+                        <span>Support</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="feedback.html" class="nav-link">
+                        <i class="fas fa-star"></i>
+                        <span>Feedback</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="reports.html" class="nav-link">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>Reports</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <div class="page-title">
+                    <h1>Lead Management</h1>
+                    <p>Capture • Deduplicate • Qualify • Assign to Agents</p>
+                </div>
+                <div class="user-area">
+                    <div class="notification-badge">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge-dot"></span>
+                    </div>
+                    <div class="avatar">
+                        <span>RK</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Cards for Leads -->
+            <div class="stats-grid" style="margin-bottom: 20px;">
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3 id="totalLeadsCount">0</h3>
+                        <p>Total Leads</p>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3 id="newLeadsCount">0</h3>
+                        <p>New Leads</p>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3 id="qualifiedLeadsCount">0</h3>
+                        <p>Qualified</p>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3 id="avgLeadScore">0</h3>
+                        <p>Avg Lead Score</p>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lead Table -->
+            <div class="table-container">
+                <div class="table-header">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchLeads" placeholder="Search by name, destination, email...">
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                         <select id="filterSource" class="form-control" style="padding: 8px 12px; border-radius: 40px; border: 1px solid #e2e8f0;">
+                            <option value="">Select Lead Type</option>
+                            <option value="hot">hot</option>
+                            <option value="cold">cold</option>
+                            <option value="warm">warm</option>
+                        </select>
+
+                        <select id="filterSource" class="form-control" style="padding: 8px 12px; border-radius: 40px; border: 1px solid #e2e8f0;">
+                            <option value="">All Sources</option>
+                            <option value="Google Ads">Google Ads</option>
+                            <option value="Instagram">Instagram</option>
+                            <option value="Facebook">Facebook</option>
+                            <option value="Referral">Referral</option>
+                            <option value="Website">Website</option>
+                        </select>
+                        <select id="filterStatus" class="form-control" style="padding: 8px 12px; border-radius: 40px; border: 1px solid #e2e8f0;">
+                            <option value="">All Status</option>
+                            <option value="new">New</option>
+                            <option value="contacted">Contacted</option>
+                            <option value="interested">Interested</option>
+                            <option value="quotation_sent">Quotation Sent</option>
+                            <option value="negotiation">Negotiation</option>
+                            <option value="won">Won</option>
+                            <option value="lost">Lost</option>
+                        </select>
+                        <button class="btn-primary" data-onclick="openAddLeadModal()">
+                            <i class="fas fa-plus"></i> Add Lead
+                        </button>
+                    </div>
+                </div>
+
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="selectAll"></th>
+                                <th>Lead Name</th>
+                                <th>Source</th>
+                                <th>Destination</th>
+                                <th>Budget</th>
+                                <th>Travelers</th>
+                                <th>Status</th>
+                                <th>Score</th>
+                                <th>Assigned To</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leadsTableBody">
+                            <tr><td colspan="10" style="text-align: center;">Loading leads...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 15px; border-top: 1px solid #e2e8f0;">
+                    <div style="font-size: 13px; color: #64748b;">
+                        Showing <span id="showingStart">0</span> to <span id="showingEnd">0</span> of <span id="totalRecords">0</span> leads
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn-outline" id="prevPage" disabled>&laquo; Previous</button>
+                        <button class="btn-outline" id="nextPage">Next &raquo;</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Duplicate Check Info -->
+            <div style="background: #fef3c7; border-radius: 16px; padding: 15px; margin-top: 20px; display: flex; align-items: center; gap: 12px;">
+                <i class="fas fa-shield-alt" style="color: #f59e0b; font-size: 24px;"></i>
+                <div>
+                    <strong style="color: #92400e;">Auto-Deduplication Active</strong>
+                    <p style="font-size: 12px; color: #92400e; margin-top: 4px;">System automatically checks for duplicate leads by email and phone number before adding new leads.</p>
+                </div>
+            </div>
+
+            <!-- Qualification Rules Card -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+                <div class="table-container">
+                    <h3 style="font-size: 16px; margin-bottom: 15px;"><i class="fas fa-robot"></i> Lead Qualification Rules</h3>
+                    <div style="font-size: 14px;">
+                        <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                            <span>Budget > ₹50,000</span>
+                            <span class="status-badge status-won">+30 points</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                            <span>International Destination</span>
+                            <span class="status-badge status-won">+25 points</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                            <span>Group Travel (4+ travelers)</span>
+                            <span class="status-badge status-won">+20 points</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                            <span>Travel within 30 days</span>
+                            <span class="status-badge status-won">+15 points</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 10px 0;">
+                            <span>Referred by existing customer</span>
+                            <span class="status-badge status-won">+10 points</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <h3 style="font-size: 16px; margin-bottom: 15px;"><i class="fas fa-user-check"></i> Auto-Assignment Rules</h3>
+                    <div style="font-size: 14px;">
+                        <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                            <span>High Score (80+) → Senior Agent</span>
+                            <span>Neha Singh / Amit Patel</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                            <span>International → International Desk</span>
+                            <span>Rajesh Kumar</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 10px 0;">
+                            <span>Low Score → Auto Nurture Campaign</span>
+                            <span>Email Drip Sequence</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Lead Modal -->
+    <div id="addLeadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-plus"></i> Capture New Lead</h3>
+                <button class="close-modal" data-onclick="closeModal('addLeadModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addLeadForm">
+    
+    <!-- Basic Info -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+        
+        <div class="form-group">
+            <label>Salutation *</label>
+            <select id="leadSalutation" required>
+                <option value="">Select</option>
+                <option>Mr.</option>
+                <option>Mrs.</option>
+                <option>Miss</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Full Name *</label>
+            <input type="text" id="leadName" required>
+        </div>
+
+        <div class="form-group">
+            <label>Email *</label>
+            <input type="email" id="leadEmail" required>
+        </div>
+
+        <div class="form-group">
+            <label>Phone *</label>
+            <input type="tel" id="leadPhone" required>
+        </div>
+
+    </div>
+
+    <!-- Requirement Section -->
+    <h5 style="margin-top:20px;">Requirement Details</h5>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+
+        <div class="form-group">
+            <label>Lead Source *</label>
+            <select id="leadSource" required>
+                <option value="">Select Source</option>
+                <option>Google Ads</option>
+                <option>Instagram</option>
+                <option>Facebook</option>
+                <option>Referral</option>
+                <option>Website</option>
+                <option>WhatsApp</option>
+            </select>
+        </div>
+
+        <!-- Trip Type Dropdown -->
+        <div class="form-group">
+            <label>Trip Type *</label>
+            <select id="leadTripType" required>
+                <option value="">Select Trip Type</option>
+                <option value="domestic">Domestic</option>
+                <option value="international">International</option>
+                <option value="any">Any</option>
+            </select>
+        </div>
+
+        <!-- Travel Category -->
+        <div class="form-group">
+            <label>Travel Category *</label>
+            <select id="leadCategory" required>
+                <option value="">Select Category</option>
+                <option>Beach</option>
+                <option>Adventure</option>
+                <option>Honeymoon</option>
+                <option>Family</option>
+                <option>Luxury</option>
+                <option>Religious</option>
+            </select>
+        </div>
+
+        <!-- Duration Text Input -->
+        <div class="form-group">
+            <label>Duration *</label>
+            <input type="text" id="leadDuration" placeholder="e.g. 5 Days" required>
+        </div>
+
+    </div>
+
+    <!-- Notes -->
+    <div class="form-group" style="margin-top:15px;">
+        <label>Additional Notes</label>
+        <textarea id="leadNotes" rows="3" placeholder="Customer requirement, preferences..."></textarea>
+    </div>
+
+</form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-outline" data-onclick="closeModal('addLeadModal')">Cancel</button>
+                <button class="btn-primary" data-onclick="addNewLead()">Save Lead</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Lead Offcanvas -->
+    <div class="offcanvas offcanvas-end lead-offcanvas" tabindex="-1" id="leadJourneyCanvas" aria-labelledby="leadJourneyCanvasLabel">
+        <div class="offcanvas-header lead-offcanvas-header">
+            <div>
+                <span class="lead-offcanvas-kicker">Lead Journey Console</span>
+                <h5 class="offcanvas-title" id="leadJourneyCanvasLabel">Lead Details</h5>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body p-0" id="leadJourneyContent"></div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="js/app.js"></script>
+    <script src="js/layout.js"></script>
+    <script src="js/dom-events.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/leads.js"></script>
+</body>
+</html>

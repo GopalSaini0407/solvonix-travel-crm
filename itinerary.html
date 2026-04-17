@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solvonix Travel CRM - Itinerary | Builder & Share</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Solvonix <span>CRM</span></h3>
+                <p>Travel Pipeline Intelligence</p>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="leads.html" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <span>Leads</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="quotations.html" class="nav-link">
+                        <i class="fas fa-file-invoice"></i>
+                        <span>Quotations</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="bookings.html" class="nav-link">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span>Bookings</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="customers.html" class="nav-link">
+                        <i class="fas fa-address-book"></i>
+                        <span>Customers</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="payments.html" class="nav-link">
+                        <i class="fas fa-hand-holding-usd"></i>
+                        <span>Payments</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="itinerary.html" class="nav-link">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <span>Itinerary</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="vouchers.html" class="nav-link">
+                        <i class="fas fa-receipt"></i>
+                        <span>Vouchers</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="campaigns.html" class="nav-link">
+                        <i class="fas fa-envelope-open-text"></i>
+                        <span>Campaigns</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="support.html" class="nav-link">
+                        <i class="fas fa-headset"></i>
+                        <span>Support</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="feedback.html" class="nav-link">
+                        <i class="fas fa-star"></i>
+                        <span>Feedback</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="reports.html" class="nav-link">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>Reports</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="top-bar">
+                <div class="page-title">
+                    <h1>Itinerary Builder</h1>
+                    <p>Create, customize and share day-wise itineraries with live preview</p>
+                </div>
+                <div class="user-area">
+                    <div class="notification-badge">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge-dot"></span>
+                    </div>
+                    <div class="avatar">
+                        <span>RK</span>
+                    </div>
+                </div>
+            </div>
+                   <div class="table-container " style="display: flex; justify-content: end;">
+                     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="btn-primary" data-onclick="openModal('newItineraryModal')"><i class="far fa-map"></i> New Itinerary</button>
+                        <button class="btn-outline" data-onclick="exportPDF()"><i class="far fa-file-pdf"></i> PDF</button>
+                         <button class="btn-outline" data-onclick="shareWhatsApp()"><i class="fab fa-whatsapp"></i> Share</button>
+                    </div>
+                </div>
+            <div class="table-container">
+                
+                <div class="builder-toolbar">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label>Select Booking</label>
+                        <select id="bookingSelect" data-onchange="loadItinerary()" style="padding: 10px 14px; border-radius: 14px;">
+                            <option value="">-- Select a booking --</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label>Template Style</label>
+                        <select id="templateStyle" style="padding: 10px 14px; border-radius: 14px;">
+                            <option>Classic</option>
+                            <option>Modern</option>
+                            <option>Luxury</option>
+                            <option>Adventure</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label>Include</label>
+                        <div class="checkbox-row">
+                            <label><input type="checkbox" checked> Hotel Details</label>
+                            <label><input type="checkbox" checked> Flight Info</label>
+                            <label><input type="checkbox" checked> Activities</label>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+
+            <div class="builder-grid">
+                <section class="card-shell">
+                    <div class="section-head">
+                        <h3><i class="far fa-calendar-alt"></i> Day-wise Plan</h3>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button class="btn-primary" data-onclick="addNewDay()"><i class="fas fa-plus"></i> Add Day</button>
+                        </div>
+                    </div>
+                    <div class="section-body" id="daysContainer"></div>
+                </section>
+
+                <section style="display: grid; gap: 20px;">
+                    <div class="card-shell">
+                        <div class="section-head">
+                            <h3><i class="far fa-eye"></i> Itinerary Preview</h3>
+                         <button class="btn-primary" data-onclick="refreshPreview()"><i class="fas fa-rotate"></i> Refresh</button>
+
+                        </div>
+                        <div class="section-body">
+                            <div class="preview-box" id="itineraryPreview"></div>
+                            <div id="itineraryMeta" style="margin-top: 16px; display: grid; gap: 12px;"></div>
+                        </div>
+                    </div>
+
+                    <div class="card-shell">
+                        <div class="section-head">
+                            <h3><i class="far fa-file-invoice"></i> Invoice & Cost Breakup</h3>
+                        </div>
+                        <div class="section-body">
+                            <table class="cost-table" id="invoiceTable"></table>
+                            <div style="margin-top: 16px; display: grid; gap: 8px; color: var(--gray); font-size: 14px;" id="invoiceSummary"></div>
+                            <button class="btn-primary" style="margin-top: 16px; width: 100%; justify-content: center;" data-onclick="downloadInvoice()">
+                                <i class="far fa-file-pdf"></i> Download Invoice
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card-shell">
+                        <div class="section-head">
+                            <h3><i class="fas fa-share-alt"></i> Share Itinerary</h3>
+                        </div>
+                        <div class="section-body">
+                            <div class="share-grid">
+                                <button class="btn-outline" data-onclick="shareWhatsApp()"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+                                <button class="btn-outline" data-onclick="shareEmail()"><i class="far fa-envelope"></i> Email</button>
+                                <button class="btn-outline" data-onclick="copyLink()"><i class="fas fa-link"></i> Copy Link</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <div id="newItineraryModal" class="modal">
+        <div class="modal-content" style="width: 620px;">
+            <div class="modal-header">
+                <h3><i class="far fa-map"></i> Create New Itinerary</h3>
+                <button class="close-modal" data-onclick="closeModal('newItineraryModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Booking Reference</label>
+                    <select>
+                        <option>#TR-2024-001 - Rahul Mehta</option>
+                        <option>#TR-2024-002 - Neha Sharma</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Itinerary Title</label>
+                    <input type="text" placeholder="e.g. Swiss Alps Adventure">
+                </div>
+                <div class="two-col-form">
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <input type="date">
+                    </div>
+                    <div class="form-group">
+                        <label>End Date</label>
+                        <input type="date">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Template</label>
+                    <select>
+                        <option>Classic</option>
+                        <option>Modern</option>
+                        <option>Luxury</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-outline" data-onclick="closeModal('newItineraryModal')">Cancel</button>
+                <button class="btn-primary" data-onclick="createItinerary()">Create Itinerary</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="addActivityModal" class="modal">
+        <div class="modal-content" style="width: 540px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-plus"></i> Add Activity</h3>
+                <button class="close-modal" data-onclick="closeModal('addActivityModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Time</label>
+                    <input type="time" id="activityTime" value="09:00">
+                </div>
+                <div class="form-group">
+                    <label>Activity Title</label>
+                    <input type="text" id="activityTitle" placeholder="e.g. Sightseeing tour">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea rows="2" id="activityDescription" placeholder="Activity details"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Icon</label>
+                    <select id="activityIcon">
+                        <option value="plane">Plane</option>
+                        <option value="hotel">Hotel</option>
+                        <option value="utensils">Restaurant</option>
+                        <option value="map">Sightseeing</option>
+                        <option value="train">Train</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary" data-onclick="submitActivity()">Add Activity</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/layout.js"></script>
+    <script src="js/dom-events.js"></script>
+    <script src="js/itinerary.js"></script>
+</body>
+</html>

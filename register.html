@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solvonix Travel CRM - Register</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/pages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="auth-shell">
+        <section class="auth-brand">
+            <div class="auth-brand-card">
+                <div class="auth-badge"><i class="fas fa-compass"></i> Build Your Travel Desk</div>
+                <h1>Set up your agency workspace with a premium front-desk experience.</h1>
+                <p>Register your workspace to bring sales, operations, service, and finance teams onto a single CRM workflow.</p>
+
+                <div class="auth-feature-list">
+                    <div class="auth-feature">
+                        <i class="fas fa-users-gear"></i>
+                        <div>
+                            <strong>Team-Based Working</strong>
+                            <div class="muted-13">Bring sales owners, operations desks, and finance control into a structured workflow.</div>
+                        </div>
+                    </div>
+                    <div class="auth-feature">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                        <div>
+                            <strong>Real Booking Handoffs</strong>
+                            <div class="muted-13">A clear journey from qualified lead to quote, quote to booking, and booking to collection.</div>
+                        </div>
+                    </div>
+                    <div class="auth-feature">
+                        <i class="fas fa-star"></i>
+                        <div>
+                            <strong>Retention-Ready CRM</strong>
+                            <div class="muted-13">A closed-loop customer view with feedback, loyalty, and repeat upsell opportunities.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="auth-panel">
+            <div class="auth-card">
+                <div class="auth-logo">Solvonix <span>CRM</span></div>
+                <h2 class="auth-title">Create your account</h2>
+                <p class="auth-copy">Beautifully organize your travel business from first enquiry to repeat booking.</p>
+
+                <form class="auth-form" action="login.html">
+                    <div class="auth-grid-2">
+                        <div class="auth-field">
+                            <label for="regName">Full Name</label>
+                            <input id="regName" type="text" placeholder="Your full name" required>
+                        </div>
+                        <div class="auth-field">
+                            <label for="regAgency">Agency Name</label>
+                            <input id="regAgency" type="text" placeholder="Agency / company name" required>
+                        </div>
+                    </div>
+
+                    <div class="auth-grid-2">
+                        <div class="auth-field">
+                            <label for="regEmail">Work Email</label>
+                            <input id="regEmail" type="email" placeholder="name@agency.com" required>
+                        </div>
+                        <div class="auth-field">
+                            <label for="regPhone">Phone</label>
+                            <input id="regPhone" type="tel" placeholder="+91 XXXXX XXXXX" required>
+                        </div>
+                    </div>
+
+                    <div class="auth-grid-2">
+                        <div class="auth-field">
+                            <label for="regRole">Primary Role</label>
+                            <select id="regRole" required>
+                                <option value="">Select role</option>
+                                <option>Sales Owner</option>
+                                <option>Operations Manager</option>
+                                <option>Finance Desk</option>
+                                <option>Agency Admin</option>
+                            </select>
+                        </div>
+                        <div class="auth-field">
+                            <label for="regTeam">Team Size</label>
+                            <select id="regTeam" required>
+                                <option value="">Select size</option>
+                                <option>1-5 users</option>
+                                <option>6-15 users</option>
+                                <option>16-50 users</option>
+                                <option>50+ users</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="auth-field">
+                        <label for="regPassword">Password</label>
+                        <input id="regPassword" type="password" placeholder="Create a strong password" required>
+                    </div>
+
+                    <div class="auth-meta-row">
+                        <label class="auth-check">
+                            <input type="checkbox" required>
+                            <span>I agree to the workspace terms</span>
+                        </label>
+                        <a href="login.html">Already have an account?</a>
+                    </div>
+
+                    <button type="submit" class="auth-submit">Create Workspace</button>
+                </form>
+
+                <div class="auth-footer">
+                    Already registered? <a href="login.html">Go to login</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
