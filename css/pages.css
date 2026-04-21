@@ -1441,8 +1441,7 @@
     border-radius: 24px;
 }
 
-.itinerary-action-strip,
-.voucher-action-strip {
+.itinerary-action-strip {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
@@ -2055,219 +2054,6 @@ color: #047857;
     font-size: 14px;
 }
 
-.voucher-overview-shell {
-    align-items: flex-start;
-    padding: 24px 26px;
-    background:
-        radial-gradient(circle at top right, rgba(233, 69, 96, 0.16), transparent 30%),
-        linear-gradient(135deg, #fff8fb 0%, #ffffff 42%, #f8fbff 100%);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-}
-
-.voucher-overview-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    align-items: flex-end;
-}
-
-.voucher-tabs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: flex-end;
-}
-
-.voucher-tab {
-    border: 1px solid #f1d5d9;
-    border-radius: 999px;
-    padding: 10px 16px;
-    background: white;
-    color: var(--secondary);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.voucher-tab.is-active {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: white;
-    border-color: transparent;
-    box-shadow: 0 14px 28px rgba(233, 69, 96, 0.22);
-}
-
-.voucher-card-shell {
-    padding: 22px;
-    border-radius: 22px;
-    border: 1px solid var(--border);
-    background: white;
-    box-shadow: 0 14px 32px rgba(15, 23, 42, 0.05);
-}
-
-.voucher-card-shell + .voucher-card-shell {
-    margin-top: 16px;
-}
-
-.voucher-card-top {
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    align-items: flex-start;
-}
-
-.voucher-card-title {
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-}
-
-.voucher-icon {
-    width: 46px;
-    height: 46px;
-    border-radius: 16px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #fff1f2, #ffe4e6);
-    color: var(--primary);
-    font-size: 18px;
-    flex-shrink: 0;
-}
-
-.voucher-title-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    align-items: center;
-    margin-bottom: 4px;
-}
-
-.voucher-card-title span {
-    color: var(--gray);
-    font-size: 14px;
-}
-
-.voucher-card-amount {
-    font-size: 24px;
-    font-weight: 800;
-    color: var(--secondary);
-}
-
-.voucher-card-grid,
-.voucher-preview-grid,
-.voucher-print-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-    margin-top: 18px;
-}
-
-.voucher-card-grid div,
-.voucher-preview-grid div,
-.voucher-print-grid div {
-    padding: 12px 14px;
-    border-radius: 16px;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-}
-
-.voucher-card-grid span,
-.voucher-preview-grid span,
-.voucher-print-grid span,
-.voucher-coverage-head span,
-.dispatch-item span,
-.voucher-print-brand span {
-    display: block;
-    font-size: 12px;
-    color: var(--gray);
-    margin-bottom: 4px;
-}
-
-.voucher-note {
-    margin-top: 16px;
-    padding: 14px 16px;
-    border-radius: 16px;
-    background: #fff7ed;
-    color: #9a3412;
-    border: 1px solid #fed7aa;
-    font-size: 14px;
-}
-
-.voucher-card-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 18px;
-}
-
-.voucher-empty {
-    padding: 48px 24px;
-    text-align: center;
-    border: 1px dashed #cbd5e1;
-    border-radius: 24px;
-    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-}
-
-.voucher-empty i {
-    font-size: 44px;
-    color: #cbd5e1;
-    margin-bottom: 14px;
-}
-
-.voucher-coverage-card {
-    padding: 16px;
-    border-radius: 18px;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-}
-
-.voucher-coverage-head,
-.dispatch-item,
-.voucher-preview-head,
-.voucher-print-header,
-.voucher-print-footer {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-}
-
-.voucher-progress {
-    height: 10px;
-    border-radius: 999px;
-    background: #e2e8f0;
-    overflow: hidden;
-    margin: 14px 0 12px;
-}
-
-.voucher-progress span {
-    display: block;
-    height: 100%;
-    border-radius: inherit;
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-}
-
-.voucher-mini-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.voucher-mini-tags span {
-    padding: 6px 10px;
-    border-radius: 999px;
-    background: white;
-    color: var(--gray);
-    font-size: 12px;
-    border: 1px solid #e2e8f0;
-}
-
-.voucher-mini-tags span.done {
-    background: #ecfdf5;
-    color: #166534;
-    border-color: #bbf7d0;
-}
-
 .dispatch-item {
     align-items: center;
     padding: 14px 16px;
@@ -2278,50 +2064,6 @@ color: #047857;
 
 .btn-sm-inline {
     padding: 6px 12px;
-}
-
-.voucher-preview-head {
-    align-items: flex-start;
-}
-
-.voucher-print-card {
-    border-radius: 24px;
-    border: 1px solid #e2e8f0;
-    background: #ffffff;
-    padding: 24px;
-}
-
-.voucher-print-tag {
-    display: inline-flex;
-    padding: 6px 12px;
-    border-radius: 999px;
-    background: #fff1f2;
-    color: #be123c;
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.voucher-print-header h2 {
-    margin: 12px 0 8px;
-    color: var(--secondary);
-}
-
-.voucher-print-brand {
-    text-align: right;
-}
-
-.voucher-print-notes {
-    margin-top: 18px;
-    padding: 18px;
-    border-radius: 18px;
-    background: #fff7ed;
-    border: 1px solid #fed7aa;
-}
-
-.voucher-print-notes h4 {
-    margin-bottom: 10px;
-    color: #9a3412;
 }
 
 .summary-row {
@@ -2889,16 +2631,11 @@ display: flex;
 }
 
 @media (max-width: 992px) {
-    .itinerary-overview-shell,
-    .voucher-overview-shell,
-    .voucher-print-header,
-    .voucher-print-footer {
+    .itinerary-overview-shell {
         flex-direction: column;
         align-items: flex-start;
     }
 
-    .voucher-tabs,
-    .voucher-overview-actions,
     .itinerary-action-strip {
         justify-content: flex-start;
         align-items: flex-start;
@@ -2910,42 +2647,32 @@ display: flex;
 }
 
 @media (max-width: 768px) {
-    .voucher-card-grid,
-    .voucher-preview-grid,
-    .voucher-print-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .employee-card,
+    /* .employee-card,
     .employee-card-main {
         flex-direction: column;
-    }
+    } */
+     .employee-directory {
+  gap: 10px;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: auto;
+}
 
     .employee-stat-grid {
         grid-template-columns: 1fr;
     }
 
-    .voucher-card-top,
-    .voucher-coverage-head,
-    .dispatch-item,
-    .voucher-preview-head {
+    .dispatch-item {
         flex-direction: column;
         align-items: flex-start;
     }
 
-    .voucher-print-brand {
-        text-align: left;
-    }
-
-    .itinerary-action-strip,
-    .voucher-action-strip {
+    .itinerary-action-strip {
         width: 100%;
     }
 
     .itinerary-action-strip .btn-outline,
-    .itinerary-action-strip .btn-primary,
-    .voucher-action-strip .btn-outline,
-    .voucher-action-strip .btn-primary {
+    .itinerary-action-strip .btn-primary {
         width: 100%;
         justify-content: center;
     }

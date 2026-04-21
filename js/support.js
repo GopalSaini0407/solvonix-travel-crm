@@ -55,7 +55,7 @@
             }
             
             container.innerHTML = filteredTickets.map(t => `
-                <div style="background: white; border-radius: 16px; padding: 16px; margin-bottom: 12px; border-left: 4px solid ${t.priority === 'high' ? '#ef4444' : t.priority === 'medium' ? '#f59e0b' : '#10b981'};">
+                <div style="background: white; border-radius: 16px; padding: 16px; margin-bottom: 12px; border-left: 4px solid ${t.priority === 'critical' ? '#b91c1c' : t.priority === 'high' ? '#ef4444' : t.priority === 'medium' ? '#f59e0b' : '#10b981'};">
                     <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
                         <div style="flex: 1;">
                             <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
@@ -64,7 +64,7 @@
                                 </span>
                                 <strong>#${t.id}</strong>
                                 <span class="status-badge status-${t.status === 'open' ? 'new' : t.status === 'in-progress' ? 'negotiation' : 'won'}">${t.status}</span>
-                                <span class="status-badge" style="background: ${t.priority === 'high' ? '#fee2e2' : t.priority === 'medium' ? '#fef3c7' : '#e8f5e9'}; color: ${t.priority === 'high' ? '#ef4444' : t.priority === 'medium' ? '#f59e0b' : '#10b981'};">${t.priority.toUpperCase()}</span>
+                                <span class="status-badge" style="background: ${t.priority === 'critical' ? '#fee2e2' : t.priority === 'high' ? '#fee2e2' : t.priority === 'medium' ? '#fef3c7' : '#e8f5e9'}; color: ${t.priority === 'critical' ? '#b91c1c' : t.priority === 'high' ? '#ef4444' : t.priority === 'medium' ? '#f59e0b' : '#10b981'};">${t.priority.toUpperCase()}</span>
                             </div>
                             <div style="margin-top: 10px;">
                                 <div style="font-weight: 600;">${t.subject}</div>
@@ -251,14 +251,42 @@
         }
 
         function broadcastAlert() {
-            const message = prompt('Enter alert message to broadcast to all active travelers:');
-            if (message) {
-                showToast('Alert Broadcasted', 'Message sent to all active travelers');
+            document.getElementById('broadcastType').value = 'travel_update';
+            document.getElementById('broadcastAudience').value = 'all';
+            document.getElementById('broadcastMessage').value = '';
+            document.getElementById('broadcastAlertModal').classList.add('show');
+        }
+
+        function submitBroadcastAlert() {
+            const type = document.getElementById('broadcastType')?.value;
+            const audience = document.getElementById('broadcastAudience')?.value;
+            const message = document.getElementById('broadcastMessage')?.value.trim();
+            if (!message) {
+                showToast('Missing Alert Message', 'Please enter a clear alert before sending.', 'warning');
+                return;
             }
+
+            const audienceLabel = audience === 'all'
+                ? 'all active travelers'
+                : audience === 'destination'
+                    ? 'destination-specific travelers'
+                    : 'critical travelers';
+
+            sampleAlerts.unshift({
+                id: Date.now(),
+                type: type === 'weather' ? 'weather' : type === 'transport' ? 'transport' : 'flight',
+                message,
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                priority: audience === 'critical' ? 'high' : 'medium'
+            });
+
+            renderRealTimeAlerts();
+            closeModal('broadcastAlertModal');
+            showToast('Alert Broadcasted', `Your update was sent to ${audienceLabel}.`);
         }
 
         function viewKnowledgeBase() {
-            showToast('Knowledge Base', 'Opening help articles and FAQs');
+            document.getElementById('knowledgeBaseModal').classList.add('show');
         }
 
         function callEmergency() {
@@ -288,3 +316,5 @@
                 document.getElementById('searchTicket')?.addEventListener('keyup', () => renderTickets());
             }
         });
+
+        window.submitBroadcastAlert = submitBroadcastAlert;

@@ -2,6 +2,15 @@ let employees = [];
 let filteredEmployees = [];
 let activeEmployeeId = null;
 
+function employeeEscape(value) {
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
 function employeeCurrency(value) {
     return `₹${Number(value || 0).toLocaleString('en-IN')}`;
 }
@@ -91,21 +100,21 @@ function renderEmployeeDirectory() {
     container.innerHTML = filteredEmployees.map(employee => `
         <article class="employee-card ${employee.id === activeEmployeeId ? 'active' : ''}" data-onclick="showEmployeeDetail(${employee.id})">
             <div class="employee-card-main">
-                <div class="employee-avatar">${employeeInitials(employee.name)}</div>
+                <div class="employee-avatar">${employeeEscape(employeeInitials(employee.name))}</div>
                 <div class="employee-card-copy">
-                    <h4>${employee.name}</h4>
-                    <p>${employee.role} • ${employee.department}</p>
-                    <p>${employee.email} • ${employee.phone}</p>
+                    <h4>${employeeEscape(employee.name)}</h4>
+                    <p>${employeeEscape(employee.role)} • ${employeeEscape(employee.department)}</p>
+                    <p>${employeeEscape(employee.email)} • ${employeeEscape(employee.phone)}</p>
                     <div class="employee-card-meta">
-                        <span class="employee-chip primary"><i class="fas fa-location-dot"></i> ${employee.location || 'Location pending'}</span>
+                        <span class="employee-chip primary"><i class="fas fa-location-dot"></i> ${employeeEscape(employee.location || 'Location pending')}</span>
                         <span class="employee-chip ${statusChipClass(employee.status)}"><i class="fas fa-circle"></i> ${statusLabel(employee.status)}</span>
                         <span class="employee-chip"><i class="fas fa-chart-line"></i> ${employee.performance || 0}% score</span>
                     </div>
                 </div>
             </div>
             <div class="table-actions">
-                <button class="btn-outline btn-sm btn-icon" data-onclick="openEmployeeModal(${employee.id}); event.stopPropagation();"><i class="fas fa-pen"></i></button>
-                <button class="btn-outline btn-danger-outline btn-sm btn-icon" data-onclick="deleteEmployee(${employee.id}); event.stopPropagation();"><i class="fas fa-trash"></i></button>
+                <button class="btn-outline btn-sm btn-icon" data-onclick="employeeEditAction(${employee.id}, event)"><i class="fas fa-pen"></i></button>
+                <button class="btn-outline btn-danger-outline btn-sm btn-icon" data-onclick="employeeDeleteAction(${employee.id}, event)"><i class="fas fa-trash"></i></button>
             </div>
         </article>
     `).join('');
@@ -131,12 +140,12 @@ function renderEmployeeDetail(id = activeEmployeeId) {
 
     panel.innerHTML = `
         <div class="employee-side-hero">
-            <div class="employee-avatar">${employeeInitials(employee.name)}</div>
-            <h2>${employee.name}</h2>
-            <p>${employee.role} • ${employee.department}</p>
+            <div class="employee-avatar">${employeeEscape(employeeInitials(employee.name))}</div>
+            <h2>${employeeEscape(employee.name)}</h2>
+            <p>${employeeEscape(employee.role)} • ${employeeEscape(employee.department)}</p>
             <div class="employee-card-meta">
                 <span class="employee-chip ${statusChipClass(employee.status)}"><i class="fas fa-circle"></i> ${statusLabel(employee.status)}</span>
-                <span class="employee-chip primary"><i class="fas fa-user-shield"></i> Manager: ${employee.manager || 'Not assigned'}</span>
+                <span class="employee-chip primary"><i class="fas fa-user-shield"></i> Manager: ${employeeEscape(employee.manager || 'Not assigned')}</span>
             </div>
         </div>
         <div class="employee-side-body">
@@ -157,19 +166,19 @@ function renderEmployeeDetail(id = activeEmployeeId) {
             <div class="employee-info-list">
                 <div class="employee-info-item">
                     <span class="label">Email</span>
-                    <span class="value">${employee.email || 'Not available'}</span>
+                    <span class="value">${employeeEscape(employee.email || 'Not available')}</span>
                 </div>
                 <div class="employee-info-item">
                     <span class="label">Phone</span>
-                    <span class="value">${employee.phone || 'Not available'}</span>
+                    <span class="value">${employeeEscape(employee.phone || 'Not available')}</span>
                 </div>
                 <div class="employee-info-item">
                     <span class="label">Joining Date</span>
-                    <span class="value">${employee.joiningDate || 'Not added'}</span>
+                    <span class="value">${employeeEscape(employee.joiningDate || 'Not added')}</span>
                 </div>
                 <div class="employee-info-item">
                     <span class="label">Work Location</span>
-                    <span class="value">${employee.location || 'Not available'}</span>
+                    <span class="value">${employeeEscape(employee.location || 'Not available')}</span>
                 </div>
                 <div class="employee-info-item">
                     <span class="label">Monthly Salary</span>
@@ -177,7 +186,7 @@ function renderEmployeeDetail(id = activeEmployeeId) {
                 </div>
                 <div class="employee-info-item">
                     <span class="label">Notes</span>
-                    <span class="value">${employee.notes || 'No notes added yet.'}</span>
+                    <span class="value">${employeeEscape(employee.notes || 'No notes added yet.')}</span>
                 </div>
             </div>
             <div class="table-actions">
@@ -225,6 +234,16 @@ function showEmployeeDetail(id) {
     activeEmployeeId = id;
     renderEmployeeDirectory();
     renderEmployeeDetail(id);
+}
+
+function employeeEditAction(id, event) {
+    event?.stopPropagation?.();
+    openEmployeeModal(id);
+}
+
+function employeeDeleteAction(id, event) {
+    event?.stopPropagation?.();
+    deleteEmployee(id);
 }
 
 function openEmployeeModal(id = null) {
@@ -299,6 +318,7 @@ function saveEmployee() {
 function deleteEmployee(id) {
     const employee = employees.find(item => item.id === id);
     if (!employee) return;
+    if (!window.confirm(`Delete ${employee.name} from employee directory?`)) return;
 
     window.state.employees = window.state.employees.filter(item => item.id !== id);
     if (activeEmployeeId === id) {
@@ -329,3 +349,5 @@ window.showEmployeeDetail = showEmployeeDetail;
 window.openEmployeeModal = openEmployeeModal;
 window.saveEmployee = saveEmployee;
 window.deleteEmployee = deleteEmployee;
+window.employeeEditAction = employeeEditAction;
+window.employeeDeleteAction = employeeDeleteAction;

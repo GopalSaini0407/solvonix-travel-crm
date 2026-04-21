@@ -115,7 +115,6 @@
                     
                     if (paymentType === 'full') {
                         showToast('Booking Created', `Booking ${newBooking.bookingRef} confirmed with full payment`);
-                        generateVoucher(newBooking.id);
                     } else {
                         showToast('Booking Created', `Booking ${newBooking.bookingRef} created. Please collect 30% advance payment.`);
                         // Open payment modal
@@ -192,10 +191,6 @@
                     const lead = state.leads.find(l => l.id === booking.leadId);
                     showReceipt(booking, lead, amount, mode, transactionId);
                     
-                    // Auto generate voucher if full payment
-                    if (booking.paymentStatus === 'full') {
-                        generateVoucher(booking.id);
-                    }
                 }
             }
         }
@@ -333,6 +328,8 @@
                     tbody.innerHTML = bookings.map(b => {
                         const lead = state.leads.find(l => l.id === b.leadId);
                         const pending = (b.totalAmount || 0) - (b.paidAmount || 0);
+                        const owner = b.assignedTo || lead?.assignedTo || 'Unassigned';
+                        const incentive = Number(b.incentiveAmount || 0);
                         return `
                             <tr>
                                 <td><strong>${b.bookingRef}</strong></td>
@@ -342,8 +339,8 @@
                                 <td>₹${(b.paidAmount || 0).toLocaleString()}</td>
                                 <td><span style="color: #f59e0b;">₹${pending.toLocaleString()}</span></td>
                                 <td><span class="status-badge status-${b.paymentStatus === 'full' ? 'won' : b.paymentStatus === 'partial' ? 'partial' : 'new'}">${b.paymentStatus}</span></td>
-                                 <td>ram sharma</td>
-                                 <td>2000</td>
+                                 <td>${owner}</td>
+                                 <td>₹${incentive.toLocaleString()}</td>
 
                                 <td>${b.travelDate || '-'}</td>
                                 <td>${b.paymentStatus !== 'full' ? '<span style="color: #e94560;">Immediate</span>' : '-'}</td>
@@ -358,7 +355,7 @@
                     }).join('');
                     
                     if (bookings.length === 0) {
-                        tbody.innerHTML = '<tr><td colspan="10" style="text-align: center;">No bookings found</td></tr>';
+                        tbody.innerHTML = '<tr><td colspan="12" style="text-align: center;">No bookings found</td></tr>';
                     }
                 }
                 updateBookingStats();
@@ -371,9 +368,41 @@
 
         function viewBookingDetails(bookingId) {
             const booking = state.bookings.find(b => b.id === bookingId);
+            if (!booking) return;
             const lead = state.leads.find(l => l.id === booking.leadId);
+            const pending = (booking.totalAmount || 0) - (booking.paidAmount || 0);
+            const content = document.getElementById('bookingInfoContent');
             if (booking && lead) {
-                showToast('Booking Details', `${lead.name} - ${booking.bookingRef} | Status: ${booking.paymentStatus}`);
+                content.innerHTML = `
+                    <div class="summary-box mb-15">
+                        <div class="fw-600 mb-10">${lead.name}</div>
+                        <div class="text-13">Booking Ref: ${booking.bookingRef}</div>
+                        <div class="text-13">Destination: ${lead.destination || '-'}</div>
+                        <div class="text-13">Travel Date: ${booking.travelDate || lead.travelDate || '-'}</div>
+                    </div>
+                    <div class="grid-2-form mb-15">
+                        <div class="summary-box">
+                            <div class="text-12 text-muted mb-10">Commercial</div>
+                            <div class="summary-row"><span>Total Amount</span><strong>₹${(booking.totalAmount || 0).toLocaleString()}</strong></div>
+                            <div class="summary-row"><span>Paid Amount</span><strong>₹${(booking.paidAmount || 0).toLocaleString()}</strong></div>
+                            <div class="summary-row"><span>Pending</span><strong>₹${pending.toLocaleString()}</strong></div>
+                        </div>
+                        <div class="summary-box">
+                            <div class="text-12 text-muted mb-10">Operations</div>
+                            <div class="summary-row"><span>Payment Status</span><strong>${booking.paymentStatus}</strong></div>
+                            <div class="summary-row"><span>Booking Status</span><strong>${booking.status || 'pending'}</strong></div>
+                            <div class="summary-row"><span>Payment Mode</span><strong>${booking.paymentMode || 'Not captured'}</strong></div>
+                        </div>
+                    </div>
+                    <div class="summary-box">
+                        <div class="text-12 text-muted mb-10">Lead Context</div>
+                        <div class="summary-row"><span>Assigned To</span><strong>${booking.assignedTo || lead.assignedTo || 'Unassigned'}</strong></div>
+                        <div class="summary-row"><span>Package Type</span><strong>${booking.packageType || lead.packageType || 'standard'}</strong></div>
+                        <div class="summary-row"><span>Trip Type</span><strong>${booking.tripType || lead.tripType || 'domestic'}</strong></div>
+                        <div class="summary-row"><span>Special Requests</span><strong>${booking.specialRequests || 'None'}</strong></div>
+                    </div>
+                `;
+                document.getElementById('bookingInfoModal').classList.add('show');
             }
         }
 

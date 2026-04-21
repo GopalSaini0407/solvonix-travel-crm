@@ -189,7 +189,7 @@
                 visa: {
                     name: 'Visa & Documents Checklist',
                     subject: 'Important: Visa & Travel Documents Checklist for Your Upcoming Trip',
-                    message: `Dear Customer,\n\nYour trip is coming up soon! Please ensure you have the following documents ready:\n\n📌 Valid Passport (min 6 months validity)\n📌 Visa (if applicable)\n📌 Flight tickets copy\n📌 Hotel vouchers\n📌 Travel Insurance\n📌 COVID-19 documents (if required)\n\nPlease contact us if you need any assistance with visa processing.\n\nSafe travels!\nSolvonix Travels Team`
+                    message: `Dear Customer,\n\nYour trip is coming up soon! Please ensure you have the following documents ready:\n\n📌 Valid Passport (min 6 months validity)\n📌 Visa (if applicable)\n📌 Flight tickets copy\n📌 Hotel confirmations\n📌 Travel Insurance\n📌 COVID-19 documents (if required)\n\nPlease contact us if you need any assistance with visa processing.\n\nSafe travels!\nSolvonix Travels Team`
                 },
                 packing: {
                     name: 'Packing Checklist',

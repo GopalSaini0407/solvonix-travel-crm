@@ -184,8 +184,8 @@
                     const points = parseInt(resolutionValue) || 200;
                     feedback.points = points;
                     showToast('Complaint Resolved', `${feedback.customer} has been awarded ${points} compensation points`);
-                } else if (action === 'voucher') {
-                    showToast('Complaint Resolved', `Travel voucher of ${resolutionValue} sent to ${feedback.customer}`);
+                } else if (action === 'credit') {
+                    showToast('Complaint Resolved', `Travel credit of ${resolutionValue} added for ${feedback.customer}`);
                 } else if (action === 'refund') {
                     showToast('Complaint Resolved', `Refund of ${resolutionValue} processed for ${feedback.customer}`);
                 } else {

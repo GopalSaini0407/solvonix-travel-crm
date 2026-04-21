@@ -9,7 +9,6 @@ let state = {
     quotations: [],
     bookings: [],
     employees: [],
-    vouchers: [],
     campaigns: [],
     tickets: [],
     feedbacks: [],
@@ -51,15 +50,6 @@ const sampleData = {
         { id: 104, name: 'Priya Sharma', email: 'priya.s@solvonix.com', phone: '+91 98333 44556', role: 'Campaign Executive', department: 'Marketing', status: 'active', joiningDate: '2023-02-12', location: 'Remote', manager: 'Rajesh Kumar', salary: 45000, performance: 84, activeLeads: 0, activeBookings: 0, notes: 'Owns campaign automation and follow-up sequences.' },
         { id: 105, name: 'Rohit Mehra', email: 'rohit@solvonix.com', phone: '+91 98444 55667', role: 'Support Lead', department: 'Operations', status: 'on_leave', joiningDate: '2021-11-01', location: 'Mumbai Support Hub', manager: 'Rajesh Kumar', salary: 56000, performance: 81, activeLeads: 0, activeBookings: 16, notes: 'Escalation owner for in-trip support and service recovery.' }
     ],
-    
-    vouchers: [
-        { id: 'VCH-001', bookingId: 2001, bookingRef: 'SOL-BK-001', customerName: 'Anjali Nair', customerEmail: 'anjali.nair@gmail.com', customerPhone: '9876543215', destination: 'Kashmir', type: 'hotel', serviceName: 'The Lalit Grand Palace', startDate: '2024-04-20', endDate: '2024-04-25', details: 'Premium room with breakfast and dinner included.', amount: 60900, generatedDate: '2024-02-09', status: 'active' },
-        { id: 'VCH-002', bookingId: 2001, bookingRef: 'SOL-BK-001', customerName: 'Anjali Nair', customerEmail: 'anjali.nair@gmail.com', customerPhone: '9876543215', destination: 'Kashmir', type: 'transport', serviceName: 'Kashmir Private Cab Service', startDate: '2024-04-20', endDate: '2024-04-25', details: 'Airport transfer plus local sightseeing with private AC vehicle.', amount: 60900, generatedDate: '2024-02-09', status: 'active' },
-        { id: 'VCH-003', bookingId: 2001, bookingRef: 'SOL-BK-001', customerName: 'Anjali Nair', customerEmail: 'anjali.nair@gmail.com', customerPhone: '9876543215', destination: 'Kashmir', type: 'activity', serviceName: 'Shikara Ride & Gondola Pass', startDate: '2024-04-22', endDate: '2024-04-23', details: 'Activity tickets with reporting details shared with local coordinator.', amount: 60900, generatedDate: '2024-02-09', status: 'active' },
-        { id: 'VCH-004', bookingId: 2001, bookingRef: 'SOL-BK-001', customerName: 'Anjali Nair', customerEmail: 'anjali.nair@gmail.com', customerPhone: '9876543215', destination: 'Kashmir', type: 'flight', serviceName: 'IndiGo DEL-SXR Round Trip', startDate: '2024-04-20', endDate: '2024-04-25', details: 'Economy class ticket with 15kg baggage and PNR confirmation.', amount: 60900, generatedDate: '2024-02-09', status: 'active' },
-        { id: 'VCH-005', bookingId: 2001, bookingRef: 'SOL-BK-001', customerName: 'Anjali Nair', customerEmail: 'anjali.nair@gmail.com', customerPhone: '9876543215', destination: 'Kashmir', type: 'insurance', serviceName: 'Travel Secure Policy', startDate: '2024-04-20', endDate: '2024-04-25', details: 'Medical emergency, baggage delay and trip interruption cover active.', amount: 60900, generatedDate: '2024-02-09', status: 'active' }
-    ],
-    
     campaigns: [
         { id: 1, name: 'Pre-travel Tips - Kashmir', trigger: '7 days before', status: 'active', sent: 156, opens: 98 },
         { id: 2, name: 'Packing Checklist', trigger: '5 days before', status: 'active', sent: 156, opens: 112 },
@@ -91,7 +81,6 @@ function loadSampleDataIntoState() {
     state.quotations = sampleData.quotations.map(normalizeQuotation);
     state.bookings = sampleData.bookings.map(normalizeBooking);
     state.employees = sampleData.employees.map(normalizeEmployee);
-    state.vouchers = [...sampleData.vouchers];
     state.campaigns = [...sampleData.campaigns];
     state.tickets = [...sampleData.tickets];
     state.feedbacks = [...sampleData.feedbacks];
@@ -301,12 +290,10 @@ function getCurrentPage() {
         customers: 'customers',
         payments: 'payments',
         itinerary: 'itinerary',
-        vouchers: 'vouchers',
         campaigns: 'campaigns',
         support: 'support',
         feedback: 'feedback',
-        reports: 'reports'
-        ,
+        reports: 'reports',
         employees: 'employees'
     };
 
@@ -324,8 +311,6 @@ function renderCurrentPage() {
         renderQuotationsTable();
     } else if (page === 'bookings') {
         renderBookingsTable();
-    } else if (page === 'vouchers') {
-        renderVouchers();
     } else if (page === 'campaigns') {
         renderCampaigns();
     } else if (page === 'support') {
@@ -369,7 +354,7 @@ function renderFlowSteps() {
         { num: 4, title: 'Negotiation', desc: 'Discount & Deal' },
         { num: 5, title: 'Booking', desc: 'Confirm & Lock' },
         { num: 6, title: 'Payment', desc: 'Partial/Full' },
-        { num: 7, title: 'Voucher', desc: 'Documents' },
+        { num: 7, title: 'Trip Handoff', desc: 'Documents' },
         { num: 8, title: 'Pre-travel', desc: 'Drip Campaign' },
         { num: 9, title: 'During Travel', desc: 'Support' },
         { num: 10, title: 'Post Travel', desc: 'Feedback & Points' }
@@ -835,7 +820,6 @@ function renderBookingsTable() {
                 <td>${b.travelDate || '-'}</td>
                 <td>
                     <button class="btn-primary" style="padding:4px 12px;" data-onclick="processPayment(${b.id})">Pay</button>
-                    <button class="btn-outline" style="padding:4px 8px;" data-onclick="generateVoucher(${b.id})">Voucher</button>
                 </td>
             </tr>
         `;
@@ -898,112 +882,7 @@ function confirmPayment(bookingId) {
         closeModal('paymentModal');
         renderBookingsTable();
         showToast('Payment Received', `₹${paymentAmount.toLocaleString()} received successfully`);
-        
-        // Auto generate voucher if full payment
-        if (booking.paymentStatus === 'full') {
-            generateVoucher(bookingId);
-        }
     }
-}
-
-// ========== VOUCHERS PAGE ==========
-function renderVouchers() {
-    const container = document.getElementById('vouchersContainer');
-    if (!container) return;
-    
-    container.innerHTML = state.vouchers.map(v => `
-        <div style="background:white; border-radius:16px; padding:20px; margin-bottom:16px; border-left:4px solid #e94560;">
-            <div style="display:flex; justify-content:space-between;">
-                <div>
-                    <h4>${v.customerName}</h4>
-                    <p style="color:#64748b;">${v.destination} | ${v.hotel}</p>
-                    <p style="font-size:13px;">Check-in: ${v.checkIn} | Check-out: ${v.checkOut}</p>
-                </div>
-                <div style="text-align:right;">
-                    <div style="font-size:20px; font-weight:bold;">₹${v.amount.toLocaleString()}</div>
-                    <button class="btn-primary" style="margin-top:10px; padding:6px 16px;" data-onclick="downloadVoucher('${v.id}')">Download PDF</button>
-                </div>
-            </div>
-        </div>
-    `).join('');
-    
-    if (state.vouchers.length === 0) {
-        container.innerHTML = '<div style="text-align:center; padding:40px; color:#64748b;">No vouchers generated yet. Complete payment to generate voucher.</div>';
-    }
-}
-
-function generateVoucher(bookingId) {
-    const booking = state.bookings.find(b => b.id === bookingId);
-    const lead = state.leads.find(l => l.id === booking?.leadId);
-    
-    if (booking && lead && booking.paymentStatus === 'full') {
-        const existingHotelVoucher = state.vouchers.find(v => v.bookingId === booking.id && (v.type || 'hotel') === 'hotel');
-        if (existingHotelVoucher) {
-            showToast('Voucher already ready', `Hotel voucher for ${lead.name} already exists.`);
-            return;
-        }
-
-        const newVoucher = {
-            id: `VCH-${String(state.vouchers.length + 1).padStart(3,'0')}`,
-            bookingId: booking.id,
-            bookingRef: booking.bookingRef,
-            customerName: lead.name,
-            customerEmail: lead.email,
-            customerPhone: lead.phone,
-            destination: lead.destination,
-            type: 'hotel',
-            serviceName: `${lead.destination} Stay Confirmation`,
-            startDate: lead.travelDate,
-            endDate: getDateAfterDays(lead.travelDate, 5),
-            details: 'Room with breakfast included. Final hotel confirmation to be shared with traveler.',
-            amount: booking.paidAmount,
-            generatedDate: new Date().toISOString().split('T')[0],
-            status: 'active'
-        };
-        
-        state.vouchers.push(newVoucher);
-        if (getCurrentPage() === 'vouchers') renderVouchers();
-        showToast('Voucher Generated', `Voucher for ${lead.name} is ready`);
-    } else {
-        showToast('Payment Pending', 'Complete full payment to generate voucher', 'warning');
-    }
-}
-
-function downloadVoucher(voucherId) {
-    const voucher = state.vouchers.find(v => v.id === voucherId);
-    if (!voucher) return;
-    
-    const html = `
-        <!DOCTYPE html>
-        <html>
-        <head><title>Travel Voucher - ${voucher.customerName}</title></head>
-        <body style="font-family: Arial; padding: 40px;">
-            <div style="border: 2px solid #e94560; border-radius: 16px; padding: 30px; max-width: 600px;">
-                <h1 style="color: #e94560;">SOLVONIX TRAVELS</h1>
-                <hr>
-                <h3>TRAVEL VOUCHER</h3>
-                <p><strong>Voucher ID:</strong> ${voucher.id}</p>
-                <p><strong>Customer:</strong> ${voucher.customerName}</p>
-                <p><strong>Destination:</strong> ${voucher.destination}</p>
-                <p><strong>Hotel:</strong> ${voucher.hotel}</p>
-                <p><strong>Check-in:</strong> ${voucher.checkIn}</p>
-                <p><strong>Check-out:</strong> ${voucher.checkOut}</p>
-                <p><strong>Amount Paid:</strong> ₹${voucher.amount.toLocaleString()}</p>
-                <hr>
-                <p>Thank you for choosing Solvonix Travels!</p>
-            </div>
-        </body>
-        </html>
-    `;
-    
-    const blob = new Blob([html], { type: 'text/html' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `voucher_${voucher.id}.html`;
-    link.click();
-    URL.revokeObjectURL(link.href);
-    
-    showToast('Download Started', 'Voucher is being downloaded');
 }
 
 // ========== CAMPAIGNS PAGE ==========
@@ -1196,8 +1075,6 @@ window.viewQuotation = (id) => showToast('Quotation', `Viewing quotation #${id}`
 window.approveQuotation = approveQuotation;
 window.processPayment = processPayment;
 window.confirmPayment = confirmPayment;
-window.generateVoucher = generateVoucher;
-window.downloadVoucher = downloadVoucher;
 window.triggerCampaign = triggerCampaign;
 window.openModal = openModal;
 window.closeModal = closeModal;

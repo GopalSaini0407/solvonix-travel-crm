@@ -49,6 +49,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="employee.html" class="nav-link">
+                        <i class="fas fa-user-tie"></i>
+                        <span>Employees</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="payments.html" class="nav-link">
                         <i class="fas fa-hand-holding-usd"></i>
                         <span>Payments</span>
@@ -58,12 +64,6 @@
                     <a href="itinerary.html" class="nav-link">
                         <i class="fas fa-map-marked-alt"></i>
                         <span>Itinerary</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="vouchers.html" class="nav-link">
-                        <i class="fas fa-receipt"></i>
-                        <span>Vouchers</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -393,6 +393,90 @@
             </div>
             <div class="modal-footer">
                 <button class="btn-outline" data-onclick="closeModal('liveChatModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="broadcastAlertModal" class="modal">
+        <div class="modal-content modal-w-620">
+            <div class="modal-header">
+                <h3><i class="fas fa-bullhorn"></i> Broadcast Alert Center</h3>
+                <button class="close-modal" data-onclick="closeModal('broadcastAlertModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="notice-card-soft mb-15">
+                    Send an operational update to all currently traveling customers or create a destination-specific alert.
+                </div>
+                <div class="form-group">
+                    <label>Alert Type</label>
+                    <select id="broadcastType" class="form-control">
+                        <option value="travel_update">Travel Update</option>
+                        <option value="weather">Weather Alert</option>
+                        <option value="transport">Transport Disruption</option>
+                        <option value="safety">Safety Advisory</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Audience</label>
+                    <select id="broadcastAudience" class="form-control">
+                        <option value="all">All Active Travelers</option>
+                        <option value="destination">Destination-Specific Travelers</option>
+                        <option value="critical">Critical / High-Risk Travelers</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Alert Message</label>
+                    <textarea id="broadcastMessage" rows="4" class="form-control" placeholder="Write a clear update for travelers..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Notify Through</label>
+                    <div class="flex gap-15 flex-wrap">
+                        <label><input type="checkbox" value="email" checked> Email</label>
+                        <label><input type="checkbox" value="whatsapp" checked> WhatsApp</label>
+                        <label><input type="checkbox" value="sms"> SMS</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-outline" data-onclick="closeModal('broadcastAlertModal')">Cancel</button>
+                <button class="btn-primary" data-onclick="submitBroadcastAlert()">Send Alert</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="knowledgeBaseModal" class="modal">
+        <div class="modal-content modal-w-760">
+            <div class="modal-header">
+                <h3><i class="fas fa-book"></i> Knowledge Base</h3>
+                <button class="close-modal" data-onclick="closeModal('knowledgeBaseModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="grid-2">
+                    <div class="summary-box">
+                        <div class="fw-600 mb-10">Emergency Playbooks</div>
+                        <div class="rule-row"><span>Flight disruption SOP</span><span>15 min SLA</span></div>
+                        <div class="rule-row"><span>Hotel issue recovery</span><span>30 min SLA</span></div>
+                        <div class="rule-row"><span>Medical escalation checklist</span><span>5 min SLA</span></div>
+                        <div class="rule-row"><span>Visa / immigration handling</span><span>45 min SLA</span></div>
+                    </div>
+                    <div class="summary-box">
+                        <div class="fw-600 mb-10">Quick References</div>
+                        <div class="rule-row"><span>Emergency helpline</span><span>+91 98765 43210</span></div>
+                        <div class="rule-row"><span>Operations escalation</span><span>Operations Head</span></div>
+                        <div class="rule-row"><span>Hotel desk backup</span><span>Hotel Desk</span></div>
+                        <div class="rule-row"><span>Transport support</span><span>Transport Team</span></div>
+                    </div>
+                </div>
+                <div class="summary-box mt-15">
+                    <div class="fw-600 mb-10">Recommended First Response</div>
+                    <p class="mb-10">1. Acknowledge the traveler within SLA.</p>
+                    <p class="mb-10">2. Confirm booking ref, live location and urgency.</p>
+                    <p class="mb-10">3. Assign correct desk and share next update timeline.</p>
+                    <p class="mb-0">4. Close only after traveler confirms resolution.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-outline" data-onclick="closeModal('knowledgeBaseModal')">Close</button>
             </div>
         </div>
     </div>

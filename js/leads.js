@@ -187,10 +187,9 @@ function getLeadJourneyContext(lead) {
     const booking = state.bookings.find(item => item.leadId === lead.id) || null;
     const payment = booking ? state.transactions.find(item => item.bookingId === booking.id) || null : null;
     const itinerary = booking ? state.itineraries.find(item => item.bookingId === booking.id) || null : null;
-    const voucher = booking ? state.vouchers.find(item => item.bookingId === booking.id) || null : null;
     const supportTicket = state.tickets.find(item => item.customer === lead.name) || null;
     const feedback = state.feedbacks.find(item => item.customer === lead.name) || null;
-    return { quote, booking, payment, itinerary, voucher, supportTicket, feedback };
+    return { quote, booking, payment, itinerary, supportTicket, feedback };
 }
 
 const customerProfileMemory = {
@@ -203,7 +202,7 @@ const customerProfileMemory = {
         preferredDestinations: ['Goa', 'Kerala', 'Andaman'],
         preferredHotelCategory: '4 Star',
         serviceFlags: ['Prefers early check-in support', 'Usually books with breakfast + airport transfer'],
-        paymentBehaviour: 'Pays advance quickly, balance after voucher confirmation',
+        paymentBehaviour: 'Pays advance quickly, balance after final trip confirmation',
         decisionMaker: 'Amit Sharma',
         lastTripFeedback: 'Asked for a cleaner beach-facing property on the next holiday.',
         pastTrips: [
@@ -579,20 +578,6 @@ function buildLeadTimeline(lead) {
             channel: context.payment.mode,
             outcome: `Received ₹${Number(context.payment.amount || 0).toLocaleString()} via ${context.payment.mode}.`,
             notes: `Transaction reference ${context.payment.transactionId || 'Pending'}.`
-        });
-    }
-
-    if (context.voucher) {
-        events.push({
-            date: getDateAfterDays(context.booking?.paymentDate || lead.createdAt, 2),
-            time: '10:40 AM',
-            type: 'Operations',
-            title: 'Voucher and hotel confirmation prepared',
-            icon: 'fa-file-signature',
-            owner: 'Operations Team',
-            channel: 'Voucher Desk',
-            outcome: `${context.voucher.hotel} reserved for ${formatDisplayDate(context.voucher.checkIn)} check-in.`,
-            notes: `Voucher ID ${context.voucher.id} ready for dispatch.`
         });
     }
 
@@ -1077,7 +1062,7 @@ function renderLeadCommercialsTab(lead, context, insights) {
                     <div class="lead-list-card">
                         <div class="lead-list-item">
                             <i class="fas fa-bolt"></i>
-                            <div class="muted-13">${lead.status === 'quotation_sent' ? 'Best time to call is within 24 hours of quote dispatch to prevent cold drift.' : lead.status === 'negotiation' ? 'Use hotel upgrade / limited seat urgency and lock commitment with payment link.' : lead.status === 'won' ? 'Focus shifts to service delivery, voucher accuracy and upsell opportunities.' : 'Keep nudges personalized around destination intent and travel window.'}</div>
+                            <div class="muted-13">${lead.status === 'quotation_sent' ? 'Best time to call is within 24 hours of quote dispatch to prevent cold drift.' : lead.status === 'negotiation' ? 'Use hotel upgrade / limited seat urgency and lock commitment with payment link.' : lead.status === 'won' ? 'Focus shifts to service delivery, booking accuracy and upsell opportunities.' : 'Keep nudges personalized around destination intent and travel window.'}</div>
                         </div>
                         <div class="lead-list-item">
                             <i class="fas fa-hand-holding-dollar"></i>
@@ -1109,8 +1094,8 @@ function renderLeadOpsTab(lead, context) {
                         <div class="lead-list-item">
                             <i class="fas fa-receipt"></i>
                             <div>
-                                <strong>Voucher Status</strong>
-                                <div class="muted-13">${context.voucher ? `${escapeHtml(context.voucher.id)} ready for ${escapeHtml(context.voucher.hotel)}.` : 'Voucher not released yet.'}</div>
+                                <strong>Operations Status</strong>
+                                <div class="muted-13">${context.booking ? 'Booking handed over to operations for trip servicing and confirmations.' : 'Operations handoff will begin after booking confirmation.'}</div>
                             </div>
                         </div>
                         <div class="lead-list-item">
@@ -1135,7 +1120,7 @@ function renderLeadOpsTab(lead, context) {
                     </div>
                     <div class="lead-alert">
                         ${lead.status === 'won'
-                            ? 'Booking is closed. Keep ops checklist tight: voucher, reconfirmation, pre-travel communication and feedback automation.'
+                            ? 'Booking is closed. Keep ops checklist tight: reconfirmation, pre-travel communication and feedback automation.'
                             : lead.status === 'lost'
                                 ? 'Review the pricing objection and response gaps. This record can be reused for reactivation campaigns and win-back offers.'
                                 : lead.status === 'negotiation'

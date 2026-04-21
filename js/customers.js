@@ -53,7 +53,6 @@ function buildCustomers() {
     const bookings = Array.isArray(window.state?.bookings) ? window.state.bookings : [];
     const feedbacks = Array.isArray(window.state?.feedbacks) ? window.state.feedbacks : [];
     const tickets = Array.isArray(window.state?.tickets) ? window.state.tickets : [];
-    const vouchers = Array.isArray(window.state?.vouchers) ? window.state.vouchers : [];
 
     customers = leads
         .filter(lead => lead.status !== 'lost')
@@ -63,7 +62,6 @@ function buildCustomers() {
                 .sort((a, b) => new Date(b.travelDate || 0) - new Date(a.travelDate || 0));
             const customerFeedback = feedbacks.filter(item => item.customer === lead.name);
             const customerTickets = tickets.filter(item => item.customer === lead.name);
-            const customerVouchers = vouchers.filter(item => item.bookingId && customerBookings.some(booking => booking.id === item.bookingId));
 
             const totalSpent = customerBookings.reduce((sum, booking) => sum + Number(booking.paidAmount || 0), 0);
             const trips = customerBookings.length;
@@ -101,7 +99,6 @@ function buildCustomers() {
                 satisfaction,
                 tickets: customerTickets,
                 feedbacks: customerFeedback,
-                vouchers: customerVouchers,
                 bookings: customerBookings.map(booking => ({
                     id: booking.bookingRef,
                     destination: lead.destination,
@@ -269,7 +266,6 @@ function showCustomerProfile(id) {
             <div class="profile-actions">
                 <button class="btn-primary" data-onclick="notifyAction('Message ready', 'Use this profile for WhatsApp or email follow-up.')"><i class="far fa-message"></i> Contact</button>
                 <button class="btn-outline" data-onclick="notifyAction('Handoff ready', 'Move this traveler into quotation or booking workflow.')"><i class="fas fa-route"></i> Start Next Step</button>
-                <button class="btn-outline" data-onclick="notifyAction('Voucher check', '${customer.vouchers.length} voucher(s) linked to this traveler.')"><i class="fas fa-receipt"></i> View Docs</button>
             </div>
         </div>
     `;
