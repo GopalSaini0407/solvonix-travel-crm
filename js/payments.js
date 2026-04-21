@@ -66,6 +66,7 @@ function updateFinanceSummary() {
 function renderCollectionsTable() {
     const tbody = document.getElementById('collectionsTableBody');
     if (!tbody) return;
+    if (tbody.dataset.static === 'true') return;
 
     const bookings = window.state.bookings || [];
     if (!bookings.length) {
@@ -168,6 +169,7 @@ function renderIncentiveTracker() {
 function renderVendorPayouts() {
     const tbody = document.getElementById('vendorPayoutTableBody');
     if (!tbody) return;
+    if (tbody.dataset.static === 'true') return;
 
     const vendorPayouts = buildVendorPayouts();
     if (!vendorPayouts.length) {
@@ -194,6 +196,7 @@ function renderVendorPayouts() {
 function renderTransactionsLedger() {
     const tbody = document.getElementById('transactionsLedgerBody');
     if (!tbody) return;
+    if (tbody.dataset.static === 'true') return;
 
     const transactions = [...(window.state.transactions || [])].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
     if (!transactions.length) {

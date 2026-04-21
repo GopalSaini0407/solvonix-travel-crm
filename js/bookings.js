@@ -285,6 +285,7 @@
 
         function renderTransactions() {
             const tbody = document.getElementById('transactionsTableBody');
+            if (tbody?.dataset.static === 'true') return;
             if (tbody && typeof state !== 'undefined' && state.transactions && state.transactions.length > 0) {
                 tbody.innerHTML = state.transactions.slice(-5).reverse().map(t => {
                     const booking = state.bookings.find(b => b.id === t.bookingId);
@@ -310,6 +311,10 @@
             if (getCurrentPage() === 'bookings' && typeof state !== 'undefined' && state.bookings) {
                 const tbody = document.getElementById('bookingsTableBody');
                 if (tbody) {
+                    if (tbody.dataset.static === 'true') {
+                        renderTransactions();
+                        return;
+                    }
                     let bookings = [...state.bookings];
                     const statusFilter = document.getElementById('filterPaymentStatus')?.value;
                     if (statusFilter) {

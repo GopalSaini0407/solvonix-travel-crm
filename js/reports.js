@@ -69,6 +69,7 @@
         function renderSourceEffectivenessTable() {
             const tbody = document.getElementById('sourceEffectivenessTable');
             if (!tbody) return;
+            if (tbody.dataset.static === 'true') return;
             
             const totalRevenue = sourceData.reduce((sum, s) => sum + s.revenue, 0);
             
@@ -95,6 +96,7 @@
         function renderAgentPerformanceTable() {
             const tbody = document.getElementById('agentPerformanceTable');
             if (!tbody) return;
+            if (tbody.dataset.static === 'true') return;
             
             tbody.innerHTML = agentData.map(a => {
                 const conversionRate = a.assigned > 0 ? ((a.won / a.assigned) * 100).toFixed(1) : 0;
@@ -120,6 +122,7 @@
         function renderDestinationTable() {
             const tbody = document.getElementById('destinationTable');
             if (!tbody) return;
+            if (tbody.dataset.static === 'true') return;
             
             tbody.innerHTML = destinationData.map(d => `
                 <tr>

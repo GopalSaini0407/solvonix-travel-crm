@@ -124,7 +124,38 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody id="collectionsTableBody"></tbody>
+                            <tbody id="collectionsTableBody" data-static="true">
+                                <tr>
+                                    <td>SOL-BK-001</td>
+                                    <td>Anjali Nair<br><small style="color: var(--gray);">Kashmir</small></td>
+                                    <td>₹60,900</td>
+                                    <td>₹60,900</td>
+                                    <td style="color: #10b981;">₹0</td>
+                                    <td><span class="status-badge status-won">full</span></td>
+                                    <td>Amit Patel</td>
+                                    <td><span style="color:#10b981; font-weight:600;">Closed</span></td>
+                                </tr>
+                                <tr>
+                                    <td>SOL-BK-002</td>
+                                    <td>Sneha Reddy<br><small style="color: var(--gray);">Rajasthan</small></td>
+                                    <td>₹68,250</td>
+                                    <td>₹25,000</td>
+                                    <td style="color: #e94560;">₹43,250</td>
+                                    <td><span class="status-badge status-partial">partial</span></td>
+                                    <td>Neha Singh</td>
+                                    <td><button class="btn-primary btn-sm" data-onclick="openFinancePaymentModal(2002)">Collect</button></td>
+                                </tr>
+                                <tr>
+                                    <td>SOL-BK-003</td>
+                                    <td>Vikram Singh<br><small style="color: var(--gray);">Andaman</small></td>
+                                    <td>₹93,450</td>
+                                    <td>₹20,000</td>
+                                    <td style="color: #e94560;">₹73,450</td>
+                                    <td><span class="status-badge status-new">pending</span></td>
+                                    <td>Rajesh Kumar</td>
+                                    <td><button class="btn-primary btn-sm" data-onclick="openFinancePaymentModal(2003)">Collect</button></td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </section>
@@ -155,7 +186,32 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody id="vendorPayoutTableBody"></tbody>
+                            <tbody id="vendorPayoutTableBody" data-static="true">
+                                <tr>
+                                    <td>Kashmir Hotel Partner</td>
+                                    <td>Hotel</td>
+                                    <td>SOL-BK-001</td>
+                                    <td>₹27,405</td>
+                                    <td><span class="status-badge status-negotiation">due</span></td>
+                                    <td><button class="btn-outline btn-sm" data-onclick="markVendorPayout('SOL-BK-001-hotel')">Mark Paid</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Rajasthan Transport Partner</td>
+                                    <td>Transport</td>
+                                    <td>SOL-BK-002</td>
+                                    <td>₹12,285</td>
+                                    <td><span class="status-badge status-contacted">hold</span></td>
+                                    <td><button class="btn-outline btn-sm" data-onclick="markVendorPayout('SOL-BK-002-transport')">Keep On Hold</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Andaman Activities Partner</td>
+                                    <td>Activities</td>
+                                    <td>SOL-BK-003</td>
+                                    <td>₹11,214</td>
+                                    <td><span class="status-badge status-contacted">planned</span></td>
+                                    <td><button class="btn-outline btn-sm" data-onclick="markVendorPayout('SOL-BK-003-activity')">Mark Paid</button></td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </section>
@@ -176,7 +232,35 @@
                                 <th>Notes</th>
                             </tr>
                         </thead>
-                        <tbody id="transactionsLedgerBody"></tbody>
+                        <tbody id="transactionsLedgerBody" data-static="true">
+                            <tr>
+                                <td>2024-02-11</td>
+                                <td>SOL-BK-003</td>
+                                <td>Vikram Singh</td>
+                                <td>₹20,000</td>
+                                <td>NetBanking</td>
+                                <td>NB24021103</td>
+                                <td>Advance payment received</td>
+                            </tr>
+                            <tr>
+                                <td>2024-02-10</td>
+                                <td>SOL-BK-002</td>
+                                <td>Sneha Reddy</td>
+                                <td>₹25,000</td>
+                                <td>Card</td>
+                                <td>CARD24021002</td>
+                                <td>Part payment collected</td>
+                            </tr>
+                            <tr>
+                                <td>2024-02-09</td>
+                                <td>SOL-BK-001</td>
+                                <td>Anjali Nair</td>
+                                <td>₹60,900</td>
+                                <td>UPI</td>
+                                <td>UPI24020901</td>
+                                <td>Full advance received</td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </section>

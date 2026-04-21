@@ -240,6 +240,10 @@
             if (getCurrentPage() === 'quotations' && typeof state !== 'undefined' && state.quotations) {
                 const tbody = document.getElementById('quotationsTableBody');
                 if (tbody) {
+                    if (tbody.dataset.static === 'true') {
+                        updateQuoteStats();
+                        return;
+                    }
                     let quotes = [...state.quotations];
                     const statusFilter = document.getElementById('filterQuoteStatus')?.value;
                     if (statusFilter) {

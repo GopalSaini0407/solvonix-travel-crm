@@ -2223,6 +2223,23 @@ table td .btn-outline,
     padding-right: 10px !important;
 }
 
+.nps-btn {
+    background: #ffffff;
+    color: var(--secondary);
+    border-color: #dbe5f1;
+}
+
+.nps-btn:hover {
+    background: #f8fbff;
+    color: var(--secondary);
+}
+
+.nps-btn.is-active {
+    background: var(--primary);
+    color: #ffffff;
+    border-color: var(--primary);
+}
+
 .btn-accent {
     background: var(--primary) !important;
     color: white !important;

@@ -190,8 +190,64 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="quotationsTableBody">
-                            <tr><td colspan="11" class="text-center">Loading quotations...</td></tr>
+                        <tbody id="quotationsTableBody" data-static="true">
+                            <tr>
+                                <td>#5001</td>
+                                <td>Sneha Reddy</td>
+                                <td>Rajasthan</td>
+                                <td>5 Days Rajasthan Tour</td>
+                                <td>₹65,000</td>
+                                <td>₹3,250</td>
+                                <td><strong>₹68,250</strong></td>
+                                <td><span class="status-badge status-quotation">sent</span></td>
+                                <td>v1</td>
+                                <td>2024-02-15</td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="btn-outline btn-sm btn-icon" data-onclick="viewQuotation(5001)"><i class="fas fa-eye"></i></button>
+                                        <button class="btn-outline btn-sm btn-icon" data-onclick="sendFollowUp(5001)"><i class="fas fa-bell"></i></button>
+                                        <button class="btn-outline btn-success-solid btn-sm btn-icon" data-onclick="approveQuotation(5001)"><i class="fas fa-check"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#5002</td>
+                                <td>Vikram Singh</td>
+                                <td>Andaman</td>
+                                <td>6 Days Andaman Package</td>
+                                <td>₹89,000</td>
+                                <td>₹4,450</td>
+                                <td><strong>₹93,450</strong></td>
+                                <td><span class="status-badge status-negotiation">negotiating</span></td>
+                                <td>v2</td>
+                                <td>2024-02-14</td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="btn-outline btn-sm btn-icon" data-onclick="viewQuotation(5002)"><i class="fas fa-eye"></i></button>
+                                        <button class="btn-outline btn-sm btn-icon" data-onclick="sendFollowUp(5002)"><i class="fas fa-bell"></i></button>
+                                        <button class="btn-outline btn-success-solid btn-sm btn-icon" data-onclick="approveQuotation(5002)"><i class="fas fa-check"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#5003</td>
+                                <td>Anjali Nair</td>
+                                <td>Kashmir</td>
+                                <td>5 Days Kashmir Tour</td>
+                                <td>₹58,000</td>
+                                <td>₹2,900</td>
+                                <td><strong>₹60,900</strong></td>
+                                <td><span class="status-badge status-won">accepted</span></td>
+                                <td>v1</td>
+                                <td>2024-02-13</td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="btn-outline btn-sm btn-icon" data-onclick="viewQuotation(5003)"><i class="fas fa-eye"></i></button>
+                                        <button class="btn-outline btn-sm btn-icon" data-onclick="sendFollowUp(5003)"><i class="fas fa-bell"></i></button>
+                                        <button class="btn-outline btn-success-solid btn-sm btn-icon" data-onclick="approveQuotation(5003)"><i class="fas fa-check"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

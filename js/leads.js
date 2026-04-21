@@ -35,6 +35,7 @@ function applyFilters() {
 function renderLeadsTablePage() {
     const tbody = document.getElementById('leadsTableBody');
     if (!tbody) return;
+    if (tbody.dataset.static === 'true') return;
 
     const start = (currentPage - 1) * rowsPerPage;
     const end = start + rowsPerPage;

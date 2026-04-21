@@ -203,9 +203,11 @@
 
         function submitNPS(score) {
             showToast('NPS Submitted', `Thank you! Your rating: ${score}/10`);
-            document.querySelectorAll('.nps-btn').forEach(btn => btn.style.background = '');
-            event.target.style.background = '#e94560';
-            event.target.style.color = 'white';
+            const buttons = document.querySelectorAll('.nps-btn');
+            buttons.forEach(btn => btn.classList.remove('is-active'));
+
+            const activeButton = Array.from(buttons).find(btn => btn.textContent.trim() === String(score));
+            activeButton?.classList.add('is-active');
         }
 
         function filterFeedback(category) {

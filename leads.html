@@ -207,8 +207,107 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="leadsTableBody">
-                            <tr><td colspan="10" class="text-center">Loading leads...</td></tr>
+                        <tbody id="leadsTableBody" data-static="true">
+                            <tr>
+                                <td><input type="checkbox" class="lead-checkbox" data-id="1001"></td>
+                                <td>
+                                    <strong>Amit Sharma</strong><br>
+                                    <small style="color:#64748b;" class="d-flex">amit.sharma@gmail.com</small>
+                                    <small style="color:#64748b;" class="d-flex align-items-center">
+                                        9876543210
+                                        <button class="btn-outline lead-whatsapp-btn" data-onclick="shareWhatsApp()"><i class="fab fa-whatsapp"></i></button>
+                                    </small>
+                                </td>
+                                <td>Google Ads</td>
+                                <td>Goa</td>
+                                <td>₹55,000</td>
+                                <td>4</td>
+                                <td><span class="status-badge status-new">new</span></td>
+                                <td><div style="display: flex; align-items: center; gap: 5px;"><div style="background: #e94560; color: white; border-radius: 20px; padding: 2px 8px; font-size: 11px; font-weight: bold;">85</div></div></td>
+                                <td>Neha Singh</td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="btn-outline btn-icon" data-onclick="viewLead(1001)"><i class="fas fa-eye"></i></button>
+                                        <button class="btn-outline btn-accent btn-icon" data-onclick="sendQuotation(1001)"><i class="fas fa-file-invoice"></i></button>
+                                        <button class="btn-outline btn-danger-outline btn-icon" data-onclick="deleteLead(1001)"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="lead-checkbox" data-id="1003"></td>
+                                <td>
+                                    <strong>Rahul Mehta</strong><br>
+                                    <small style="color:#64748b;" class="d-flex">rahul.mehta@gmail.com</small>
+                                    <small style="color:#64748b;" class="d-flex align-items-center">
+                                        9876543212
+                                        <button class="btn-outline lead-whatsapp-btn" data-onclick="shareWhatsApp()"><i class="fab fa-whatsapp"></i></button>
+                                    </small>
+                                </td>
+                                <td>Instagram</td>
+                                <td>Kerala</td>
+                                <td>₹68,000</td>
+                                <td>3</td>
+                                <td><span class="status-badge status-interested">interested</span></td>
+                                <td><div style="display: flex; align-items: center; gap: 5px;"><div style="background: #e94560; color: white; border-radius: 20px; padding: 2px 8px; font-size: 11px; font-weight: bold;">92</div></div></td>
+                                <td>Amit Patel</td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="btn-outline btn-icon" data-onclick="viewLead(1003)"><i class="fas fa-eye"></i></button>
+                                        <button class="btn-outline btn-accent btn-icon" data-onclick="sendQuotation(1003)"><i class="fas fa-file-invoice"></i></button>
+                                        <button class="btn-outline btn-danger-outline btn-icon" data-onclick="deleteLead(1003)"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="lead-checkbox" data-id="1004"></td>
+                                <td>
+                                    <strong>Sneha Reddy</strong><br>
+                                    <small style="color:#64748b;" class="d-flex">sneha.r@rediff.com</small>
+                                    <small style="color:#64748b;" class="d-flex align-items-center">
+                                        9876543213
+                                        <button class="btn-outline lead-whatsapp-btn" data-onclick="shareWhatsApp()"><i class="fab fa-whatsapp"></i></button>
+                                    </small>
+                                </td>
+                                <td>Website</td>
+                                <td>Rajasthan</td>
+                                <td>₹75,000</td>
+                                <td>5</td>
+                                <td><span class="status-badge status-quotation">quotation sent</span></td>
+                                <td><div style="display: flex; align-items: center; gap: 5px;"><div style="background: #e94560; color: white; border-radius: 20px; padding: 2px 8px; font-size: 11px; font-weight: bold;">88</div></div></td>
+                                <td>Neha Singh</td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="btn-outline btn-icon" data-onclick="viewLead(1004)"><i class="fas fa-eye"></i></button>
+                                        <button class="btn-outline btn-accent btn-icon" data-onclick="sendQuotation(1004)"><i class="fas fa-file-invoice"></i></button>
+                                        <button class="btn-outline btn-danger-outline btn-icon" data-onclick="deleteLead(1004)"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="lead-checkbox" data-id="1005"></td>
+                                <td>
+                                    <strong>Vikram Singh</strong><br>
+                                    <small style="color:#64748b;" class="d-flex">vikram.singh@gmail.com</small>
+                                    <small style="color:#64748b;" class="d-flex align-items-center">
+                                        9876543214
+                                        <button class="btn-outline lead-whatsapp-btn" data-onclick="shareWhatsApp()"><i class="fab fa-whatsapp"></i></button>
+                                    </small>
+                                </td>
+                                <td>Google Ads</td>
+                                <td>Andaman</td>
+                                <td>₹95,000</td>
+                                <td>2</td>
+                                <td><span class="status-badge status-negotiation">negotiation</span></td>
+                                <td><div style="display: flex; align-items: center; gap: 5px;"><div style="background: #e94560; color: white; border-radius: 20px; padding: 2px 8px; font-size: 11px; font-weight: bold;">94</div></div></td>
+                                <td>Rajesh Kumar</td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="btn-outline btn-icon" data-onclick="viewLead(1005)"><i class="fas fa-eye"></i></button>
+                                        <button class="btn-outline btn-accent btn-icon" data-onclick="sendQuotation(1005)"><i class="fas fa-file-invoice"></i></button>
+                                        <button class="btn-outline btn-danger-outline btn-icon" data-onclick="deleteLead(1005)"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -216,7 +315,7 @@
                 <!-- Pagination -->
                 <div class="section-divider">
                     <div class="text-muted-13">
-                        Showing <span id="showingStart">0</span> to <span id="showingEnd">0</span> of <span id="totalRecords">0</span> leads
+                        Showing <span id="showingStart">1</span> to <span id="showingEnd">4</span> of <span id="totalRecords">4</span> leads
                     </div>
                     <div class="flex gap-8">
                         <button class="btn-outline" id="prevPage" disabled>&laquo; Previous</button>
