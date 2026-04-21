@@ -88,7 +88,7 @@ function renderCollectionsTable() {
                 <td><span class="status-badge status-${statusClass}">${booking.paymentStatus}</span></td>
                 <td>${booking.assignedTo || lead.assignedTo || 'Unassigned'}</td>
                 <td>
-                    ${balance > 0 ? `<button class="btn-primary" style="padding: 4px 12px;" data-onclick="openFinancePaymentModal(${booking.id})">Collect</button>` : '<span style="color:#10b981; font-weight:600;">Closed</span>'}
+                    ${balance > 0 ? `<button class="btn-primary btn-sm" data-onclick="openFinancePaymentModal(${booking.id})">Collect</button>` : '<span style="color:#10b981; font-weight:600;">Closed</span>'}
                 </td>
             </tr>
         `;
@@ -184,7 +184,7 @@ function renderVendorPayouts() {
             <td><span class="status-badge status-${item.status === 'paid' ? 'won' : item.status === 'due' ? 'negotiation' : 'contacted'}">${item.status}</span></td>
             <td>
                 ${item.status !== 'paid'
-                    ? `<button class="btn-outline" style="padding: 4px 12px;" data-onclick="markVendorPayout('${item.id}')">${item.status === 'hold' ? 'Keep On Hold' : 'Mark Paid'}</button>`
+                    ? `<button class="btn-outline btn-sm" data-onclick="markVendorPayout('${item.id}')">${item.status === 'hold' ? 'Keep On Hold' : 'Mark Paid'}</button>`
                     : '<span style="color:#10b981; font-weight:600;">Settled</span>'}
             </td>
         </tr>

@@ -8,6 +8,7 @@ let state = {
     leads: [],
     quotations: [],
     bookings: [],
+    employees: [],
     vouchers: [],
     campaigns: [],
     tickets: [],
@@ -42,9 +43,21 @@ const sampleData = {
     bookings: [
         { id: 2001, bookingRef: 'SOL-BK-001', leadId: 1006, quoteId: 5003, totalAmount: 60900, paidAmount: 60900, paymentStatus: 'full', paymentDate: '2024-02-09', travelDate: '2024-04-20', status: 'confirmed', paymentMode: 'UPI', assignedTo: 'Amit Patel', incentiveAmount: 2436, incentiveRate: 4, packageType: 'premium', tripType: 'domestic' }
     ],
+
+    employees: [
+        { id: 101, name: 'Rajesh Kumar', email: 'rajesh@solvonix.com', phone: '+91 98765 43210', role: 'CRM Admin', department: 'Management', status: 'active', joiningDate: '2021-04-10', location: 'Delhi HQ', manager: 'Founder Office', salary: 95000, performance: 97, activeLeads: 14, activeBookings: 9, notes: 'Oversees revenue, approvals and CRM operations.' },
+        { id: 102, name: 'Neha Singh', email: 'neha@solvonix.com', phone: '+91 98111 22334', role: 'Senior Travel Consultant', department: 'Sales', status: 'active', joiningDate: '2022-01-18', location: 'Delhi HQ', manager: 'Rajesh Kumar', salary: 62000, performance: 92, activeLeads: 28, activeBookings: 7, notes: 'Handles premium domestic family and leisure packages.' },
+        { id: 103, name: 'Amit Patel', email: 'amit.p@solvonix.com', phone: '+91 98222 33445', role: 'Travel Consultant', department: 'Sales', status: 'active', joiningDate: '2022-08-05', location: 'Ahmedabad Desk', manager: 'Neha Singh', salary: 52000, performance: 88, activeLeads: 19, activeBookings: 11, notes: 'Strong closer for premium upsell and repeat customers.' },
+        { id: 104, name: 'Priya Sharma', email: 'priya.s@solvonix.com', phone: '+91 98333 44556', role: 'Campaign Executive', department: 'Marketing', status: 'active', joiningDate: '2023-02-12', location: 'Remote', manager: 'Rajesh Kumar', salary: 45000, performance: 84, activeLeads: 0, activeBookings: 0, notes: 'Owns campaign automation and follow-up sequences.' },
+        { id: 105, name: 'Rohit Mehra', email: 'rohit@solvonix.com', phone: '+91 98444 55667', role: 'Support Lead', department: 'Operations', status: 'on_leave', joiningDate: '2021-11-01', location: 'Mumbai Support Hub', manager: 'Rajesh Kumar', salary: 56000, performance: 81, activeLeads: 0, activeBookings: 16, notes: 'Escalation owner for in-trip support and service recovery.' }
+    ],
     
     vouchers: [
-        { id: 'VCH-001', bookingId: 2001, customerName: 'Anjali Nair', destination: 'Kashmir', hotel: 'The Lalit Grand Palace', checkIn: '2024-04-20', checkOut: '2024-04-25', amount: 60900 }
+        { id: 'VCH-001', bookingId: 2001, bookingRef: 'SOL-BK-001', customerName: 'Anjali Nair', customerEmail: 'anjali.nair@gmail.com', customerPhone: '9876543215', destination: 'Kashmir', type: 'hotel', serviceName: 'The Lalit Grand Palace', startDate: '2024-04-20', endDate: '2024-04-25', details: 'Premium room with breakfast and dinner included.', amount: 60900, generatedDate: '2024-02-09', status: 'active' },
+        { id: 'VCH-002', bookingId: 2001, bookingRef: 'SOL-BK-001', customerName: 'Anjali Nair', customerEmail: 'anjali.nair@gmail.com', customerPhone: '9876543215', destination: 'Kashmir', type: 'transport', serviceName: 'Kashmir Private Cab Service', startDate: '2024-04-20', endDate: '2024-04-25', details: 'Airport transfer plus local sightseeing with private AC vehicle.', amount: 60900, generatedDate: '2024-02-09', status: 'active' },
+        { id: 'VCH-003', bookingId: 2001, bookingRef: 'SOL-BK-001', customerName: 'Anjali Nair', customerEmail: 'anjali.nair@gmail.com', customerPhone: '9876543215', destination: 'Kashmir', type: 'activity', serviceName: 'Shikara Ride & Gondola Pass', startDate: '2024-04-22', endDate: '2024-04-23', details: 'Activity tickets with reporting details shared with local coordinator.', amount: 60900, generatedDate: '2024-02-09', status: 'active' },
+        { id: 'VCH-004', bookingId: 2001, bookingRef: 'SOL-BK-001', customerName: 'Anjali Nair', customerEmail: 'anjali.nair@gmail.com', customerPhone: '9876543215', destination: 'Kashmir', type: 'flight', serviceName: 'IndiGo DEL-SXR Round Trip', startDate: '2024-04-20', endDate: '2024-04-25', details: 'Economy class ticket with 15kg baggage and PNR confirmation.', amount: 60900, generatedDate: '2024-02-09', status: 'active' },
+        { id: 'VCH-005', bookingId: 2001, bookingRef: 'SOL-BK-001', customerName: 'Anjali Nair', customerEmail: 'anjali.nair@gmail.com', customerPhone: '9876543215', destination: 'Kashmir', type: 'insurance', serviceName: 'Travel Secure Policy', startDate: '2024-04-20', endDate: '2024-04-25', details: 'Medical emergency, baggage delay and trip interruption cover active.', amount: 60900, generatedDate: '2024-02-09', status: 'active' }
     ],
     
     campaigns: [
@@ -77,6 +90,7 @@ function loadSampleDataIntoState() {
     state.leads = sampleData.leads.map(normalizeLead);
     state.quotations = sampleData.quotations.map(normalizeQuotation);
     state.bookings = sampleData.bookings.map(normalizeBooking);
+    state.employees = sampleData.employees.map(normalizeEmployee);
     state.vouchers = [...sampleData.vouchers];
     state.campaigns = [...sampleData.campaigns];
     state.tickets = [...sampleData.tickets];
@@ -121,6 +135,30 @@ function formatListForTextarea(items = []) {
     return Array.isArray(items) ? items.join('\n') : '';
 }
 
+function updateQuoteTravelerTotal() {
+    const travelerTotalField = document.getElementById('travelerTotal');
+    if (!travelerTotalField) return;
+
+    const travelerBreakdown = normalizeTravelerBreakdown({
+        adults: document.getElementById('travelerAdults')?.value,
+        young: document.getElementById('travelerYoung')?.value,
+        children: document.getElementById('travelerChildren')?.value,
+        infants: document.getElementById('travelerInfants')?.value
+    });
+
+    travelerTotalField.value = getTravelerTotal(travelerBreakdown);
+}
+
+function attachQuoteFormListeners() {
+    document.getElementById('packageType')?.addEventListener('change', updateTotals);
+    document.getElementById('baseAmount')?.addEventListener('input', updateTotals);
+    document.getElementById('discount')?.addEventListener('input', updateTotals);
+    ['travelerAdults', 'travelerYoung', 'travelerChildren', 'travelerInfants'].forEach(id => {
+        document.getElementById(id)?.addEventListener('input', updateQuoteTravelerTotal);
+    });
+    updateQuoteTravelerTotal();
+}
+
 function detectTripType(destination = '') {
     const internationalDestinations = ['thailand', 'singapore', 'bali', 'maldives', 'switzerland', 'dubai', 'europe'];
     return internationalDestinations.includes(String(destination).toLowerCase()) ? 'international' : 'domestic';
@@ -155,6 +193,19 @@ function normalizeLead(lead) {
         inclusionNotes: Array.isArray(lead.inclusionNotes) ? lead.inclusionNotes : [],
         exclusionNotes: Array.isArray(lead.exclusionNotes) ? lead.exclusionNotes : [],
         assignedTo: lead.assignedTo || 'unassigned'
+    };
+}
+
+function normalizeEmployee(employee) {
+    return {
+        ...employee,
+        status: employee.status || 'active',
+        department: employee.department || 'Sales',
+        role: employee.role || 'Team Member',
+        performance: Number(employee.performance || 0),
+        activeLeads: Number(employee.activeLeads || 0),
+        activeBookings: Number(employee.activeBookings || 0),
+        salary: Number(employee.salary || 0)
     };
 }
 
@@ -255,6 +306,8 @@ function getCurrentPage() {
         support: 'support',
         feedback: 'feedback',
         reports: 'reports'
+        ,
+        employees: 'employees'
     };
 
     return pageMap[normalized] || 'dashboard';
@@ -462,75 +515,116 @@ function viewLead(id) {
 function sendQuotation(leadId) {
     const lead = state.leads.find(l => l.id === leadId);
     if (!lead) return;
+    const travelerBreakdown = normalizeTravelerBreakdown(lead.travelerBreakdown);
+    const defaultNights = Math.max(Number(lead.quoteNights || 4), 0);
     
     const modalHtml = `
         <div class="modal show" id="quoteModal">
-            <div class="modal-content">
+            <div class="modal-content quote-modal-content">
                 <div class="modal-header">
-                    <h3>Generate Quotation - ${lead.name}</h3>
+                    <h3><i class="fas fa-file-invoice"></i> Generate New Quotation</h3>
                     <button class="close-modal" data-onclick="closeModal('quoteModal')">&times;</button>
                 </div>
                 <div class="modal-body">
                     <form id="quoteForm">
                         <input type="hidden" id="quoteLeadId" value="${lead.id}">
                         <div class="form-group">
-                            <label>Package Type</label>
-                            <select id="packageType" class="form-control">
-                                <option value="standard" ${lead.packageType === 'standard' ? 'selected' : ''}>Standard Package</option>
-                                <option value="deluxe" ${lead.packageType === 'deluxe' ? 'selected' : ''}>Deluxe Package</option>
-                                <option value="premium" ${lead.packageType === 'premium' ? 'selected' : ''}>Premium Package</option>
+                            <label>Select Lead *</label>
+                            <select id="quoteLeadIdDisplay" class="form-control" disabled>
+                                <option value="${lead.id}">${lead.name} - ${lead.destination} (₹${lead.budget.toLocaleString()})</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label>Trip Type</label>
-                            <select id="tripType" class="form-control">
-                                <option value="domestic" ${lead.tripType === 'domestic' ? 'selected' : ''}>Domestic</option>
-                                <option value="international" ${lead.tripType === 'international' ? 'selected' : ''}>International</option>
-                            </select>
+                        <div id="leadDetailsPreview" class="quote-lead-preview">
+                            <div><strong>${lead.name}</strong></div>
+                            <div class="quote-lead-preview-meta">${lead.destination} | ${lead.travelers} travelers | ${lead.travelDate || 'Date flexible'}</div>
+                        </div>
+                        <div class="quote-grid-two">
+                            <div class="form-group">
+                                <label>Package Type</label>
+                                <select id="packageType" class="form-control">
+                                    <option value="standard" ${lead.packageType === 'standard' ? 'selected' : ''}>Standard Package</option>
+                                    <option value="deluxe" ${lead.packageType === 'deluxe' ? 'selected' : ''}>Deluxe Package (+20%)</option>
+                                    <option value="premium" ${lead.packageType === 'premium' ? 'selected' : ''}>Premium Package (+40%)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Trip Type</label>
+                                <select id="quoteTripType" class="form-control">
+                                    <option value="domestic" ${lead.tripType === 'domestic' ? 'selected' : ''}>Domestic</option>
+                                    <option value="international" ${lead.tripType === 'international' ? 'selected' : ''}>International</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Base Amount (₹)</label>
+                                <input type="number" id="baseAmount" class="form-control" value="${lead.budget}">
+                            </div>
+                            <div class="form-group">
+                                <label>Nights</label>
+                                <input type="number" id="quoteNights" class="form-control" value="${defaultNights}" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Discount (₹)</label>
+                                <input type="number" id="discount" class="form-control" value="0" data-onchange="updateTotals()">
+                            </div>
+                            <div class="form-group">
+                                <label>Valid Until</label>
+                                <input type="date" id="validUntil" class="form-control" value="${getDateAfterDays(7)}">
+                            </div>
+                        </div>
+                        <div class="quote-grid-four">
+                            <div class="form-group">
+                                <label>Adults (12+ yrs)</label>
+                                <input type="number" id="travelerAdults" class="form-control" value="${travelerBreakdown.adults}" min="0">
+                            </div>
+                           
+                            <div class="form-group">
+                                <label>Children (2-11 yrs)</label>
+                                <input type="number" id="travelerChildren" class="form-control" value="${travelerBreakdown.children}" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Infants (0-2 yrs)</label>
+                                <input type="number" id="travelerInfants" class="form-control" value="${travelerBreakdown.infants}" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Total Travelers</label>
+                                <input type="number" id="travelerTotal" class="form-control" value="${lead.travelers}" readonly>
+                            </div>
+                        </div>
+                        <div class="quote-summary-card">
+                            <div class="quote-summary-row">
+                                <span>Base Amount:</span>
+                                <strong id="displayBaseAmount">₹0</strong>
+                            </div>
+                            <div class="quote-summary-row">
+                                <span>Discount:</span>
+                                <strong id="displayDiscount" class="quote-discount-value">-₹0</strong>
+                            </div>
+                            <div class="quote-summary-row">
+                                <span>Subtotal:</span>
+                                <strong id="displaySubtotal">₹0</strong>
+                            </div>
+                            <div class="quote-summary-row">
+                                <span>GST (5%):</span>
+                                <strong id="displayTax">₹0</strong>
+                            </div>
+                            <div class="quote-summary-row quote-summary-row-total">
+                                <span class="quote-total-label">Total Amount:</span>
+                                <strong class="quote-total-value" id="displayTotal">₹0</strong>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label>Base Amount (₹)</label>
-                            <input type="number" id="baseAmount" class="form-control" value="${lead.budget}">
+                            <label>Itinerary Title</label>
+                            <input id="itinerary" class="form-control" value="${defaultNights + 1} Days ${lead.destination} ${lead.packageType.charAt(0).toUpperCase() + lead.packageType.slice(1)} Package" placeholder="Hotel, flights, transfers, sightseeing...">
                         </div>
-                        <div class="form-group">
-                            <label>No. of Days</label>
-                            <input type="number" id="quoteDays" class="form-control" value="5" min="1">
-                        </div>
-                        <div class="form-group">
-                            <label>No. of Nights</label>
-                            <input type="number" id="quoteNights" class="form-control" value="4" min="0">
-                        </div>
-                        <div class="form-group">
-                            <label>Discount (₹)</label>
-                            <input type="number" id="discount" class="form-control" value="0">
-                        </div>
-                        <div class="form-group">
-                            <label>Valid Until</label>
-                            <input type="date" id="validUntil" class="form-control" value="${getDateAfterDays(7)}">
-                        </div>
-                        <div class="form-group">
-                            <label>Adult</label>
-                            <input type="number" id="travelerAdults" class="form-control" value="${lead.travelerBreakdown.adults}" min="0">
-                        </div>
-                        <div class="form-group">
-                            <label>Young</label>
-                            <input type="number" id="travelerYoung" class="form-control" value="${lead.travelerBreakdown.young}" min="0">
-                        </div>
-                        <div class="form-group">
-                            <label>Child</label>
-                            <input type="number" id="travelerChildren" class="form-control" value="${lead.travelerBreakdown.children}" min="0">
-                        </div>
-                        <div class="form-group">
-                            <label>Baby</label>
-                            <input type="number" id="travelerInfants" class="form-control" value="${lead.travelerBreakdown.infants}" min="0">
-                        </div>
-                        <div class="form-group" style="grid-column: 1 / -1;">
+                        <div class="quote-grid-two">
+                            <div class="form-group mt-15">
                             <label>Inclusions</label>
                             <textarea id="quoteInclusions" class="form-control" rows="3">${formatListForTextarea(lead.inclusionNotes)}</textarea>
-                        </div>
-                        <div class="form-group" style="grid-column: 1 / -1;">
+                            </div>
+                            <div class="form-group mt-15">
                             <label>Exclusions</label>
                             <textarea id="quoteExclusions" class="form-control" rows="3">${formatListForTextarea(lead.exclusionNotes)}</textarea>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -543,17 +637,19 @@ function sendQuotation(leadId) {
     `;
     
     document.body.insertAdjacentHTML('beforeend', modalHtml);
+    attachQuoteFormListeners();
+    updateTotals();
 }
 
 function generateQuotation() {
     const leadId = parseInt(document.getElementById('quoteLeadId')?.value);
     const baseAmount = parseFloat(document.getElementById('baseAmount')?.value);
-    const discount = parseFloat(document.getElementById('discount')?.value);
+    const discount = parseFloat(document.getElementById('discount')?.value) || 0;
     const packageType = document.getElementById('packageType')?.value;
-    const tripType = document.getElementById('tripType')?.value || 'domestic';
+    const tripType = document.getElementById('quoteTripType')?.value || document.getElementById('tripType')?.value || 'domestic';
     const validUntil = document.getElementById('validUntil')?.value;
-    const days = parseInt(document.getElementById('quoteDays')?.value, 10) || 5;
-    const nights = parseInt(document.getElementById('quoteNights')?.value, 10) || Math.max(days - 1, 0);
+    const nights = parseInt(document.getElementById('quoteNights')?.value, 10) || 4;
+    const days = parseInt(document.getElementById('quoteDays')?.value, 10) || Math.max(nights + 1, 1);
     const travelerBreakdown = normalizeTravelerBreakdown({
         adults: document.getElementById('travelerAdults')?.value,
         young: document.getElementById('travelerYoung')?.value,
@@ -563,11 +659,15 @@ function generateQuotation() {
     const inclusions = parseTextareaList(document.getElementById('quoteInclusions')?.value);
     const exclusions = parseTextareaList(document.getElementById('quoteExclusions')?.value);
     
-    const amount = baseAmount - discount;
+    let adjustedBaseAmount = baseAmount;
+    if (packageType === 'deluxe') adjustedBaseAmount = baseAmount * 1.2;
+    if (packageType === 'premium') adjustedBaseAmount = baseAmount * 1.4;
+
+    const amount = adjustedBaseAmount - discount;
     const tax = amount * 0.05;
     const total = amount + tax;
     const lead = state.leads.find(l => l.id === leadId);
-    const itineraryTitle = `${days} Days ${lead?.destination || 'Custom'} ${packageType.charAt(0).toUpperCase() + packageType.slice(1)} Package`;
+    const itineraryTitle = document.getElementById('itinerary')?.value?.trim() || `${days} Days ${lead?.destination || 'Custom'} ${packageType.charAt(0).toUpperCase() + packageType.slice(1)} Package`;
     
     const newQuote = {
         id: state.quotations.length + 5000,
@@ -731,6 +831,7 @@ function renderBookingsTable() {
                 <td>₹${b.totalAmount.toLocaleString()}</td>
                 <td>₹${b.paidAmount.toLocaleString()}</td>
                 <td><span class="status-badge status-${b.paymentStatus === 'full' ? 'won' : b.paymentStatus === 'partial' ? 'partial' : 'new'}">${b.paymentStatus}</span></td>
+                
                 <td>${b.travelDate || '-'}</td>
                 <td>
                     <button class="btn-primary" style="padding:4px 12px;" data-onclick="processPayment(${b.id})">Pay</button>
@@ -836,15 +937,28 @@ function generateVoucher(bookingId) {
     const lead = state.leads.find(l => l.id === booking?.leadId);
     
     if (booking && lead && booking.paymentStatus === 'full') {
+        const existingHotelVoucher = state.vouchers.find(v => v.bookingId === booking.id && (v.type || 'hotel') === 'hotel');
+        if (existingHotelVoucher) {
+            showToast('Voucher already ready', `Hotel voucher for ${lead.name} already exists.`);
+            return;
+        }
+
         const newVoucher = {
             id: `VCH-${String(state.vouchers.length + 1).padStart(3,'0')}`,
             bookingId: booking.id,
+            bookingRef: booking.bookingRef,
             customerName: lead.name,
+            customerEmail: lead.email,
+            customerPhone: lead.phone,
             destination: lead.destination,
-            hotel: 'To be confirmed',
-            checkIn: lead.travelDate,
-            checkOut: getDateAfterDays(lead.travelDate, 5),
-            amount: booking.paidAmount
+            type: 'hotel',
+            serviceName: `${lead.destination} Stay Confirmation`,
+            startDate: lead.travelDate,
+            endDate: getDateAfterDays(lead.travelDate, 5),
+            details: 'Room with breakfast included. Final hotel confirmation to be shared with traveler.',
+            amount: booking.paidAmount,
+            generatedDate: new Date().toISOString().split('T')[0],
+            status: 'active'
         };
         
         state.vouchers.push(newVoucher);
@@ -1029,6 +1143,13 @@ function getDateAfterDays(dateStr, days = 7) {
     return date.toISOString().split('T')[0];
 }
 
+function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal?.classList.contains('modal')) {
+        modal.classList.add('show');
+    }
+}
+
 function closeModal(modalId) {
     const modal = document.getElementById(modalId);
     if (!modal) return;
@@ -1078,6 +1199,7 @@ window.confirmPayment = confirmPayment;
 window.generateVoucher = generateVoucher;
 window.downloadVoucher = downloadVoucher;
 window.triggerCampaign = triggerCampaign;
+window.openModal = openModal;
 window.closeModal = closeModal;
 window.addNewLead = addNewLead;
 window.state = state;
@@ -1091,3 +1213,4 @@ window.formatListForTextarea = formatListForTextarea;
 window.calculateIncentive = calculateIncentive;
 window.getIncentiveRate = getIncentiveRate;
 window.createItineraryFromBooking = createItineraryFromBooking;
+window.normalizeEmployee = normalizeEmployee;

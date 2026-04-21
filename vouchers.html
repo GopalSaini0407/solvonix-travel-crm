@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solvonix Travel CRM - Vouchers | Document Generation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/pages.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -98,7 +99,7 @@
             <div class="top-bar">
                 <div class="page-title">
                     <h1>Vouchers & Documents</h1>
-                    <p>Hotel Vouchers • Transport Vouchers • Activity Tickets • Insurance Docs</p>
+                    <p>Hotel Vouchers • Transport Vouchers • Activity Tickets • Flight Tickets • Insurance Docs</p>
                 </div>
                 <div class="user-area">
                     <div class="notification-badge">
@@ -112,7 +113,7 @@
             </div>
             
             <!-- Stats Cards -->
-            <div class="stats-grid" style="margin-bottom: 20px;">
+            <div class="stats-grid mb-20">
                 <div class="stat-card">
                     <div class="stat-info">
                         <h3 id="totalVouchers">0</h3>
@@ -149,39 +150,96 @@
                         <i class="fas fa-ticket-alt"></i>
                     </div>
                 </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3 id="flightVouchers">0</h3>
+                        <p>Flight Tickets</p>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="fas fa-plane-departure"></i>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3 id="insuranceVouchers">0</h3>
+                        <p>Insurance Docs</p>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="fas fa-shield"></i>
+                    </div>
+                </div>
             </div>
 
-            <!-- Document Type Tabs -->
-            <div style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px;">
-                <button class="btn-outline active-tab" data-onclick="filterVouchers('all')" id="tabAll" style="background: #e94560; color: white; border: none;">All Documents</button>
-                <button class="btn-outline" data-onclick="filterVouchers('hotel')" id="tabHotel">Hotel Vouchers</button>
-                <button class="btn-outline" data-onclick="filterVouchers('transport')" id="tabTransport">Transport Vouchers</button>
-                <button class="btn-outline" data-onclick="filterVouchers('activity')" id="tabActivity">Activity Tickets</button>
-                <button class="btn-outline" data-onclick="filterVouchers('flight')" id="tabFlight">Flight Tickets</button>
-                <button class="btn-outline" data-onclick="filterVouchers('insurance')" id="tabInsurance">Insurance Docs</button>
+            <div class="voucher-overview-shell mb-20 row">
+                <div class="col-md-6">
+                    <span class="section-eyebrow">Document Hub</span>
+                    <h2 id="activeVoucherTitle" class="section-title">All Documents</h2>
+                    <p id="activeVoucherSubtitle" class="section-copy">0 documents • Every generated document across hotel, transport, activity, flight and insurance.</p>
+                </div>
+                <div class="voucher-action-strip col-md-6">
+                        <button class="btn-primary" data-onclick="openModal('generateVoucherModal')"><i class="fas fa-plus-circle"></i> Generate</button>
+                        <button class="btn-outline" data-onclick="openModal('bulkVoucherModal')"><i class="fas fa-layer-group"></i> Bulk Docs</button>
+                        <button class="btn-outline" data-onclick="openModal('shareVoucherModal')"><i class="fas fa-share-alt"></i> Share</button>
+                    </div>
+                 
+            </div>
+  <div class="voucher-tabs" role="tablist" aria-label="Voucher document types">
+                        <button class="voucher-tab is-active" data-type="all" data-onclick="filterVouchers('all')">All Documents</button>
+                        <button class="voucher-tab" data-type="hotel" data-onclick="filterVouchers('hotel')">Hotel Vouchers</button>
+                        <button class="voucher-tab" data-type="transport" data-onclick="filterVouchers('transport')">Transport Vouchers</button>
+                        <button class="voucher-tab" data-type="activity" data-onclick="filterVouchers('activity')">Activity Tickets</button>
+                        <button class="voucher-tab" data-type="flight" data-onclick="filterVouchers('flight')">Flight Tickets</button>
+                        <button class="voucher-tab" data-type="insurance" data-onclick="filterVouchers('insurance')">Insurance Docs</button>
+                    </div>
+            <div class="grid-main-side mb-20">
+                <section class="table-container">
+                    <div id="vouchersContainer">
+                        <!-- Dynamic vouchers will be loaded here -->
+                    </div>
+                </section>
+
+                <aside class="page-grid">
+                    <section class="table-container">
+                        <h3 class="card-title">
+                            <i class="fas fa-layer-group"></i> Booking Coverage
+                        </h3>
+                        <div id="voucherCoverageSummary" class="page-grid">
+                            <!-- Dynamic coverage -->
+                        </div>
+                    </section>
+
+                    <section class="table-container">
+                        <h3 class="card-title">
+                            <i class="fas fa-paper-plane"></i> Dispatch Queue
+                        </h3>
+                        <div id="dispatchQueue" class="page-grid">
+                            <!-- Dynamic queue -->
+                        </div>
+                    </section>
+                </aside>
             </div>
 
-            <!-- Vouchers Container -->
-            <div id="vouchersContainer">
-                <!-- Dynamic vouchers will be loaded here -->
-            </div>
+        </main>
+    </div>
 
-            <!-- Generate Voucher Section -->
-            <div class="table-container" style="margin-top: 20px;">
-                <h3 style="font-size: 16px; margin-bottom: 15px;">
-                    <i class="fas fa-plus-circle"></i> Generate New Voucher
-                </h3>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+    <div id="generateVoucherModal" class="modal">
+        <div class="modal-content modal-w-760">
+            <div class="modal-header">
+                <h3><i class="fas fa-plus-circle"></i> Generate New Voucher</h3>
+                <button class="close-modal" data-onclick="closeModal('generateVoucherModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="grid-2">
                     <div>
                         <div class="form-group">
                             <label>Select Booking</label>
                             <select id="voucherBookingSelect" class="form-control" data-onchange="loadVoucherBookingDetails()">
-                                <option value="">-- Select Fully Paid Booking --</option>
+                                <option value="">-- Select Booking --</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Voucher Type</label>
-                            <select id="voucherType" class="form-control">
+                            <select id="voucherType" class="form-control" data-onchange="applyVoucherTypeDefaults()">
                                 <option value="hotel">Hotel Voucher</option>
                                 <option value="transport">Transport Voucher</option>
                                 <option value="activity">Activity Ticket</option>
@@ -189,78 +247,90 @@
                                 <option value="insurance">Insurance Document</option>
                             </select>
                         </div>
-                        <div id="voucherPreview" style="background: #f1f5f9; padding: 15px; border-radius: 12px; margin-top: 15px; display: none;">
+                        <div id="voucherPreview" class="summary-box mt-15 hidden">
                             <!-- Preview -->
                         </div>
                     </div>
                     <div>
                         <div class="form-group">
-                            <label>Hotel/Service Name</label>
+                            <label id="serviceNameLabel">Hotel / Service Name</label>
                             <input type="text" id="serviceName" class="form-control" placeholder="e.g., Taj Hotel, SIC Bus Service">
                         </div>
                         <div class="form-group">
-                            <label>Check-in / Service Date</label>
+                            <label id="serviceStartLabel">Check-in / Service Date</label>
                             <input type="date" id="serviceStartDate" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label>Check-out / End Date</label>
+                            <label id="serviceEndLabel">Check-out / End Date</label>
                             <input type="date" id="serviceEndDate" class="form-control">
                         </div>
                         <div class="form-group">
                             <label>Additional Details</label>
                             <textarea id="voucherDetails" rows="3" class="form-control" placeholder="Room type, meal plan, pickup point, etc."></textarea>
                         </div>
-                        <button class="btn-primary" style="width: 100%; margin-top: 10px;" data-onclick="generateCustomVoucher()">
-                            <i class="fas fa-download"></i> Generate Voucher
-                        </button>
                     </div>
                 </div>
             </div>
+            <div class="modal-footer">
+                <button class="btn-outline" data-onclick="closeModal('generateVoucherModal')">Cancel</button>
+                <button class="btn-primary" data-onclick="generateCustomVoucher()">
+                    <i class="fas fa-download"></i> Generate Voucher
+                </button>
+            </div>
+        </div>
+    </div>
 
-            <!-- Bulk Document Generation -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
-                <div class="table-container">
-                    <h3 style="font-size: 16px; margin-bottom: 15px;">
-                        <i class="fas fa-layer-group"></i> Bulk Document Generation
-                    </h3>
-                    <div style="text-align: center; padding: 20px;">
-                        <p style="margin-bottom: 15px;">Generate all vouchers for a booking at once</p>
-                        <select id="bulkBookingSelect" class="form-control" style="margin-bottom: 15px;">
-                            <option value="">-- Select Booking --</option>
-                        </select>
-                        <button class="btn-primary" data-onclick="generateAllVouchers()">
-                            <i class="fas fa-file-pdf"></i> Generate All Documents
-                        </button>
-                    </div>
+    <div id="bulkVoucherModal" class="modal">
+        <div class="modal-content modal-w-520">
+            <div class="modal-header">
+                <h3><i class="fas fa-layer-group"></i> Bulk Document Generation</h3>
+                <button class="close-modal" data-onclick="closeModal('bulkVoucherModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-15">Generate all vouchers for a booking at once.</p>
+                <select id="bulkBookingSelect" class="form-control mb-15">
+                    <option value="">-- Select Booking --</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-outline" data-onclick="closeModal('bulkVoucherModal')">Cancel</button>
+                <button class="btn-primary" data-onclick="generateAllVouchers()">
+                    <i class="fas fa-file-pdf"></i> Generate All Documents
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="shareVoucherModal" class="modal">
+        <div class="modal-content modal-w-600">
+            <div class="modal-header">
+                <h3><i class="fas fa-share-alt"></i> Share Documents</h3>
+                <button class="close-modal" data-onclick="closeModal('shareVoucherModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Customer Email</label>
+                    <input type="email" id="shareEmail" class="form-control" placeholder="customer@example.com">
                 </div>
-
-                <div class="table-container">
-                    <h3 style="font-size: 16px; margin-bottom: 15px;">
-                        <i class="fas fa-share-alt"></i> Share Documents
-                    </h3>
-                    <div style="text-align: center; padding: 20px;">
-                        <div class="form-group">
-                            <label>Customer Email</label>
-                            <input type="email" id="shareEmail" class="form-control" placeholder="customer@example.com">
-                        </div>
-                        <div class="form-group">
-                            <label>Select Vouchers to Share</label>
-                            <select id="shareVoucherSelect" class="form-control" multiple style="height: 80px;">
-                                <option value="all">All Vouchers</option>
-                            </select>
-                        </div>
-                        <button class="btn-primary" style="width: 100%; margin-top: 10px;" data-onclick="shareDocuments()">
-                            <i class="fas fa-envelope"></i> Email Documents
-                        </button>
-                    </div>
+                <div class="form-group">
+                    <label>Select Vouchers to Share</label>
+                    <select id="shareVoucherSelect" class="form-control h-80" multiple>
+                        <option value="all">All Vouchers</option>
+                    </select>
                 </div>
             </div>
-        </main>
+            <div class="modal-footer">
+                <button class="btn-outline" data-onclick="closeModal('shareVoucherModal')">Cancel</button>
+                <button class="btn-primary" data-onclick="shareDocuments()">
+                    <i class="fas fa-envelope"></i> Email Documents
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- Voucher Preview Modal -->
     <div id="voucherPreviewModal" class="modal">
-        <div class="modal-content" style="width: 600px;">
+        <div class="modal-content modal-w-600">
             <div class="modal-header">
                 <h3><i class="fas fa-receipt"></i> Voucher Preview</h3>
                 <button class="close-modal" data-onclick="closeModal('voucherPreviewModal')">&times;</button>
@@ -283,6 +353,7 @@
     <!-- Toast Container -->
     <div id="toastContainer" class="toast-container"></div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/app.js"></script>
     <script src="js/layout.js"></script>
     <script src="js/dom-events.js"></script>

@@ -23,16 +23,32 @@
             const leadId = document.getElementById('quoteLeadId').value;
             const preview = document.getElementById('leadDetailsPreview');
             const baseAmount = document.getElementById('baseAmount');
+            const tripType = document.getElementById('quoteTripType');
+            const packageType = document.getElementById('packageType');
+            const nights = document.getElementById('quoteNights');
             
             if (leadId && typeof state !== 'undefined' && state.leads) {
                 const lead = state.leads.find(l => l.id == leadId);
                 if (lead) {
+                    const travelerBreakdown = normalizeTravelerBreakdown(lead.travelerBreakdown);
                     preview.style.display = 'block';
                     preview.innerHTML = `
                         <div><strong>${lead.name}</strong></div>
                         <div style="font-size: 12px;">${lead.destination} | ${lead.travelers} travelers | ${lead.travelDate || 'Date flexible'}</div>
                     `;
                     baseAmount.value = lead.budget;
+                    if (tripType) tripType.value = lead.tripType || 'domestic';
+                    if (packageType) packageType.value = lead.packageType || 'standard';
+                    if (nights && !nights.value) nights.value = 4;
+                    if (document.getElementById('travelerAdults')) document.getElementById('travelerAdults').value = travelerBreakdown.adults;
+                    if (document.getElementById('travelerYoung')) document.getElementById('travelerYoung').value = travelerBreakdown.young;
+                    if (document.getElementById('travelerChildren')) document.getElementById('travelerChildren').value = travelerBreakdown.children;
+                    if (document.getElementById('travelerInfants')) document.getElementById('travelerInfants').value = travelerBreakdown.infants;
+                    if (document.getElementById('itinerary')) {
+                        const packageLabel = (lead.packageType || 'standard').charAt(0).toUpperCase() + (lead.packageType || 'standard').slice(1);
+                        document.getElementById('itinerary').value = `5 Days ${lead.destination} ${packageLabel} Package`;
+                    }
+                    updateQuoteTravelerTotal();
                     updateTotals();
                 }
             } else {
@@ -66,6 +82,8 @@
             const date = new Date();
             date.setDate(date.getDate() + 7);
             document.getElementById('validUntil').value = date.toISOString().split('T')[0];
+            attachQuoteFormListeners();
+            updateQuoteTravelerTotal();
             updateTotals();
         }
 
@@ -250,9 +268,11 @@
                                 <td>v${q.version}</td>
                                 <td>${q.validUntil || q.createdAt}</td>
                                 <td>
-                                    <button class="btn-outline" style="padding: 4px 8px; margin: 2px;" data-onclick="viewQuotation(${q.id})"><i class="fas fa-eye"></i></button>
-                                    <button class="btn-outline" style="padding: 4px 8px; margin: 2px;" data-onclick="sendFollowUp(${q.id})"><i class="fas fa-bell"></i></button>
-                                    <button class="btn-outline" style="padding: 4px 8px; margin: 2px; background: #10b981; color: white;" data-onclick="approveQuotation(${q.id})"><i class="fas fa-check"></i></button>
+                                    <div class="table-actions">
+                                    <button class="btn-outline btn-sm btn-icon" data-onclick="viewQuotation(${q.id})"><i class="fas fa-eye"></i></button>
+                                    <button class="btn-outline btn-sm btn-icon" data-onclick="sendFollowUp(${q.id})"><i class="fas fa-bell"></i></button>
+                                    <button class="btn-outline btn-success-solid btn-sm btn-icon" data-onclick="approveQuotation(${q.id})"><i class="fas fa-check"></i></button>
+                                    </div>
                                  </td>
                             </tr>
                         `;
@@ -276,8 +296,6 @@
                 
                 document.getElementById('searchQuotes')?.addEventListener('keyup', () => window.renderQuotationsTable());
                 document.getElementById('filterQuoteStatus')?.addEventListener('change', () => window.renderQuotationsTable());
-                document.getElementById('packageType')?.addEventListener('change', updateTotals);
-                document.getElementById('baseAmount')?.addEventListener('input', updateTotals);
-                document.getElementById('discount')?.addEventListener('input', updateTotals);
+                attachQuoteFormListeners();
             }
         });

@@ -50,8 +50,8 @@ function renderLeadsTablePage() {
             <td><input type="checkbox" class="lead-checkbox" data-id="${lead.id}"></td>
             <td>
                 <strong>${escapeHtml(lead.name)}</strong><br>
-                <small style="color:#64748b;">${escapeHtml(lead.email)}</small><br>
-                <small style="color:#64748b;">
+                <small style="color:#64748b;" class="d-flex">${escapeHtml(lead.email)}</small>
+                <small style="color:#64748b;" class="d-flex align-items-center">
                     ${escapeHtml(lead.phone)}
                     <button class="btn-outline lead-whatsapp-btn" data-onclick="shareWhatsApp()"><i class="fab fa-whatsapp"></i></button>
                 </small>
@@ -68,15 +68,17 @@ function renderLeadsTablePage() {
             </td>
             <td>${lead.assignedTo !== 'unassigned' ? escapeHtml(lead.assignedTo) : '<span style="color:#94a3b8;">Unassigned</span>'}</td>
             <td>
-                <button class="btn-outline" style="padding: 4px 10px; margin: 0 2px;" data-onclick="viewLead(${lead.id})">
+                <div class="table-actions">
+                <button class="btn-outline btn-icon" data-onclick="viewLead(${lead.id})">
                     <i class="fas fa-eye"></i>
                 </button>
-                <button class="btn-outline" style="padding: 4px 10px; margin: 0 2px; background: #e94560; color: white; border: none;" data-onclick="sendQuotation(${lead.id})">
+                <button class="btn-outline btn-accent btn-icon" data-onclick="sendQuotation(${lead.id})">
                     <i class="fas fa-file-invoice"></i>
                 </button>
-                <button class="btn-outline" style="padding: 4px 10px; margin: 0 2px; color: #ef4444;" data-onclick="deleteLead(${lead.id})">
+                <button class="btn-outline btn-danger-outline btn-icon" data-onclick="deleteLead(${lead.id})">
                     <i class="fas fa-trash"></i>
                 </button>
+                </div>
             </td>
         </tr>
     `).join('');
@@ -189,6 +191,288 @@ function getLeadJourneyContext(lead) {
     const supportTicket = state.tickets.find(item => item.customer === lead.name) || null;
     const feedback = state.feedbacks.find(item => item.customer === lead.name) || null;
     return { quote, booking, payment, itinerary, voucher, supportTicket, feedback };
+}
+
+const customerProfileMemory = {
+    1001: {
+        customerType: 'existing',
+        loyaltyTier: 'Silver',
+        relationshipManager: 'Neha Singh',
+        customerSince: '2022-09-14',
+        preferredStyle: 'Family leisure with resort stay and smooth transfers',
+        preferredDestinations: ['Goa', 'Kerala', 'Andaman'],
+        preferredHotelCategory: '4 Star',
+        serviceFlags: ['Prefers early check-in support', 'Usually books with breakfast + airport transfer'],
+        paymentBehaviour: 'Pays advance quickly, balance after voucher confirmation',
+        decisionMaker: 'Amit Sharma',
+        lastTripFeedback: 'Asked for a cleaner beach-facing property on the next holiday.',
+        pastTrips: [
+            { destination: 'Kerala', sector: 'Munnar + Alleppey', bookedOn: '2023-11-03', travelDate: '2023-12-18', nights: 4, days: 5, pax: '2 Adult, 1 Child', amount: 48200, status: 'completed', bookingRef: 'SOL-BK-143', highlights: 'Houseboat night and private cab' },
+            { destination: 'Jaipur', sector: 'Weekend family break', bookedOn: '2023-02-07', travelDate: '2023-03-12', nights: 2, days: 3, pax: '2 Adult, 1 Child', amount: 26800, status: 'completed', bookingRef: 'SOL-BK-087', highlights: 'Heritage hotel and local sightseeing' }
+        ]
+    },
+    1002: {
+        customerType: 'new',
+        loyaltyTier: 'Prospect',
+        relationshipManager: 'Neha Singh',
+        customerSince: '2024-02-09',
+        preferredStyle: 'Couple-focused premium stay with privacy and scenic views',
+        preferredDestinations: ['Manali', 'Kashmir'],
+        preferredHotelCategory: '4 Star',
+        serviceFlags: ['Late checkout important', 'Wants snowfall chances if possible'],
+        paymentBehaviour: 'First booking, likely to compare 2-3 quotes before confirming',
+        decisionMaker: 'Priya Verma',
+        lastTripFeedback: 'No prior trip history in CRM.',
+        pastTrips: []
+    },
+    1003: {
+        customerType: 'existing',
+        loyaltyTier: 'Gold',
+        relationshipManager: 'Amit Patel',
+        customerSince: '2021-06-21',
+        preferredStyle: 'Premium domestic breaks with experiential activities',
+        preferredDestinations: ['Kerala', 'Coorg', 'Sikkim'],
+        preferredHotelCategory: 'Premium Boutique',
+        serviceFlags: ['Needs child-friendly sightseeing pace', 'Prefers private vehicle all days'],
+        paymentBehaviour: 'Confirms after spouse review, but once agreed closes fast',
+        decisionMaker: 'Rahul Mehta',
+        lastTripFeedback: 'Loved the plantation stay but wants better lake-view room allocation next time.',
+        pastTrips: [
+            { destination: 'Coorg', sector: 'Nature retreat', bookedOn: '2023-08-11', travelDate: '2023-09-06', nights: 3, days: 4, pax: '2 Adult, 1 Young', amount: 56600, status: 'completed', bookingRef: 'SOL-BK-132', highlights: 'Plantation resort and private sightseeing' },
+            { destination: 'Sikkim', sector: 'Gangtok getaway', bookedOn: '2022-10-04', travelDate: '2022-11-14', nights: 4, days: 5, pax: '2 Adult', amount: 62400, status: 'completed', bookingRef: 'SOL-BK-076', highlights: 'Mountain hotel and permits handled' }
+        ]
+    },
+    1004: {
+        customerType: 'existing',
+        loyaltyTier: 'Silver',
+        relationshipManager: 'Neha Singh',
+        customerSince: '2023-01-18',
+        preferredStyle: 'Family heritage circuits with comfortable pacing',
+        preferredDestinations: ['Rajasthan', 'Gujarat', 'Madhya Pradesh'],
+        preferredHotelCategory: 'Deluxe',
+        serviceFlags: ['Needs interconnecting rooms', 'Senior citizen comfort matters'],
+        paymentBehaviour: 'Wants detailed inclusions before advance',
+        decisionMaker: 'Sneha Reddy and spouse',
+        lastTripFeedback: 'Wanted stronger cab coordination on the final day.',
+        pastTrips: [
+            { destination: 'Udaipur', sector: 'Lakes and palaces', bookedOn: '2023-10-02', travelDate: '2023-10-29', nights: 3, days: 4, pax: '2 Adult, 2 Child', amount: 51800, status: 'completed', bookingRef: 'SOL-BK-149', highlights: 'Boat ride and private SUV' }
+        ]
+    },
+    1005: {
+        customerType: 'existing',
+        loyaltyTier: 'Gold',
+        relationshipManager: 'Rajesh Kumar',
+        customerSince: '2022-02-17',
+        preferredStyle: 'Activity-led premium beach vacations',
+        preferredDestinations: ['Andaman', 'Maldives', 'Thailand'],
+        preferredHotelCategory: '5 Star / Premium Resort',
+        serviceFlags: ['Scuba and water sports upsell works well', 'Needs seamless airport-hotel coordination'],
+        paymentBehaviour: 'Negotiates hard but usually closes if value-adds are included',
+        decisionMaker: 'Vikram Singh',
+        lastTripFeedback: 'Was happy with resort, but wants better ferry timing on island routes.',
+        pastTrips: [
+            { destination: 'Thailand', sector: 'Phuket + Krabi', bookedOn: '2023-04-06', travelDate: '2023-05-20', nights: 5, days: 6, pax: '2 Adult', amount: 118500, status: 'completed', bookingRef: 'SOL-BK-111', highlights: 'Island tour and 4 star beach resort' },
+            { destination: 'Goa', sector: 'Luxury beach break', bookedOn: '2022-11-10', travelDate: '2022-12-02', nights: 3, days: 4, pax: '2 Adult', amount: 43800, status: 'completed', bookingRef: 'SOL-BK-082', highlights: 'Sunset cruise and candlelight dinner' }
+        ]
+    },
+    1006: {
+        customerType: 'existing',
+        loyaltyTier: 'Gold',
+        relationshipManager: 'Amit Patel',
+        customerSince: '2023-03-10',
+        preferredStyle: 'Premium family trips with strong service assurance',
+        preferredDestinations: ['Kashmir', 'Himachal'],
+        preferredHotelCategory: 'Premium',
+        serviceFlags: ['Priority on meals and room heating', 'Wants one point of contact'],
+        paymentBehaviour: 'Reliable full payer',
+        decisionMaker: 'Anjali Nair',
+        lastTripFeedback: 'Highly satisfied and open to repeat travel.',
+        pastTrips: [
+            { destination: 'Shimla', sector: 'Summer family trip', bookedOn: '2023-05-08', travelDate: '2023-06-12', nights: 4, days: 5, pax: '2 Adult, 1 Child', amount: 54100, status: 'completed', bookingRef: 'SOL-BK-120', highlights: 'Mall road hotel and toy train experience' }
+        ]
+    },
+    1007: {
+        customerType: 'new',
+        loyaltyTier: 'Prospect',
+        relationshipManager: 'Rajesh Kumar',
+        customerSince: '2024-02-10',
+        preferredStyle: 'International leisure with visa guidance and nightlife options',
+        preferredDestinations: ['Thailand', 'Singapore', 'Bali'],
+        preferredHotelCategory: 'Deluxe',
+        serviceFlags: ['Needs visa and forex clarity', 'Interested in nightlife + island excursion'],
+        paymentBehaviour: 'Likely to benchmark online portals first',
+        decisionMaker: 'Deepak Joshi',
+        lastTripFeedback: 'No prior trip history in CRM.',
+        pastTrips: []
+    },
+    1008: {
+        customerType: 'existing',
+        loyaltyTier: 'Silver',
+        relationshipManager: 'Neha Singh',
+        customerSince: '2022-07-05',
+        preferredStyle: 'Family international departures with strong budgeting',
+        preferredDestinations: ['Singapore', 'Dubai'],
+        preferredHotelCategory: '4 Star',
+        serviceFlags: ['Budget sensitive', 'Needs infant-friendly planning'],
+        paymentBehaviour: 'High comparison shopping, low urgency response',
+        decisionMaker: 'Kavita Sharma',
+        lastTripFeedback: 'Service liked, but price sensitivity remains high.',
+        pastTrips: [
+            { destination: 'Dubai', sector: 'Family holiday', bookedOn: '2023-01-13', travelDate: '2023-02-21', nights: 4, days: 5, pax: '2 Adult, 1 Child, 1 Infant', amount: 132000, status: 'completed', bookingRef: 'SOL-BK-091', highlights: 'City tour and marina cruise' }
+        ]
+    }
+};
+
+function getLeadOwnerName(lead, fallback = 'Sales Desk') {
+    return lead.assignedTo && lead.assignedTo !== 'unassigned' ? lead.assignedTo : fallback;
+}
+
+function formatCurrency(value) {
+    return `₹${Number(value || 0).toLocaleString('en-IN')}`;
+}
+
+function getDaysUntil(dateValue) {
+    if (!dateValue) return null;
+    const current = new Date();
+    const target = new Date(dateValue);
+    if (Number.isNaN(target.getTime())) return null;
+    current.setHours(0, 0, 0, 0);
+    target.setHours(0, 0, 0, 0);
+    return Math.round((target - current) / 86400000);
+}
+
+function getLeadServiceWindow(lead, quote) {
+    const days = getDaysUntil(lead.travelDate);
+    if (days === null) return 'Travel window yet to be frozen';
+    if (days < 0) return `Past dated by ${Math.abs(days)} days - needs date refresh`;
+    if (days === 0) return 'Travel starts today';
+    if (days <= 7) return `${days} days to travel - urgent closure window`;
+    if (days <= 21) return `${days} days to travel - warm follow-up window`;
+    if (quote) return `${days} days to travel - proposal nurturing stage`;
+    return `${days} days to travel - qualification stage`;
+}
+
+function getLeadCurrentPriority(lead, context) {
+    if (lead.status === 'won') return 'Ops handover and service delivery';
+    if (lead.status === 'lost') return 'Win-back or closure audit';
+    if (lead.status === 'negotiation') return 'Decision maker closure and commercial lock';
+    if (lead.status === 'quotation_sent') return 'Proposal review and objection handling';
+    if (context.quote) return 'Quote follow-up';
+    return 'Qualification and trip shaping';
+}
+
+function getLeadRiskSummary(lead) {
+    if (lead.status === 'lost') return 'Lead went cold due to pricing pressure and delayed response.';
+    if (lead.tripType === 'international') return 'Passport/visa, forex and travel insurance may influence decision timing.';
+    if (lead.score >= 90) return 'High-potential lead. Delay in follow-up can cost a near-term conversion.';
+    if (lead.budget < 50000) return 'Budget-fit and expectation-setting need tight handling.';
+    return 'Main risk is slow follow-up or weak personalization against destination intent.';
+}
+
+function getLeadStageSla(lead) {
+    if (lead.status === 'new') return 'First call within 15 minutes, detailed qualification same day.';
+    if (lead.status === 'contacted') return 'Need requirement freeze and itinerary direction within 24 hours.';
+    if (lead.status === 'interested') return 'Quote should go out within 1 working day.';
+    if (lead.status === 'quotation_sent') return 'Review call due within 24 hours of quotation send.';
+    if (lead.status === 'negotiation') return 'Daily touchpoint until yes/no decision.';
+    if (lead.status === 'won') return 'Ops welcome call and document checklist within 4 working hours.';
+    return 'Record closure reason and schedule reactivation cadence.';
+}
+
+function buildCurrentTripPlan(lead, context) {
+    const quote = context.quote;
+    const nights = quote?.nights || Math.max(1, Math.round((lead.travelers || 2) / 2) + 2);
+    const days = quote?.days || nights + 1;
+    const budgetBand = lead.budget >= 120000 ? 'Premium spend bracket' : lead.budget >= 70000 ? 'Mid-high value bracket' : 'Value-conscious bracket';
+    const hotelCategory = quote?.packageType === 'premium' ? '5 Star / Premium Resort' : lead.preferredHotelCategory || (lead.packageType === 'premium' ? '5 Star' : lead.packageType === 'deluxe' ? '4 Star' : '3 Star');
+    const idealRouting = lead.tripType === 'international'
+        ? `${lead.destination} arrival + city exploration + 1 activity day + shopping / free day`
+        : `${lead.destination} arrival + sightseeing + experience day + departure`;
+
+    return {
+        travelWindow: formatDisplayDateTime(lead.travelDate, null),
+        serviceWindow: getLeadServiceWindow(lead, quote),
+        duration: `${days} Days / ${nights} Nights`,
+        hotelCategory,
+        budgetBand,
+        idealRouting,
+        travelerProfile: formatTravelerBreakdown(quote?.travelerBreakdown || lead.travelerBreakdown),
+        packageType: getLeadStatusLabel(quote?.packageType || lead.packageType),
+        tripType: getLeadStatusLabel(lead.tripType),
+        currentPriority: getLeadCurrentPriority(lead, context),
+        riskSummary: getLeadRiskSummary(lead),
+        stageSla: getLeadStageSla(lead)
+    };
+}
+
+function getCustomerRelationshipData(lead, context) {
+    const memory = customerProfileMemory[lead.id] || {
+        customerType: context.booking ? 'existing' : 'new',
+        loyaltyTier: context.booking ? 'Silver' : 'Prospect',
+        relationshipManager: getLeadOwnerName(lead),
+        customerSince: lead.createdAt,
+        preferredStyle: 'Travel preference profile still being built by sales.',
+        preferredDestinations: [lead.destination],
+        preferredHotelCategory: lead.preferredHotelCategory || 'To be qualified',
+        serviceFlags: [],
+        paymentBehaviour: 'Payment confidence to be established after qualification.',
+        decisionMaker: lead.name,
+        lastTripFeedback: 'No historical feedback in CRM.',
+        pastTrips: []
+    };
+
+    const bookingTrips = state.bookings
+        .filter(item => item.leadId === lead.id)
+        .map(item => {
+            const quote = state.quotations.find(q => q.id === item.quoteId) || {};
+            return {
+                destination: lead.destination,
+                sector: quote.itinerary || `${lead.destination} tour`,
+                bookedOn: item.paymentDate || lead.createdAt,
+                travelDate: item.travelDate,
+                nights: quote.nights || 4,
+                days: quote.days || 5,
+                pax: formatTravelerBreakdown(quote.travelerBreakdown || lead.travelerBreakdown),
+                amount: item.totalAmount,
+                status: item.status || 'confirmed',
+                bookingRef: item.bookingRef,
+                highlights: quote.inclusions?.slice(0, 2).join(' + ') || 'Confirmed package'
+            };
+        });
+
+    const pastTrips = [...memory.pastTrips, ...bookingTrips].sort((a, b) => new Date(b.travelDate || b.bookedOn) - new Date(a.travelDate || a.bookedOn));
+    const lifetimeRevenue = pastTrips.reduce((sum, trip) => sum + Number(trip.amount || 0), 0) + Number(context.booking?.totalAmount || 0);
+    const completedTrips = pastTrips.filter(trip => trip.status !== 'cancelled').length;
+    const isExistingCustomer = memory.customerType === 'existing' || completedTrips > 0;
+
+    return {
+        ...memory,
+        customerType: isExistingCustomer ? 'existing' : 'new',
+        pastTrips,
+        completedTrips,
+        lifetimeRevenue,
+        lastTripDate: pastTrips[0]?.travelDate || null,
+        avgTicketSize: completedTrips ? Math.round(lifetimeRevenue / completedTrips) : 0
+    };
+}
+
+function buildLeadCustomerInsights(lead, context) {
+    const relationship = getCustomerRelationshipData(lead, context);
+    const tripPlan = buildCurrentTripPlan(lead, context);
+    return {
+        relationship,
+        tripPlan,
+        nextAction: lead.status === 'won'
+            ? 'Ops team should confirm hotel, transfer and traveler documents today.'
+            : lead.status === 'lost'
+                ? 'Tag for reactivation once a sharper value offer or alternate destination is available.'
+                : lead.status === 'negotiation'
+                    ? 'Schedule a decision-maker call with revised commercial and a firm expiry.'
+                    : lead.status === 'quotation_sent'
+                        ? 'Walk the customer through each inclusion and create urgency around the travel window.'
+                        : 'Deepen qualification, understand blockers and shape itinerary before competition steps in.',
+        decisionReadiness: lead.score >= 90 ? 'High' : lead.score >= 75 ? 'Medium' : 'Low'
+    };
 }
 
 function getSyntheticFollowUps(lead, quote, booking) {
@@ -361,24 +645,28 @@ function buildLeadTimeline(lead) {
     return events.sort((a, b) => new Date(a.date) - new Date(b.date));
 }
 
-function renderLeadOverviewTab(lead, context) {
+function renderLeadOverviewTab(lead, context, insights) {
+    const relationship = insights.relationship;
+    const tripPlan = insights.tripPlan;
     return `
         <div class="lead-tab-pane tab-pane fade show active" id="lead-overview-pane" role="tabpanel" aria-labelledby="lead-overview-tab">
             <div class="lead-grid-2">
                 <div class="lead-section-card">
                     <div class="lead-section-title">
-                        <h6>Customer & Trip Snapshot</h6>
-                        <span class="lead-pill"><i class="fas fa-user-check"></i> Owner: ${escapeHtml(lead.assignedTo)}</span>
+                        <h6>Customer Snapshot</h6>
+                        <span class="lead-pill"><i class="fas fa-user-check"></i> ${relationship.customerType === 'existing' ? 'Existing Customer' : 'New Customer'}</span>
                     </div>
                     <div class="lead-info-list">
                         <div class="lead-info-item"><span class="label">Email</span><span class="value">${escapeHtml(lead.email)}</span></div>
                         <div class="lead-info-item"><span class="label">Phone</span><span class="value">${escapeHtml(lead.phone)}</span></div>
-                        <div class="lead-info-item"><span class="label">Destination</span><span class="value">${escapeHtml(lead.destination)}</span></div>
-                        <div class="lead-info-item"><span class="label">Travel Date</span><span class="value">${formatDisplayDate(lead.travelDate)}</span></div>
-                        <div class="lead-info-item"><span class="label">Trip Type</span><span class="value">${escapeHtml(getLeadStatusLabel(lead.tripType))}</span></div>
-                        <div class="lead-info-item"><span class="label">Package Type</span><span class="value">${escapeHtml(getLeadStatusLabel(lead.packageType))}</span></div>
-                        <div class="lead-info-item"><span class="label">Pax Mix</span><span class="value">${escapeHtml(formatTravelerBreakdown(lead.travelerBreakdown))}</span></div>
-                        <div class="lead-info-item"><span class="label">Lead Created</span><span class="value">${formatDisplayDate(lead.createdAt)}</span></div>
+                        <div class="lead-info-item"><span class="label">Customer Since</span><span class="value">${formatDisplayDate(relationship.customerSince)}</span></div>
+                        <div class="lead-info-item"><span class="label">Loyalty Tier</span><span class="value">${escapeHtml(relationship.loyaltyTier)}</span></div>
+                        <div class="lead-info-item"><span class="label">Relationship Owner</span><span class="value">${escapeHtml(relationship.relationshipManager)}</span></div>
+                        <div class="lead-info-item"><span class="label">Decision Maker</span><span class="value">${escapeHtml(relationship.decisionMaker)}</span></div>
+                        <div class="lead-info-item"><span class="label">Completed Tours</span><span class="value">${relationship.completedTrips}</span></div>
+                        <div class="lead-info-item"><span class="label">Lifetime Revenue</span><span class="value">${formatCurrency(relationship.lifetimeRevenue)}</span></div>
+                        <div class="lead-info-item"><span class="label">Average Ticket Size</span><span class="value">${relationship.avgTicketSize ? formatCurrency(relationship.avgTicketSize) : 'Pending'}</span></div>
+                        <div class="lead-info-item"><span class="label">Last Tour</span><span class="value">${relationship.lastTripDate ? formatDisplayDate(relationship.lastTripDate) : 'No prior tour'}</span></div>
                     </div>
                 </div>
                 <div class="lead-section-card">
@@ -391,7 +679,7 @@ function renderLeadOverviewTab(lead, context) {
                             <i class="fas fa-circle-check"></i>
                             <div>
                                 <strong>Customer intent</strong>
-                                <div class="muted-13">${escapeHtml(getLeadTemperature(lead.score))} based on score, source strength and package fit.</div>
+                                <div class="muted-13">${escapeHtml(getLeadTemperature(lead.score))} with ${escapeHtml(insights.decisionReadiness)} decision readiness based on score, source and prior relationship.</div>
                             </div>
                         </div>
                         <div class="lead-list-item">
@@ -404,15 +692,15 @@ function renderLeadOverviewTab(lead, context) {
                         <div class="lead-list-item">
                             <i class="fas fa-layer-group"></i>
                             <div>
-                                <strong>Commercial readiness</strong>
-                                <div class="muted-13">${context.quote ? `Quotation v${context.quote.version} is already active with total ₹${Number(context.quote.total || 0).toLocaleString()}.` : 'Commercial proposal not shared yet. Discovery and costing are still in progress.'}</div>
+                                <strong>Current sales priority</strong>
+                                <div class="muted-13">${escapeHtml(tripPlan.currentPriority)}. ${escapeHtml(tripPlan.serviceWindow)}.</div>
                             </div>
                         </div>
                         <div class="lead-list-item">
                             <i class="fas fa-clipboard-list"></i>
                             <div>
-                                <strong>Operations handoff</strong>
-                                <div class="muted-13">${context.booking ? `Booking ${context.booking.bookingRef} exists and handoff is in motion.` : 'No booking record yet. Lead is still in sales pipeline.'}</div>
+                                <strong>Stage SLA</strong>
+                                <div class="muted-13">${escapeHtml(tripPlan.stageSla)}</div>
                             </div>
                         </div>
                     </div>
@@ -421,10 +709,31 @@ function renderLeadOverviewTab(lead, context) {
             <div class="lead-grid-2 mt-16">
                 <div class="lead-section-card">
                     <div class="lead-section-title">
-                        <h6>Preferred Inclusions</h6>
+                        <h6>Customer Preferences</h6>
                     </div>
                     <div class="lead-list-card">
-                        ${(lead.inclusionNotes.length ? lead.inclusionNotes : ['Hotel and transfer plan to be finalized in costing stage.']).map(item => `
+                        <div class="lead-list-item">
+                            <i class="fas fa-heart"></i>
+                            <div>
+                                <strong>Travel style</strong>
+                                <div class="muted-13">${escapeHtml(relationship.preferredStyle)}</div>
+                            </div>
+                        </div>
+                        <div class="lead-list-item">
+                            <i class="fas fa-hotel"></i>
+                            <div>
+                                <strong>Preferred hotel category</strong>
+                                <div class="muted-13">${escapeHtml(relationship.preferredHotelCategory)}</div>
+                            </div>
+                        </div>
+                        <div class="lead-list-item">
+                            <i class="fas fa-location-dot"></i>
+                            <div>
+                                <strong>Preferred destinations</strong>
+                                <div class="muted-13">${escapeHtml(relationship.preferredDestinations.join(', '))}</div>
+                            </div>
+                        </div>
+                        ${(relationship.serviceFlags.length ? relationship.serviceFlags : ['Preference profile is still being built.']).map(item => `
                             <div class="lead-list-item">
                                 <i class="fas fa-check"></i>
                                 <div class="muted-13">${escapeHtml(item)}</div>
@@ -434,15 +743,213 @@ function renderLeadOverviewTab(lead, context) {
                 </div>
                 <div class="lead-section-card">
                     <div class="lead-section-title">
-                        <h6>Exclusions / Risks</h6>
+                        <h6>Service Risks & Notes</h6>
                     </div>
                     <div class="lead-list-card">
-                        ${((lead.exclusionNotes.length ? lead.exclusionNotes : ['Lunch, personal expenses and optional activities not yet included.'])).map(item => `
+                        <div class="lead-list-item">
+                            <i class="fas fa-wallet"></i>
+                            <div>
+                                <strong>Payment behavior</strong>
+                                <div class="muted-13">${escapeHtml(relationship.paymentBehaviour)}</div>
+                            </div>
+                        </div>
+                        <div class="lead-list-item">
+                            <i class="fas fa-shield-halved"></i>
+                            <div>
+                                <strong>Current risk summary</strong>
+                                <div class="muted-13">${escapeHtml(tripPlan.riskSummary)}</div>
+                            </div>
+                        </div>
+                        ${(lead.exclusionNotes.length ? lead.exclusionNotes : ['Lunch, personal expenses and optional activities not yet included.']).map(item => `
                             <div class="lead-list-item">
                                 <i class="fas fa-triangle-exclamation"></i>
                                 <div class="muted-13">${escapeHtml(item)}</div>
                             </div>
                         `).join('')}
+                        <div class="lead-alert">${escapeHtml(relationship.lastTripFeedback)}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderLeadCustomerTab(lead, context, insights) {
+    const relationship = insights.relationship;
+    const trips = relationship.pastTrips;
+
+    return `
+        <div class="lead-tab-pane tab-pane fade" id="lead-customer-pane" role="tabpanel" aria-labelledby="lead-customer-tab">
+            <div class="lead-grid-2">
+                <div class="lead-section-card">
+                    <div class="lead-section-title">
+                        <h6>Customer Relationship Memory</h6>
+                        <span class="lead-pill"><i class="fas fa-repeat"></i> ${relationship.customerType === 'existing' ? 'Repeat traveller' : 'Fresh enquiry'}</span>
+                    </div>
+                    <div class="lead-insight-strip">
+                        <div class="lead-insight-tile">
+                            <span class="label">Customer Type</span>
+                            <strong>${relationship.customerType === 'existing' ? 'Existing customer' : 'New customer'}</strong>
+                        </div>
+                        <div class="lead-insight-tile">
+                            <span class="label">Lifetime Revenue</span>
+                            <strong>${formatCurrency(relationship.lifetimeRevenue)}</strong>
+                        </div>
+                        <div class="lead-insight-tile">
+                            <span class="label">Tours Taken</span>
+                            <strong>${relationship.completedTrips}</strong>
+                        </div>
+                    </div>
+                    <div class="lead-list-card mt-16">
+                        <div class="lead-list-item">
+                            <i class="fas fa-user-tie"></i>
+                            <div>
+                                <strong>Decision maker</strong>
+                                <div class="muted-13">${escapeHtml(relationship.decisionMaker)}</div>
+                            </div>
+                        </div>
+                        <div class="lead-list-item">
+                            <i class="fas fa-people-group"></i>
+                            <div>
+                                <strong>Relationship owner</strong>
+                                <div class="muted-13">${escapeHtml(relationship.relationshipManager)}</div>
+                            </div>
+                        </div>
+                        <div class="lead-list-item">
+                            <i class="fas fa-comments-dollar"></i>
+                            <div>
+                                <strong>Payment pattern</strong>
+                                <div class="muted-13">${escapeHtml(relationship.paymentBehaviour)}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lead-section-card">
+                    <div class="lead-section-title">
+                        <h6>Past Booking History</h6>
+                        <span class="lead-pill"><i class="fas fa-suitcase"></i> ${trips.length} trip records</span>
+                    </div>
+                    ${trips.length ? `
+                        <div class="lead-history-list">
+                            ${trips.map(trip => `
+                                <article class="lead-history-card">
+                                    <div class="lead-history-head">
+                                        <div>
+                                            <h6>${escapeHtml(trip.destination)}</h6>
+                                            <p>${escapeHtml(trip.sector)} • ${trip.days}D/${trip.nights}N</p>
+                                        </div>
+                                        <span class="status-badge status-won">${escapeHtml(getLeadStatusLabel(trip.status))}</span>
+                                    </div>
+                                    <div class="lead-meta-chips">
+                                        <span class="lead-meta-chip"><i class="fas fa-calendar"></i> Travel: ${formatDisplayDate(trip.travelDate)}</span>
+                                        <span class="lead-meta-chip"><i class="fas fa-wallet"></i> ${formatCurrency(trip.amount)}</span>
+                                        <span class="lead-meta-chip"><i class="fas fa-users"></i> ${escapeHtml(trip.pax)}</span>
+                                        <span class="lead-meta-chip"><i class="fas fa-hashtag"></i> ${escapeHtml(trip.bookingRef)}</span>
+                                    </div>
+                                    <div class="lead-alert mt-16">${escapeHtml(trip.highlights)}</div>
+                                </article>
+                            `).join('')}
+                        </div>
+                    ` : `
+                        <div class="lead-empty-state">
+                            <i class="fas fa-user-plus"></i>
+                            <strong>No historical tour in CRM</strong>
+                            <p>This is a new customer enquiry. Current lead will establish first-trip baseline, budget pattern and preference memory.</p>
+                        </div>
+                    `}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderLeadTripPlanTab(lead, context, insights) {
+    const tripPlan = insights.tripPlan;
+    const quote = context.quote;
+    const booking = context.booking;
+
+    return `
+        <div class="lead-tab-pane tab-pane fade" id="lead-trip-pane" role="tabpanel" aria-labelledby="lead-trip-tab">
+            <div class="lead-grid-2">
+                <div class="lead-section-card">
+                    <div class="lead-section-title">
+                        <h6>Current Trip Requirement</h6>
+                        <span class="lead-pill"><i class="fas fa-map"></i> ${escapeHtml(lead.destination)}</span>
+                    </div>
+                    <div class="lead-info-list">
+                        <div class="lead-info-item"><span class="label">Destination</span><span class="value">${escapeHtml(lead.destination)}</span></div>
+                        <div class="lead-info-item"><span class="label">Travel Start</span><span class="value">${formatDisplayDate(lead.travelDate)}</span></div>
+                        <div class="lead-info-item"><span class="label">Trip Type</span><span class="value">${escapeHtml(tripPlan.tripType)}</span></div>
+                        <div class="lead-info-item"><span class="label">Package Level</span><span class="value">${escapeHtml(tripPlan.packageType)}</span></div>
+                        <div class="lead-info-item"><span class="label">Duration</span><span class="value">${escapeHtml(tripPlan.duration)}</span></div>
+                        <div class="lead-info-item"><span class="label">Pax Detail</span><span class="value">${escapeHtml(tripPlan.travelerProfile)}</span></div>
+                        <div class="lead-info-item"><span class="label">Lead Budget</span><span class="value">${formatCurrency(lead.budget)}</span></div>
+                        <div class="lead-info-item"><span class="label">Hotel Category</span><span class="value">${escapeHtml(tripPlan.hotelCategory)}</span></div>
+                    </div>
+                    <div class="lead-alert mt-16">${escapeHtml(tripPlan.idealRouting)}</div>
+                </div>
+                <div class="lead-section-card">
+                    <div class="lead-section-title">
+                        <h6>Plan Readiness</h6>
+                    </div>
+                    <div class="lead-list-card">
+                        <div class="lead-list-item">
+                            <i class="fas fa-hourglass-half"></i>
+                            <div>
+                                <strong>Travel window</strong>
+                                <div class="muted-13">${escapeHtml(tripPlan.serviceWindow)}</div>
+                            </div>
+                        </div>
+                        <div class="lead-list-item">
+                            <i class="fas fa-bullseye"></i>
+                            <div>
+                                <strong>Current priority</strong>
+                                <div class="muted-13">${escapeHtml(tripPlan.currentPriority)}</div>
+                            </div>
+                        </div>
+                        <div class="lead-list-item">
+                            <i class="fas fa-file-signature"></i>
+                            <div>
+                                <strong>Quotation status</strong>
+                                <div class="muted-13">${quote ? `v${quote.version} shared for ${formatCurrency(quote.total)} and valid till ${formatDisplayDate(quote.validUntil)}.` : 'No quote issued yet. Requirement shaping still active.'}</div>
+                            </div>
+                        </div>
+                        <div class="lead-list-item">
+                            <i class="fas fa-plane-departure"></i>
+                            <div>
+                                <strong>Booking / ops status</strong>
+                                <div class="muted-13">${booking ? `${booking.bookingRef} created with ${escapeHtml(getLeadStatusLabel(booking.status))} status.` : 'No booking created yet. Still pre-confirmation.'}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="lead-grid-2 mt-16">
+                <div class="lead-section-card">
+                    <div class="lead-section-title">
+                        <h6>Included in Current Ask</h6>
+                    </div>
+                    <div class="lead-list-card">
+                        ${(lead.inclusionNotes.length ? lead.inclusionNotes : ['Hotel, transfers and sightseeing to be finalized during costing.']).map(item => `
+                            <div class="lead-list-item">
+                                <i class="fas fa-check"></i>
+                                <div class="muted-13">${escapeHtml(item)}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                <div class="lead-section-card">
+                    <div class="lead-section-title">
+                        <h6>Open Questions / Exclusions</h6>
+                    </div>
+                    <div class="lead-list-card">
+                        ${(lead.exclusionNotes.length ? lead.exclusionNotes : ['Meals, optional activities and personal spends not locked yet.']).map(item => `
+                            <div class="lead-list-item">
+                                <i class="fas fa-circle-question"></i>
+                                <div class="muted-13">${escapeHtml(item)}</div>
+                            </div>
+                        `).join('')}
+                        <div class="lead-alert">${escapeHtml(insights.nextAction)}</div>
                     </div>
                 </div>
             </div>
@@ -458,8 +965,8 @@ function renderLeadJourneyTab(lead) {
             <div class="lead-grid-2">
                 <div class="lead-section-card">
                     <div class="lead-section-title">
-                        <h6>A to Z Journey Timeline</h6>
-                        <span class="lead-pill"><i class="fas fa-clock"></i> ${timeline.length} logged touchpoints</span>
+                        <h6>Journey Timeline</h6>
+               <span class="lead-pill"><i class="fas fa-clock"></i> ${timeline.length} logged touchpoints</span>
                     </div>
                     <div class="lead-timeline">
                         ${timeline.map(item => `
@@ -510,10 +1017,11 @@ function renderLeadJourneyTab(lead) {
     `;
 }
 
-function renderLeadCommercialsTab(lead, context) {
+function renderLeadCommercialsTab(lead, context, insights) {
     const quote = context.quote;
     const booking = context.booking;
     const payment = context.payment;
+    const relationship = insights.relationship;
 
     return `
         <div class="lead-tab-pane tab-pane fade" id="lead-commercials-pane" role="tabpanel" aria-labelledby="lead-commercials-tab">
@@ -529,9 +1037,9 @@ function renderLeadCommercialsTab(lead, context) {
                     <div class="meta">${quote ? `${escapeHtml(quote.itinerary)} | valid till ${formatDisplayDate(quote.validUntil)}` : 'No quotation has been generated yet.'}</div>
                 </div>
                 <div class="lead-commercial-card">
-                    <span class="label">Booking Value</span>
-                    <div class="value">${booking ? `₹${Number(booking.totalAmount || 0).toLocaleString()}` : 'Open'}</div>
-                    <div class="meta">${booking ? `${escapeHtml(booking.bookingRef)} | ${escapeHtml(getLeadStatusLabel(booking.paymentStatus))} payment` : 'Booking not confirmed yet.'}</div>
+                    <span class="label">Customer Lifetime</span>
+                    <div class="value">${formatCurrency(relationship.lifetimeRevenue)}</div>
+                    <div class="meta">${relationship.completedTrips} historical tour(s) already serviced</div>
                 </div>
             </div>
             <div class="lead-grid-2 mt-16">
@@ -551,6 +1059,10 @@ function renderLeadCommercialsTab(lead, context) {
                         <div class="lead-list-item">
                             <i class="fas fa-users"></i>
                             <div class="muted-13">${quote ? escapeHtml(formatTravelerBreakdown(quote.travelerBreakdown)) : escapeHtml(formatTravelerBreakdown(lead.travelerBreakdown))}</div>
+                        </div>
+                        <div class="lead-list-item">
+                            <i class="fas fa-briefcase"></i>
+                            <div class="muted-13">${booking ? `Booking ${booking.bookingRef} value is ${formatCurrency(booking.totalAmount)} with ${escapeHtml(getLeadStatusLabel(booking.paymentStatus))} payment status.` : 'Booking value will lock after commercial approval.'}</div>
                         </div>
                         <div class="lead-list-item">
                             <i class="fas fa-wallet"></i>
@@ -650,8 +1162,10 @@ function renderLeadOpsTab(lead, context) {
 
 function renderLeadJourneyContent(lead) {
     const context = getLeadJourneyContext(lead);
+    const insights = buildLeadCustomerInsights(lead, context);
     const timeline = buildLeadTimeline(lead);
     const latestTouch = timeline[timeline.length - 1];
+    const leadManager = getLeadOwnerName(lead, insights.relationship.relationshipManager || 'Sales Desk');
 
     return `
         <div class="lead-journey-shell">
@@ -661,43 +1175,40 @@ function renderLeadJourneyContent(lead) {
                         <div class="lead-avatar">${getLeadInitials(lead.name)}</div>
                         <div class="lead-hero-title">
                             <h3>${escapeHtml(lead.name)}</h3>
-                            <p>${escapeHtml(lead.destination)} trip • ${escapeHtml(getLeadStatusLabel(lead.tripType))} • ${escapeHtml(formatTravelerBreakdown(lead.travelerBreakdown))}</p>
+                            <p>${escapeHtml(lead.phone)} • ${escapeHtml(lead.email)}</p>
                             <div class="lead-hero-badges">
                                 <span class="lead-chip"><i class="fas fa-bullhorn"></i> ${escapeHtml(lead.source)}</span>
                                 <span class="lead-chip"><i class="fas fa-fire"></i> ${escapeHtml(getLeadTemperature(lead.score))}</span>
                                 <span class="lead-chip"><i class="fas fa-route"></i> ${escapeHtml(getLeadStatusLabel(lead.status))}</span>
-                                <span class="lead-chip"><i class="fas fa-phone"></i> ${escapeHtml(lead.phone)}</span>
+                                <span class="lead-chip"><i class="fas fa-id-badge"></i> ${insights.relationship.customerType === 'existing' ? 'Existing customer' : 'New customer'}</span>
+                                <span class="lead-chip"><i class="fas fa-user-tie"></i> Lead Executive: ${escapeHtml(leadManager)}</span>
                             </div>
                         </div>
                     </div>
-                    <div class="lead-score-tile">
-                        <span class="label">Lead Score</span>
-                        <div class="value">${lead.score}</div>
-                        <div class="meta">Last touchpoint: ${escapeHtml(latestTouch?.title || 'Lead created')}</div>
-                    </div>
+                 
                 </div>
             </section>
 
             <section class="lead-summary-grid">
                 <div class="lead-summary-card">
                     <span class="label">Expected Budget</span>
-                    <div class="value">₹${Number(lead.budget || 0).toLocaleString()}</div>
+                    <div class="value">${formatCurrency(lead.budget)}</div>
                     <div class="meta">Travel target for this enquiry</div>
                 </div>
                 <div class="lead-summary-card">
-                    <span class="label">Assigned Owner</span>
-                    <div class="value">${escapeHtml(lead.assignedTo)}</div>
-                    <div class="meta">Sales desk currently handling this lead</div>
+                    <span class="label">Customer Type</span>
+                    <div class="value">${insights.relationship.customerType === 'existing' ? 'Existing' : 'New'}</div>
+                    <div class="meta">${insights.relationship.completedTrips} previous trip(s) in CRM</div>
                 </div>
                 <div class="lead-summary-card">
-                    <span class="label">Quotation</span>
-                    <div class="value">${context.quote ? `v${context.quote.version}` : 'Pending'}</div>
-                    <div class="meta">${context.quote ? `₹${Number(context.quote.total || 0).toLocaleString()} shared` : 'Not yet issued'}</div>
+                    <span class="label">Current Plan</span>
+                    <div class="value">${escapeHtml(insights.tripPlan.duration)}</div>
+                    <div class="meta">${escapeHtml(insights.tripPlan.hotelCategory)} target stay</div>
                 </div>
                 <div class="lead-summary-card">
-                    <span class="label">Booking</span>
-                    <div class="value">${context.booking ? escapeHtml(context.booking.bookingRef) : 'Open'}</div>
-                    <div class="meta">${context.booking ? escapeHtml(getLeadStatusLabel(context.booking.status)) : 'Still in sales pipeline'}</div>
+                    <span class="label">Next Action</span>
+                    <div class="value">${escapeHtml(insights.tripPlan.currentPriority)}</div>
+                    <div class="meta">${escapeHtml(insights.tripPlan.serviceWindow)}</div>
                 </div>
             </section>
 
@@ -705,6 +1216,12 @@ function renderLeadJourneyContent(lead) {
                 <ul class="nav nav-tabs lead-tabs-nav" id="leadJourneyTabs" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="lead-overview-tab" data-bs-toggle="tab" data-bs-target="#lead-overview-pane" type="button" role="tab">Overview</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="lead-customer-tab" data-bs-toggle="tab" data-bs-target="#lead-customer-pane" type="button" role="tab">Customer 360</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="lead-trip-tab" data-bs-toggle="tab" data-bs-target="#lead-trip-pane" type="button" role="tab">Current Trip</button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="lead-journey-tab" data-bs-toggle="tab" data-bs-target="#lead-journey-pane" type="button" role="tab">Journey Timeline</button>
@@ -717,9 +1234,11 @@ function renderLeadJourneyContent(lead) {
                     </li>
                 </ul>
                 <div class="tab-content">
-                    ${renderLeadOverviewTab(lead, context)}
+                    ${renderLeadOverviewTab(lead, context, insights)}
+                    ${renderLeadCustomerTab(lead, context, insights)}
+                    ${renderLeadTripPlanTab(lead, context, insights)}
                     ${renderLeadJourneyTab(lead)}
-                    ${renderLeadCommercialsTab(lead, context)}
+                    ${renderLeadCommercialsTab(lead, context, insights)}
                     ${renderLeadOpsTab(lead, context)}
                 </div>
             </section>

@@ -69,8 +69,8 @@
             }
             
             container.innerHTML = filtered.map(f => `
-                <div style="background: white; border-radius: 16px; padding: 20px; margin-bottom: 15px; border-left: 4px solid ${f.rating >= 4 ? '#10b981' : f.rating >= 3 ? '#f59e0b' : '#ef4444'};">
-                    <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                <div class="feedback-item" style="background: white; border-radius: 16px; padding: 20px; margin-bottom: 15px; border-left: 4px solid ${f.rating >= 4 ? '#10b981' : f.rating >= 3 ? '#f59e0b' : '#ef4444'};">
+                    <div  class="feedback-content" style="display: flex; justify-content: space-between; flex-wrap: wrap;">
                         <div style="flex: 1;">
                             <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
                                 <div style="font-size: 18px; font-weight: bold;">${f.customer}</div>
@@ -147,8 +147,8 @@
             }
             
             container.innerHTML = complaints.map(c => `
-                <div style="background: white; border-radius: 12px; padding: 12px; margin-bottom: 10px;">
-                    <div style="display: flex; justify-content: space-between;">
+                <div class="complaint-item" style="background: white; border-radius: 12px; padding: 12px; margin-bottom: 10px;">
+                    <div class="complaint-content" style="display: flex; justify-content: space-between;">
                         <div>
                             <strong>${c.customer}</strong> - ${c.category.toUpperCase()}
                             <div style="font-size: 12px;">"${c.comment.substring(0, 80)}..."</div>

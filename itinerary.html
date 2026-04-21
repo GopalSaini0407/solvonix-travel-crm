@@ -107,8 +107,8 @@
                     </div>
                 </div>
             </div>
-                   <div class="table-container " style="display: flex; justify-content: end;">
-                     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                   <div class="table-container">
+                     <div class="toolbar-actions justify-end">
                         <button class="btn-primary" data-onclick="openModal('newItineraryModal')"><i class="far fa-map"></i> New Itinerary</button>
                         <button class="btn-outline" data-onclick="exportPDF()"><i class="far fa-file-pdf"></i> PDF</button>
                          <button class="btn-outline" data-onclick="shareWhatsApp()"><i class="fab fa-whatsapp"></i> Share</button>
@@ -117,22 +117,22 @@
             <div class="table-container">
                 
                 <div class="builder-toolbar">
-                    <div class="form-group" style="margin-bottom: 0;">
+                    <div class="form-group form-group-compact">
                         <label>Select Booking</label>
-                        <select id="bookingSelect" data-onchange="loadItinerary()" style="padding: 10px 14px; border-radius: 14px;">
+                        <select id="bookingSelect" class="form-control" data-onchange="loadItinerary()">
                             <option value="">-- Select a booking --</option>
                         </select>
                     </div>
-                    <div class="form-group" style="margin-bottom: 0;">
+                    <div class="form-group form-group-compact">
                         <label>Template Style</label>
-                        <select id="templateStyle" style="padding: 10px 14px; border-radius: 14px;">
+                        <select id="templateStyle" class="form-control">
                             <option>Classic</option>
                             <option>Modern</option>
                             <option>Luxury</option>
                             <option>Adventure</option>
                         </select>
                     </div>
-                    <div class="form-group" style="margin-bottom: 0;">
+                    <div class="form-group form-group-compact">
                         <label>Include</label>
                         <div class="checkbox-row">
                             <label><input type="checkbox" checked> Hotel Details</label>
@@ -148,14 +148,14 @@
                 <section class="card-shell">
                     <div class="section-head">
                         <h3><i class="far fa-calendar-alt"></i> Day-wise Plan</h3>
-                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <div class="toolbar-actions">
                             <button class="btn-primary" data-onclick="addNewDay()"><i class="fas fa-plus"></i> Add Day</button>
                         </div>
                     </div>
                     <div class="section-body" id="daysContainer"></div>
                 </section>
 
-                <section style="display: grid; gap: 20px;">
+                <section class="stack-gap-20">
                     <div class="card-shell">
                         <div class="section-head">
                             <h3><i class="far fa-eye"></i> Itinerary Preview</h3>
@@ -164,7 +164,7 @@
                         </div>
                         <div class="section-body">
                             <div class="preview-box" id="itineraryPreview"></div>
-                            <div id="itineraryMeta" style="margin-top: 16px; display: grid; gap: 12px;"></div>
+                            <div id="itineraryMeta" class="meta-grid"></div>
                         </div>
                     </div>
 
@@ -174,8 +174,8 @@
                         </div>
                         <div class="section-body">
                             <table class="cost-table" id="invoiceTable"></table>
-                            <div style="margin-top: 16px; display: grid; gap: 8px; color: var(--gray); font-size: 14px;" id="invoiceSummary"></div>
-                            <button class="btn-primary" style="margin-top: 16px; width: 100%; justify-content: center;" data-onclick="downloadInvoice()">
+                            <div class="meta-grid text-muted-sm" id="invoiceSummary"></div>
+                            <button class="btn-primary btn-block-mobile mt-16" data-onclick="downloadInvoice()">
                                 <i class="far fa-file-pdf"></i> Download Invoice
                             </button>
                         </div>
@@ -201,7 +201,7 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <div id="newItineraryModal" class="modal">
-        <div class="modal-content" style="width: 620px;">
+        <div class="modal-content modal-w-620">
             <div class="modal-header">
                 <h3><i class="far fa-map"></i> Create New Itinerary</h3>
                 <button class="close-modal" data-onclick="closeModal('newItineraryModal')">&times;</button>
@@ -245,7 +245,7 @@
     </div>
 
     <div id="addActivityModal" class="modal">
-        <div class="modal-content" style="width: 540px;">
+        <div class="modal-content modal-w-540">
             <div class="modal-header">
                 <h3><i class="fas fa-plus"></i> Add Activity</h3>
                 <button class="close-modal" data-onclick="closeModal('addActivityModal')">&times;</button>

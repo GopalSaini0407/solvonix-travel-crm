@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solvonix Travel CRM - Employees | Team Directory</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Solvonix <span>CRM</span></h3>
+                <p>Travel Pipeline Intelligence</p>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html" class="nav-link"><i class="fas fa-chart-line"></i><span>Dashboard</span></a></li>
+                <li class="nav-item"><a href="leads.html" class="nav-link"><i class="fas fa-users"></i><span>Leads</span></a></li>
+                <li class="nav-item"><a href="quotations.html" class="nav-link"><i class="fas fa-file-invoice"></i><span>Quotations</span></a></li>
+                <li class="nav-item"><a href="bookings.html" class="nav-link"><i class="fas fa-ticket-alt"></i><span>Bookings</span></a></li>
+                <li class="nav-item"><a href="customers.html" class="nav-link"><i class="fas fa-address-book"></i><span>Customers</span></a></li>
+                <li class="nav-item active"><a href="employee.html" class="nav-link"><i class="fas fa-user-tie"></i><span>Employees</span></a></li>
+                <li class="nav-item"><a href="payments.html" class="nav-link"><i class="fas fa-hand-holding-usd"></i><span>Payments</span></a></li>
+                <li class="nav-item"><a href="itinerary.html" class="nav-link"><i class="fas fa-map-marked-alt"></i><span>Itinerary</span></a></li>
+                <li class="nav-item"><a href="vouchers.html" class="nav-link"><i class="fas fa-receipt"></i><span>Vouchers</span></a></li>
+                <li class="nav-item"><a href="campaigns.html" class="nav-link"><i class="fas fa-envelope-open-text"></i><span>Campaigns</span></a></li>
+                <li class="nav-item"><a href="support.html" class="nav-link"><i class="fas fa-headset"></i><span>Support</span></a></li>
+                <li class="nav-item"><a href="feedback.html" class="nav-link"><i class="fas fa-star"></i><span>Feedback</span></a></li>
+                <li class="nav-item"><a href="reports.html" class="nav-link"><i class="fas fa-chart-pie"></i><span>Reports</span></a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="top-bar">
+                <div class="page-title">
+                    <h1>Employee Directory</h1>
+                    <p>Add, view, edit and delete team members across sales, ops and support</p>
+                </div>
+                <div class="user-area">
+                    <div class="notification-badge">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge-dot"></span>
+                    </div>
+                    <div class="avatar">
+                        <span>RK</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-grid mb-20">
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3 id="employeeTotalCount">0</h3>
+                        <p>Total Employees</p>
+                    </div>
+                    <div class="stat-icon"><i class="fas fa-users-cog"></i></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3 id="employeeActiveCount">0</h3>
+                        <p>Active Team Members</p>
+                    </div>
+                    <div class="stat-icon"><i class="fas fa-user-check"></i></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3 id="employeeSalesCount">0</h3>
+                        <p>Sales Team</p>
+                    </div>
+                    <div class="stat-icon"><i class="fas fa-bullseye"></i></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3 id="employeeAvgPerformance">0%</h3>
+                        <p>Average Performance</p>
+                    </div>
+                    <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <div class="filter-grid">
+                    <div class="search-box search-box-full">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="employeeSearch" placeholder="Search by name, email, role or phone..." data-oninput="applyEmployeeFilters()">
+                    </div>
+                    <select id="employeeDepartmentFilter" class="form-control form-control-soft" data-onchange="applyEmployeeFilters()">
+                        <option value="">All Departments</option>
+                    </select>
+                    <select id="employeeStatusFilter" class="form-control form-control-soft" data-onchange="applyEmployeeFilters()">
+                        <option value="">All Status</option>
+                        <option value="active">Active</option>
+                        <option value="on_leave">On Leave</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                    <select id="employeeRoleFilter" class="form-control form-control-soft" data-onchange="applyEmployeeFilters()">
+                        <option value="">All Roles</option>
+                    </select>
+                    <div class="flex gap-10 flex-wrap">
+                        <button class="btn-outline" data-onclick="resetEmployeeFilters()">Reset</button>
+                        <button class="btn-primary" data-onclick="openEmployeeModal()"><i class="fas fa-user-plus"></i> Add Employee</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="employee-layout">
+                <section class="panel-card">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-id-card"></i> Team Members</h3>
+                        <span id="employeeDirectoryCount" class="customer-count">Showing 0 employees</span>
+                    </div>
+                    <div id="employeeDirectory" class="panel-body employee-directory"></div>
+                </section>
+
+                <section id="employeeDetailPanel" class="employee-side-card">
+                    <div class="employee-empty">
+                        <div>
+                            <i class="fas fa-user-tie"></i>
+                            <h3>Select an employee</h3>
+                            <p>Profile, workload, department details and quick actions will appear here.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <div id="employeeModal" class="modal">
+        <div class="modal-content modal-w-760">
+            <div class="modal-header">
+                <h3 id="employeeModalTitle"><i class="fas fa-user-plus"></i> Add Employee</h3>
+                <button class="close-modal" data-onclick="closeModal('employeeModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="employeeId">
+                <div class="two-col-form">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="employeeName" placeholder="Enter employee name">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="employeeEmail" placeholder="employee@solvonix.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="text" id="employeePhone" placeholder="+91 XXXXX XXXXX">
+                    </div>
+                    <div class="form-group">
+                        <label>Role</label>
+                        <input type="text" id="employeeRole" placeholder="Sales Executive, Support Lead...">
+                    </div>
+                    <div class="form-group">
+                        <label>Department</label>
+                        <select id="employeeDepartment">
+                            <option>Sales</option>
+                            <option>Operations</option>
+                            <option>Marketing</option>
+                            <option>Management</option>
+                            <option>Support</option>
+                            <option>Finance</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="employeeStatus">
+                            <option value="active">Active</option>
+                            <option value="on_leave">On Leave</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Joining Date</label>
+                        <input type="date" id="employeeJoiningDate">
+                    </div>
+                    <div class="form-group">
+                        <label>Work Location</label>
+                        <input type="text" id="employeeLocation" placeholder="Delhi HQ, Remote...">
+                    </div>
+                    <div class="form-group">
+                        <label>Reporting Manager</label>
+                        <input type="text" id="employeeManager" placeholder="Manager name">
+                    </div>
+                    <div class="form-group">
+                        <label>Monthly Salary</label>
+                        <input type="number" id="employeeSalary" placeholder="Enter salary">
+                    </div>
+                    <div class="form-group">
+                        <label>Active Leads</label>
+                        <input type="number" id="employeeActiveLeads" placeholder="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Active Bookings</label>
+                        <input type="number" id="employeeActiveBookings" placeholder="0">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Performance Score (%)</label>
+                    <input type="number" id="employeePerformance" min="0" max="100" placeholder="85">
+                </div>
+                <div class="form-group">
+                    <label>Notes</label>
+                    <textarea rows="3" id="employeeNotes" placeholder="Key responsibilities, strengths or HR notes"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-outline" data-onclick="closeModal('employeeModal')">Cancel</button>
+                <button class="btn-primary" data-onclick="saveEmployee()">Save Employee</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/layout.js"></script>
+    <script src="js/dom-events.js"></script>
+    <script src="js/employees.js"></script>
+</body>
+</html>

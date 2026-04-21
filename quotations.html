@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solvonix Travel CRM - Quotations | Quote & Negotiation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/pages.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -112,7 +113,7 @@
             </div>
 
             <!-- Stats Cards -->
-            <div class="stats-grid" style="margin-bottom: 20px;">
+            <div class="stats-grid mb-20">
                 <div class="stat-card">
                     <div class="stat-info">
                         <h3 id="totalQuotes">0</h3>
@@ -158,8 +159,8 @@
                         <i class="fas fa-search"></i>
                         <input type="text" id="searchQuotes" placeholder="Search by customer, destination...">
                     </div>
-                    <div style="display: flex; gap: 10px;">
-                        <select id="filterQuoteStatus" class="form-control" style="padding: 8px 12px; border-radius: 40px;">
+                    <div class="flex gap-10">
+                        <select id="filterQuoteStatus" class="form-control form-control-pill">
                             <option value="">All Status</option>
                             <option value="sent">Sent</option>
                             <option value="negotiating">Negotiating</option>
@@ -172,8 +173,8 @@
                     </div>
                 </div>
 
-                <div style="overflow-x: auto;">
-                    <table style="width: 100%;">
+                <div class="table-scroll">
+                    <table class="table-full">
                         <thead>
                             <tr>
                                 <th>Quote ID</th>
@@ -190,56 +191,56 @@
                             </tr>
                         </thead>
                         <tbody id="quotationsTableBody">
-                            <tr><td colspan="11" style="text-align: center;">Loading quotations...</td></tr>
+                            <tr><td colspan="11" class="text-center">Loading quotations...</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
             <!-- Follow-up Reminders Card -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+            <div class="grid-2-top">
                 <div class="table-container">
-                    <h3 style="font-size: 16px; margin-bottom: 15px;">
+                    <h3 class="card-title">
                         <i class="fas fa-bell"></i> Follow-up Reminders
                     </h3>
                     <div id="followupReminders">
-                        <div style="padding: 12px; background: #fef3c7; border-radius: 12px; margin-bottom: 10px;">
-                            <div style="display: flex; justify-content: space-between;">
+                        <div class="notice-card-soft notice-card-warning mb-10">
+                            <div class="flex justify-between">
                                 <div><strong>Sneha Reddy</strong> - ₹68,250</div>
                                 <span class="status-badge status-negotiation">Follow-up Today</span>
                             </div>
-                            <div style="font-size: 12px; color: #92400e; margin-top: 5px;">Quote sent on 2024-02-08 | No response yet</div>
-                            <button class="btn-outline" style="margin-top: 10px; padding: 4px 12px;" data-onclick="sendFollowUp(5001)">Send Reminder</button>
+                            <div class="text-12 text-warning-dark mt-1">Quote sent on 2024-02-08 | No response yet</div>
+                            <button class="btn-outline mt-10" data-onclick="sendFollowUp(5001)">Send Reminder</button>
                         </div>
-                        <div style="padding: 12px; background: #fef3c7; border-radius: 12px;">
-                            <div style="display: flex; justify-content: space-between;">
+                        <div class="notice-card-soft notice-card-warning">
+                            <div class="flex justify-between">
                                 <div><strong>Vikram Singh</strong> - ₹93,450</div>
                                 <span class="status-badge status-negotiation">Negotiation Stage</span>
                             </div>
-                            <div style="font-size: 12px; color: #92400e; margin-top: 5px;">Version 2 sent | Customer asking for discount</div>
-                            <button class="btn-outline" style="margin-top: 10px; padding: 4px 12px;" data-onclick="openNegotiationModal(5002)">Negotiate</button>
+                            <div class="text-12 text-warning-dark mt-1">Version 2 sent | Customer asking for discount</div>
+                            <button class="btn-outline mt-10" data-onclick="openNegotiationModal(5002)">Negotiate</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="table-container">
-                    <h3 style="font-size: 16px; margin-bottom: 15px;">
+                    <h3 class="card-title">
                         <i class="fas fa-chart-line"></i> Negotiation Analytics
                     </h3>
-                    <div style="font-size: 14px;">
-                        <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                    <div class="rule-list">
+                        <div class="rule-row">
                             <span>Average Negotiation Time</span>
                             <strong>3.2 days</strong>
                         </div>
-                        <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                        <div class="rule-row">
                             <span>Average Discount Given</span>
                             <strong>8.5%</strong>
                         </div>
-                        <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                        <div class="rule-row">
                             <span>Quote to Booking Ratio</span>
                             <strong>64%</strong>
                         </div>
-                        <div style="display: flex; justify-content: space-between; padding: 10px 0;">
+                        <div class="rule-row">
                             <span>Most Negotiated Destinations</span>
                             <strong>Goa, Andaman, Thailand</strong>
                         </div>
@@ -248,14 +249,14 @@
             </div>
 
             <!-- Negotiation Tips Card -->
-            <div style="background: linear-gradient(135deg, #e94560 0%, #c62a47 100%); border-radius: 16px; padding: 20px; margin-top: 20px; color: white;">
-                <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
-                    <i class="fas fa-lightbulb" style="font-size: 32px;"></i>
-                    <div style="flex: 1;">
+            <div class="highlight-card mt-20">
+                <div class="flex items-center gap-15 flex-wrap">
+                    <i class="fas fa-lightbulb text-32"></i>
+                    <div class="flex-fill">
                         <strong>Negotiation Tips</strong>
-                        <p style="font-size: 13px; opacity: 0.9; margin-top: 5px;">Offer early bird discount, group discount, or free add-ons like airport transfer to close deals faster.</p>
+                        <p class="text-13 opacity-90 mt-1">Offer early bird discount, group discount, or free add-ons like airport transfer to close deals faster.</p>
                     </div>
-                    <button class="btn-outline" style="background: white; color: #e94560; border: none;" data-onclick="showNegotiationTips()">View All Tips</button>
+                    <button class="btn-outline btn-white-primary" data-onclick="showNegotiationTips()">View All Tips</button>
                 </div>
             </div>
         </main>
@@ -263,7 +264,7 @@
 
     <!-- New Quotation Modal -->
     <div id="newQuoteModal" class="modal">
-        <div class="modal-content" style="width: 600px;">
+        <div class="modal-content modal-w-600">
             <div class="modal-header">
                 <h3><i class="fas fa-file-invoice"></i> Generate New Quotation</h3>
                 <button class="close-modal" data-onclick="closeModal('newQuoteModal')">&times;</button>
@@ -272,14 +273,14 @@
                 <form id="quoteForm">
                     <div class="form-group">
                         <label>Select Lead *</label>
-                        <select id="quoteLeadId" class="form-control" required data-onchange="loadLeadDetails()">
+                        <select id="quoteLeadId" class="form-control mb-2" required data-onchange="loadLeadDetails()">
                             <option value="">-- Select Customer --</option>
                         </select>
                     </div>
-                    <div id="leadDetailsPreview" style="background: #f1f5f9; padding: 12px; border-radius: 12px; margin-bottom: 15px; display: none;">
+                    <div id="leadDetailsPreview" class="notice-card-soft mb-15 hidden">
                         <!-- Dynamic lead details -->
                     </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="grid-2-form">
                         <div class="form-group">
                             <label>Package Type</label>
                             <select id="packageType" class="form-control">
@@ -313,7 +314,7 @@
                             <input type="date" id="validUntil" class="form-control">
                         </div>
                     </div>
-                 <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 15px;">
+                 <div class="grid-4-tight mt-15">
     
     <div class="form-group">
         <label>Adults (12+ yrs)</label>
@@ -336,38 +337,38 @@
     </div>
 
 </div>
-                    <div style="background: #f1f5f9; padding: 15px; border-radius: 12px; margin-top: 15px;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <div class="summary-box mt-15">
+                        <div class="summary-row">
                             <span>Base Amount:</span>
                             <strong id="displayBaseAmount">₹0</strong>
                         </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <div class="summary-row">
                             <span>Discount:</span>
-                            <strong id="displayDiscount" style="color: #10b981;">-₹0</strong>
+                            <strong id="displayDiscount" class="text-success">-₹0</strong>
                         </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <div class="summary-row">
                             <span>Subtotal:</span>
                             <strong id="displaySubtotal">₹0</strong>
                         </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <div class="summary-row">
                             <span>GST (5%):</span>
                             <strong id="displayTax">₹0</strong>
                         </div>
-                        <div style="display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px solid #cbd5e1;">
-                            <span style="font-size: 16px;">Total Amount:</span>
-                            <strong style="font-size: 18px; color: #e94560;" id="displayTotal">₹0</strong>
+                        <div class="summary-row summary-total">
+                            <span class="text-16">Total Amount:</span>
+                            <strong class="text-18 text-primary" id="displayTotal">₹0</strong>
                         </div>
                     </div>
-                    <div class="form-group" style="margin-top: 15px;">
+                    <div class="form-group mt-15">
                         <label>Itinerary Title</label>
                         <input id="itinerary" class="form-control" placeholder="Hotel, flights, transfers, sightseeing...">
                     </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                        <div class="form-group" style="margin-top: 15px;">
+                    <div class="grid-2-form">
+                        <div class="form-group mt-15">
                             <label>Inclusions</label>
                             <textarea id="quoteInclusions" rows="4" class="form-control" placeholder="Hotel&#10;Breakfast&#10;Transfers"></textarea>
                         </div>
-                        <div class="form-group" style="margin-top: 15px;">
+                        <div class="form-group mt-15">
                             <label>Exclusions</label>
                             <textarea id="quoteExclusions" rows="4" class="form-control" placeholder="Lunch&#10;Airfare&#10;Visa"></textarea>
                         </div>
@@ -383,14 +384,14 @@
 
     <!-- Negotiation Modal -->
     <div id="negotiationModal" class="modal">
-        <div class="modal-content" style="width: 500px;">
+        <div class="modal-content modal-w-500">
             <div class="modal-header">
                 <h3><i class="fas fa-handshake"></i> Negotiate Deal</h3>
                 <button class="close-modal" data-onclick="closeModal('negotiationModal')">&times;</button>
             </div>
             <div class="modal-body">
                 <input type="hidden" id="negotiateQuoteId">
-                <div style="background: #f1f5f9; padding: 15px; border-radius: 12px; margin-bottom: 15px;">
+                <div class="summary-box mb-15">
                     <div><strong>Current Quote:</strong> ₹<span id="currentQuoteAmount">0</span></div>
                     <div><strong>Customer:</strong> <span id="negotiateCustomerName"></span></div>
                 </div>
@@ -402,7 +403,7 @@
                     <label>Counter Offer Message</label>
                     <textarea id="counterMessage" rows="3" class="form-control" placeholder="Special discount for early booking..."></textarea>
                 </div>
-                <div style="background: #fef3c7; padding: 12px; border-radius: 12px;">
+                <div class="notice-card-soft notice-card-warning">
                     <i class="fas fa-info-circle"></i> Revised quotation will be sent to customer for approval
                 </div>
             </div>
@@ -415,7 +416,7 @@
 
     <!-- Follow-up Modal -->
     <div id="followupModal" class="modal">
-        <div class="modal-content" style="width: 450px;">
+        <div class="modal-content modal-w-450">
             <div class="modal-header">
                 <h3><i class="fas fa-envelope"></i> Send Follow-up</h3>
                 <button class="close-modal" data-onclick="closeModal('followupModal')">&times;</button>
@@ -436,7 +437,7 @@
                 </div>
                 <div class="form-group">
                     <label>Send via</label>
-                    <div style="display: flex; gap: 15px;">
+                    <div class="flex gap-15">
                         <label><input type="checkbox" value="email" checked> Email</label>
                         <label><input type="checkbox" value="whatsapp"> WhatsApp</label>
                         <label><input type="checkbox" value="sms"> SMS</label>
@@ -456,6 +457,7 @@
     <!-- Toast Container -->
     <div id="toastContainer" class="toast-container"></div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/app.js"></script>
     <script src="js/layout.js"></script>
     <script src="js/dom-events.js"></script>

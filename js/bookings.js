@@ -279,7 +279,7 @@
                                 <span style="color: #f59e0b;">Due: ₹${pending.toLocaleString()}</span>
                             </div>
                             <div style="font-size: 12px;">${b.bookingRef} | ${lead?.destination}</div>
-                            <button class="btn-primary" style="margin-top: 10px; padding: 4px 12px;" data-onclick="openPaymentModal(${b.id})">
+                            <button class="btn-primary btn-sm mt-10" data-onclick="openPaymentModal(${b.id})">
                                 <i class="fas fa-credit-card"></i> Pay Now
                             </button>
                         </div>
@@ -302,7 +302,7 @@
                             <td>₹${t.amount.toLocaleString()}</td>
                             <td>${t.mode}</td>
                             <td><span class="status-badge status-won">Success</span></td>
-                            <td><button class="btn-outline" style="padding: 2px 8px;" data-onclick="viewTransactionReceipt(${t.id})">View</button></td>
+                            <td><button class="btn-outline btn-sm" data-onclick="viewTransactionReceipt(${t.id})">View</button></td>
                         </tr>
                     `;
                 }).join('');
@@ -342,11 +342,16 @@
                                 <td>₹${(b.paidAmount || 0).toLocaleString()}</td>
                                 <td><span style="color: #f59e0b;">₹${pending.toLocaleString()}</span></td>
                                 <td><span class="status-badge status-${b.paymentStatus === 'full' ? 'won' : b.paymentStatus === 'partial' ? 'partial' : 'new'}">${b.paymentStatus}</span></td>
+                                 <td>ram sharma</td>
+                                 <td>2000</td>
+
                                 <td>${b.travelDate || '-'}</td>
                                 <td>${b.paymentStatus !== 'full' ? '<span style="color: #e94560;">Immediate</span>' : '-'}</td>
                                 <td>
-                                    ${b.paymentStatus !== 'full' ? `<button class="btn-primary" style="padding: 4px 12px;" data-onclick="openPaymentModal(${b.id})">Pay Now</button>` : ''}
-                                    <button class="btn-outline" style="padding: 4px 8px;" data-onclick="viewBookingDetails(${b.id})"><i class="fas fa-eye"></i></button>
+                                    <div class="table-actions">
+                                    ${b.paymentStatus !== 'full' ? `<button class="btn-primary btn-sm" data-onclick="openPaymentModal(${b.id})">Pay Now</button>` : ''}
+                                    <button class="btn-outline btn-sm btn-icon" data-onclick="viewBookingDetails(${b.id})"><i class="fas fa-eye"></i></button>
+                                    </div>
                                  </td>
                             </tr>
                         `;
