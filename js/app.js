@@ -8,6 +8,7 @@ let state = {
     leads: [],
     quotations: [],
     bookings: [],
+    documents: [],
     employees: [],
     campaigns: [],
     tickets: [],
@@ -40,7 +41,20 @@ const sampleData = {
     ],
     
     bookings: [
-        { id: 2001, bookingRef: 'SOL-BK-001', leadId: 1006, quoteId: 5003, totalAmount: 60900, paidAmount: 60900, paymentStatus: 'full', paymentDate: '2024-02-09', travelDate: '2024-04-20', status: 'confirmed', paymentMode: 'UPI', assignedTo: 'Amit Patel', incentiveAmount: 2436, incentiveRate: 4, packageType: 'premium', tripType: 'domestic' }
+        { id: 2001, bookingRef: 'SOL-BK-001', leadId: 1006, quoteId: 5003, totalAmount: 60900, paidAmount: 60900, paymentStatus: 'full', paymentDate: '2024-02-18', firstPaymentDate: '2024-02-09', advancePaymentDate: '2024-02-09', lastPaymentDate: '2024-02-18', travelDate: '2024-04-20', status: 'confirmed', paymentMode: 'UPI', assignedTo: 'Amit Patel', incentiveAmount: 2436, incentiveRate: 4, packageType: 'premium', tripType: 'domestic', paymentTermPercent: 25, advanceDueAmount: 15225 },
+        { id: 2002, bookingRef: 'SOL-BK-002', leadId: 1004, quoteId: 5001, totalAmount: 68250, paidAmount: 25000, paymentStatus: 'partial', paymentDate: '2024-02-10', firstPaymentDate: '2024-02-10', advancePaymentDate: '2024-02-10', lastPaymentDate: '2024-02-10', travelDate: '2024-03-18', status: 'pending_balance', paymentMode: 'Card', assignedTo: 'Neha Singh', incentiveAmount: 2048, incentiveRate: 3, packageType: 'deluxe', tripType: 'domestic', paymentTermPercent: 25, advanceDueAmount: 17063 },
+        { id: 2003, bookingRef: 'SOL-BK-003', leadId: 1005, quoteId: 5002, totalAmount: 93450, paidAmount: 40000, paymentStatus: 'partial', paymentDate: '2024-02-16', firstPaymentDate: '2024-02-11', advancePaymentDate: '2024-02-11', lastPaymentDate: '2024-02-16', travelDate: '2024-05-10', status: 'pending_balance', paymentMode: 'UPI', assignedTo: 'Rajesh Kumar', incentiveAmount: 3738, incentiveRate: 4, packageType: 'premium', tripType: 'domestic', paymentTermPercent: 30, advanceDueAmount: 28035 },
+        { id: 2004, bookingRef: 'SOL-BK-004', leadId: 1001, quoteId: null, totalAmount: 54800, paidAmount: 15000, paymentStatus: 'partial', paymentDate: '2024-02-14', firstPaymentDate: '2024-02-14', advancePaymentDate: '2024-02-14', lastPaymentDate: '2024-02-14', travelDate: '2024-04-15', status: 'pending_balance', paymentMode: 'Cash', assignedTo: 'Neha Singh', incentiveAmount: 1096, incentiveRate: 2, packageType: 'standard', tripType: 'domestic', paymentTermPercent: 25, advanceDueAmount: 13700 },
+        { id: 2005, bookingRef: 'SOL-BK-005', leadId: 1002, quoteId: null, totalAmount: 47250, paidAmount: 12000, paymentStatus: 'partial', paymentDate: '2024-02-12', firstPaymentDate: '2024-02-12', advancePaymentDate: '2024-02-12', lastPaymentDate: '2024-02-12', travelDate: '2024-03-25', status: 'pending_balance', paymentMode: 'NetBanking', assignedTo: 'Neha Singh', incentiveAmount: 1418, incentiveRate: 3, packageType: 'deluxe', tripType: 'domestic', paymentTermPercent: 25, advanceDueAmount: 11813 }
+    ],
+
+    documents: [
+        { id: 9001, leadId: 1006, type: 'aadhaar', label: 'Aadhaar Card', travelerName: 'Anjali Nair', category: 'identity', scope: 'domestic', status: 'verified', priority: 'high', dueDate: '2024-04-10', fileName: 'anjali-aadhaar.pdf', fileSize: '1.2 MB', uploadedOn: '2024-02-11', verifiedOn: '2024-02-11', verifiedBy: 'Amit Patel', notes: 'Primary traveler ID verified for hotel check-in.', usedFor: 'Hotel and airline identity validation' },
+        { id: 9002, leadId: 1006, type: 'flight_ticket', label: 'Flight Ticket', travelerName: 'Anjali Nair', category: 'travel', scope: 'all', status: 'uploaded', priority: 'medium', dueDate: '2024-04-16', fileName: 'sol-bk-001-flight.pdf', fileSize: '420 KB', uploadedOn: '2024-02-12', verifiedOn: '', verifiedBy: '', notes: 'E-ticket shared by operations; pending final traveler confirmation.', usedFor: 'Airport check-in and PNR sharing' },
+        { id: 9003, leadId: 1007, type: 'passport', label: 'Passport Front & Back', travelerName: 'Deepak Joshi', category: 'identity', scope: 'international', status: 'pending', priority: 'critical', dueDate: '2024-05-01', fileName: '', fileSize: '', uploadedOn: '', verifiedOn: '', verifiedBy: '', notes: 'Passport scan required before visa filing.', usedFor: 'Visa processing and international ticketing' },
+        { id: 9004, leadId: 1007, type: 'visa', label: 'Visa Copy', travelerName: 'Deepak Joshi', category: 'compliance', scope: 'international', status: 'pending', priority: 'critical', dueDate: '2024-05-12', fileName: '', fileSize: '', uploadedOn: '', verifiedOn: '', verifiedBy: '', notes: 'Applicable for Thailand depending on route and travel plan.', usedFor: 'Immigration clearance and airline compliance' },
+        { id: 9005, leadId: 1005, type: 'pan', label: 'PAN Card', travelerName: 'Vikram Singh', category: 'finance', scope: 'all', status: 'uploaded', priority: 'medium', dueDate: '2024-04-22', fileName: 'vikram-pan.jpg', fileSize: '840 KB', uploadedOn: '2024-02-10', verifiedOn: '', verifiedBy: '', notes: 'Collected for payment and high-value reconciliation.', usedFor: 'Payment, invoicing and TCS/forex support' },
+        { id: 9006, leadId: 1005, type: 'hotel_voucher', label: 'Hotel Booking Voucher', travelerName: 'Vikram Singh', category: 'travel', scope: 'all', status: 'missing', priority: 'high', dueDate: '2024-05-03', fileName: '', fileSize: '', uploadedOn: '', verifiedOn: '', verifiedBy: '', notes: 'Operations team to upload after supplier confirmation.', usedFor: 'Check-in desk handoff and service confirmation' }
     ],
 
     employees: [
@@ -65,7 +79,13 @@ const sampleData = {
     ],
 
     transactions: [
-        { id: 1, bookingId: 2001, bookingRef: 'SOL-BK-001', amount: 60900, mode: 'UPI', transactionId: 'UPI24020901', notes: 'Full advance received', date: '2024-02-09' }
+        { id: 1, bookingId: 2001, bookingRef: 'SOL-BK-001', amount: 15225, mode: 'UPI', transactionId: 'UPI24020901', notes: 'Advance payment received', date: '2024-02-09' },
+        { id: 2, bookingId: 2001, bookingRef: 'SOL-BK-001', amount: 45675, mode: 'UPI', transactionId: 'UPI24021801', notes: 'Final balance collected', date: '2024-02-18' },
+        { id: 3, bookingId: 2002, bookingRef: 'SOL-BK-002', amount: 25000, mode: 'Card', transactionId: 'CRD24021022', notes: 'Advance collected at booking time', date: '2024-02-10' },
+        { id: 4, bookingId: 2003, bookingRef: 'SOL-BK-003', amount: 20000, mode: 'UPI', transactionId: 'UPI24021118', notes: 'Initial advance received', date: '2024-02-11' },
+        { id: 5, bookingId: 2003, bookingRef: 'SOL-BK-003', amount: 20000, mode: 'UPI', transactionId: 'UPI24021677', notes: 'Second installment received', date: '2024-02-16' },
+        { id: 6, bookingId: 2004, bookingRef: 'SOL-BK-004', amount: 15000, mode: 'Cash', transactionId: 'CSH24021409', notes: 'Advance received in office', date: '2024-02-14' },
+        { id: 7, bookingId: 2005, bookingRef: 'SOL-BK-005', amount: 12000, mode: 'NetBanking', transactionId: 'NBT24021255', notes: 'Advance payment from customer', date: '2024-02-12' }
     ]
 };
 
@@ -80,6 +100,7 @@ function loadSampleDataIntoState() {
     state.leads = sampleData.leads.map(normalizeLead);
     state.quotations = sampleData.quotations.map(normalizeQuotation);
     state.bookings = sampleData.bookings.map(normalizeBooking);
+    state.documents = [...(sampleData.documents || [])];
     state.employees = sampleData.employees.map(normalizeEmployee);
     state.campaigns = [...sampleData.campaigns];
     state.tickets = [...sampleData.tickets];
@@ -142,10 +163,35 @@ function attachQuoteFormListeners() {
     document.getElementById('packageType')?.addEventListener('change', updateTotals);
     document.getElementById('baseAmount')?.addEventListener('input', updateTotals);
     document.getElementById('discount')?.addEventListener('input', updateTotals);
+    document.getElementById('paymentTermPercent')?.addEventListener('change', updateTotals);
+    document.getElementById('advanceRequired')?.addEventListener('change', updateTotals);
     ['travelerAdults', 'travelerYoung', 'travelerChildren', 'travelerInfants'].forEach(id => {
         document.getElementById(id)?.addEventListener('input', updateQuoteTravelerTotal);
     });
     updateQuoteTravelerTotal();
+}
+
+function updateTotals() {
+    let base = parseFloat(document.getElementById('baseAmount')?.value) || 0;
+    const discount = parseFloat(document.getElementById('discount')?.value) || 0;
+    const packageType = document.getElementById('packageType')?.value;
+
+    if (packageType === 'deluxe') base *= 1.2;
+    if (packageType === 'premium') base *= 1.4;
+
+    const subtotal = Math.max(base - discount, 0);
+    const tax = subtotal * 0.05;
+    const total = subtotal + tax;
+    const termPercent = parseFloat(document.getElementById('paymentTermPercent')?.value) || 25;
+    const advanceRequired = (document.getElementById('advanceRequired')?.value || 'yes') === 'yes';
+    const advanceAmount = advanceRequired ? Math.round((total * termPercent) / 100) : 0;
+
+    if (document.getElementById('displayBaseAmount')) document.getElementById('displayBaseAmount').innerHTML = `₹${base.toLocaleString('en-IN')}`;
+    if (document.getElementById('displayDiscount')) document.getElementById('displayDiscount').innerHTML = `-₹${discount.toLocaleString('en-IN')}`;
+    if (document.getElementById('displaySubtotal')) document.getElementById('displaySubtotal').innerHTML = `₹${subtotal.toLocaleString('en-IN')}`;
+    if (document.getElementById('displayTax')) document.getElementById('displayTax').innerHTML = `₹${tax.toLocaleString('en-IN')}`;
+    if (document.getElementById('displayTotal')) document.getElementById('displayTotal').innerHTML = `₹${total.toLocaleString('en-IN')}`;
+    if (document.getElementById('displayAdvanceAmount')) document.getElementById('displayAdvanceAmount').innerHTML = `₹${advanceAmount.toLocaleString('en-IN')}`;
 }
 
 function detectTripType(destination = '') {
@@ -201,6 +247,8 @@ function normalizeEmployee(employee) {
 function normalizeQuotation(quotation) {
     const lead = sampleData.leads.find(item => item.id === quotation.leadId) || state.leads.find(item => item.id === quotation.leadId) || {};
     const travelerBreakdown = normalizeTravelerBreakdown(quotation.travelerBreakdown || lead.travelerBreakdown || { adults: lead.travelers || 0 });
+    const paymentTermPercent = Number(quotation.paymentTermPercent || 25);
+    const total = Number(quotation.total || 0);
     return {
         ...quotation,
         packageType: quotation.packageType || lead.packageType || 'standard',
@@ -210,7 +258,10 @@ function normalizeQuotation(quotation) {
         days: Number(quotation.days || (quotation.nights ? quotation.nights + 1 : 0)),
         inclusions: Array.isArray(quotation.inclusions) ? quotation.inclusions : [],
         exclusions: Array.isArray(quotation.exclusions) ? quotation.exclusions : [],
-        assignedTo: quotation.assignedTo || lead.assignedTo || 'unassigned'
+        assignedTo: quotation.assignedTo || lead.assignedTo || 'unassigned',
+        advanceRequired: quotation.advanceRequired !== false,
+        paymentTermPercent,
+        advanceAmount: Number(quotation.advanceAmount || Math.round((total * paymentTermPercent) / 100))
     };
 }
 
@@ -226,6 +277,8 @@ function normalizeBooking(booking) {
         assignedTo: booking.assignedTo || quote.assignedTo || 'unassigned',
         packageType: booking.packageType || quote.packageType || 'standard',
         tripType: booking.tripType || quote.tripType || 'domestic',
+        paymentTermPercent: Number(booking.paymentTermPercent || quote.paymentTermPercent || 25),
+        advanceDueAmount: Number(booking.advanceDueAmount || quote.advanceAmount || Math.round((Number(booking.totalAmount || 0) * Number(quote.paymentTermPercent || 25)) / 100)),
         incentiveRate: booking.incentiveRate || incentive.rate,
         incentiveAmount: booking.incentiveAmount || incentive.amount
     };
@@ -288,12 +341,14 @@ function getCurrentPage() {
         quotations: 'quotations',
         bookings: 'bookings',
         customers: 'customers',
+        documents: 'documents',
         payments: 'payments',
         itinerary: 'itinerary',
         campaigns: 'campaigns',
         support: 'support',
         feedback: 'feedback',
         reports: 'reports',
+        employee: 'employee',
         employees: 'employees'
     };
 
@@ -460,7 +515,7 @@ function viewLead(id) {
     if (!lead) return;
     
     const modalHtml = `
-        <div class="modal show" id="leadModal">
+        <div class="modal show" id="leadModal" data-remove-on-close="true">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3>Lead Details: ${lead.name}</h3>
@@ -504,7 +559,7 @@ function sendQuotation(leadId) {
     const defaultNights = Math.max(Number(lead.quoteNights || 4), 0);
     
     const modalHtml = `
-        <div class="modal show" id="quoteModal">
+        <div class="modal show" id="quoteModal" data-remove-on-close="true">
             <div class="modal-content quote-modal-content">
                 <div class="modal-header">
                     <h3><i class="fas fa-file-invoice"></i> Generate New Quotation</h3>
@@ -596,10 +651,32 @@ function sendQuotation(leadId) {
                                 <span class="quote-total-label">Total Amount:</span>
                                 <strong class="quote-total-value" id="displayTotal">₹0</strong>
                             </div>
+                            <div class="quote-summary-row">
+                                <span>Advance Due:</span>
+                                <strong id="displayAdvanceAmount">₹0</strong>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Itinerary Title</label>
                             <input id="itinerary" class="form-control" value="${defaultNights + 1} Days ${lead.destination} ${lead.packageType.charAt(0).toUpperCase() + lead.packageType.slice(1)} Package" placeholder="Hotel, flights, transfers, sightseeing...">
+                        </div>
+                        <div class="quote-grid-two">
+                            <div class="form-group">
+                                <label>Payment Term</label>
+                                <select id="paymentTermPercent" class="form-control" data-onchange="updateTotals()">
+                                    <option value="10">10% Advance</option>
+                                    <option value="25" selected>25% Advance</option>
+                                    <option value="50">50% Advance</option>
+                                    <option value="100">100% Full Payment</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Advance Payment</label>
+                                <select id="advanceRequired" class="form-control">
+                                    <option value="yes" selected>Required before booking</option>
+                                    <option value="no">Not required</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="quote-grid-two">
                             <div class="form-group mt-15">
@@ -641,6 +718,8 @@ function generateQuotation() {
         children: document.getElementById('travelerChildren')?.value,
         infants: document.getElementById('travelerInfants')?.value
     });
+    const paymentTermPercent = Number(document.getElementById('paymentTermPercent')?.value || 25);
+    const advanceRequired = (document.getElementById('advanceRequired')?.value || 'yes') === 'yes';
     const inclusions = parseTextareaList(document.getElementById('quoteInclusions')?.value);
     const exclusions = parseTextareaList(document.getElementById('quoteExclusions')?.value);
     
@@ -672,7 +751,10 @@ function generateQuotation() {
         travelerBreakdown,
         inclusions,
         exclusions,
-        assignedTo: lead?.assignedTo || 'unassigned'
+        assignedTo: lead?.assignedTo || 'unassigned',
+        advanceRequired,
+        paymentTermPercent,
+        advanceAmount: advanceRequired ? Math.round((total * paymentTermPercent) / 100) : 0
     };
     
     state.quotations.push(normalizeQuotation(newQuote));
@@ -790,6 +872,8 @@ function approveQuotation(quoteId) {
             assignedTo: quote.assignedTo || lead?.assignedTo,
             packageType: quote.packageType,
             tripType: quote.tripType,
+            paymentTermPercent: Number(quote.paymentTermPercent || 25),
+            advanceDueAmount: quote.advanceRequired === false ? 0 : Number(quote.advanceAmount || Math.round((quote.total * Number(quote.paymentTermPercent || 25)) / 100)),
             incentiveRate: incentive.rate,
             incentiveAmount: incentive.amount
         });
@@ -833,7 +917,7 @@ function processPayment(bookingId) {
     const lead = state.leads.find(l => l.id === booking.leadId);
     
     const modalHtml = `
-        <div class="modal show" id="paymentModal">
+        <div class="modal show" id="paymentModal" data-remove-on-close="true">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3>Payment - ${lead?.name}</h3>
@@ -1034,10 +1118,131 @@ function closeModal(modalId) {
     if (!modal) return;
     if (modal.classList.contains('modal')) {
         modal.classList.remove('show');
-        if (modal.parentElement === document.body && !['newItineraryModal', 'addActivityModal', 'paymentModal', 'receiptModal', 'newBookingModal', 'newTicketModal', 'replyTicketModal', 'liveChatModal', 'newQuoteModal', 'negotiationModal', 'followupModal', 'addLeadModal'].includes(modalId)) {
+        if (modal.dataset.removeOnClose === 'true') {
             modal.remove();
         }
     }
+}
+
+function csvEscape(value) {
+    const text = String(value ?? '').replace(/\s+/g, ' ').trim();
+    return /[",\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+}
+
+function getTableCsv(table) {
+    const tableRows = Array.from(table.querySelectorAll('tr'));
+    if (!tableRows.length) {
+        return Array.from(table.querySelectorAll('.panel-card, .notice-card-soft, .employee-card, .customer-card, [class*="card"], [class*="item"]'))
+            .map(item => csvEscape(item.innerText))
+            .filter(Boolean)
+            .join('\n');
+    }
+
+    const rows = tableRows
+        .filter(row => !row.hidden)
+        .map(row => Array.from(row.children)
+            .map(cell => csvEscape(cell.innerText))
+            .join(','));
+    return rows.join('\n');
+}
+
+function downloadTextFile(filename, content, mimeType = 'text/csv;charset=utf-8;') {
+    const blob = new Blob([content], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+}
+
+function exportTableCsv(tableId, filename = 'crm-export.csv') {
+    const table = document.getElementById(tableId)?.closest('table') || document.getElementById(tableId);
+    if (!table) {
+        showToast('Export unavailable', 'Table data was not found on this page.', 'warning');
+        return;
+    }
+
+    downloadTextFile(filename, getTableCsv(table));
+    showToast('Export Ready', `${filename} has been downloaded.`);
+}
+
+function importCsvData(entityName = 'records') {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.csv,text/csv';
+    input.addEventListener('change', () => {
+        const file = input.files?.[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = () => {
+            const rows = String(reader.result || '').split(/\r?\n/).filter(Boolean);
+            const count = Math.max(rows.length - 1, 0);
+            showToast('Import Checked', `${count} ${entityName} row${count === 1 ? '' : 's'} found in ${file.name}.`);
+        };
+        reader.readAsText(file);
+    });
+    input.click();
+}
+
+function createDataToolButton(label, icon, handler) {
+    const button = document.createElement('button');
+    button.className = 'btn-outline btn-sm';
+    button.type = 'button';
+    button.innerHTML = `<i class="${icon}"></i> ${label}`;
+    button.addEventListener('click', handler);
+    return button;
+}
+
+function ensureDataToolGroup(target) {
+    const section = target.closest('.table-header, .filter-grid, .report-top-btn, .toolbar-actions') || target;
+    const container = section.closest('.table-container') || section.parentElement;
+    let row = container.querySelector(':scope > .data-action-row');
+    if (!row) {
+        row = document.createElement('div');
+        row.className = 'data-action-row';
+        container.insertBefore(row, section);
+    }
+
+    let group = row.querySelector('.data-tool-group');
+    if (!group) {
+        group = document.createElement('div');
+        group.className = 'data-tool-group';
+        row.appendChild(group);
+    }
+
+    return group;
+}
+
+function injectDataTools() {
+    const page = getCurrentPage();
+    const toolsByPage = {
+        leads: { target: '.lead-table-toolbar', table: 'leadsTableBody', name: 'leads', importable: true },
+        quotations: { target: '.table-header .flex.gap-10', table: 'quotationsTableBody', name: 'quotations', importable: true },
+        bookings: { target: '.table-header', table: 'bookingsTableBody', name: 'bookings', importable: true },
+        customers: { target: '.filter-grid .flex.gap-10', table: 'customerList', name: 'customers', importable: true },
+        documents: { target: '.documents-filter-grid .flex.gap-10, .page-title', table: 'travelerDocumentList', name: 'documents', importable: true },
+        employee: { target: '.filter-grid .flex.gap-10', table: 'employeeDirectory', name: 'employees', importable: true },
+        payments: { target: '.table-header', table: 'collectionsTableBody', name: 'collections', importable: false },
+        campaigns: { target: '.table-header', table: 'campaignsContainer', name: 'campaigns', importable: true },
+        support: { target: '.table-header .flex.gap-10', table: 'ticketsContainer', name: 'support-tickets', importable: true },
+        feedback: { target: '.table-header .flex.gap-10', table: 'feedbackContainer', name: 'feedback', importable: false },
+        reports: { target: '.report-top-btn, .toolbar-actions', table: 'sourceEffectivenessTable', name: 'reports', importable: false }
+    };
+    const config = toolsByPage[page];
+    if (!config || document.querySelector('.data-action-row')) return;
+
+    const target = document.querySelector(config.target);
+    if (!target) return;
+
+    const group = ensureDataToolGroup(target);
+    if (config.importable) {
+        group.appendChild(createDataToolButton('Import', 'fas fa-file-import', () => importCsvData(config.name)));
+    }
+    group.appendChild(createDataToolButton('Export', 'fas fa-file-export', () => exportTableCsv(config.table, `${config.name}.csv`)));
 }
 
 function showToast(message, detail, type = 'success') {
@@ -1064,6 +1269,7 @@ function initializeEventListeners() {
             addNewLead();
         });
     }
+    injectDataTools();
 }
 
 // Global functions for HTML onclick
@@ -1091,3 +1297,6 @@ window.calculateIncentive = calculateIncentive;
 window.getIncentiveRate = getIncentiveRate;
 window.createItineraryFromBooking = createItineraryFromBooking;
 window.normalizeEmployee = normalizeEmployee;
+window.exportTableCsv = exportTableCsv;
+window.importCsvData = importCsvData;
+window.injectDataTools = injectDataTools;

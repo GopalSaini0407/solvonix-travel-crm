@@ -3,1488 +3,1712 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Solvonix Travel CRM | Intelligent Travel Pipeline Platform</title>
-    <!-- Preconnect & Fonts -->
+    <title>Solvonix Travel CRM | Travel Sales, Ops and Collections in One Workspace</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Bootstrap 5 minimal grid & utilities (lightweight) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Landing specific CSS (will be provided in next step) -->
-    <link rel="stylesheet" href="css/landing.css">
     <style>
-        /* ============================================
-   SOLVONIX TRAVEL CRM - LANDING PAGE CSS
-   Modern, responsive, travel-centric design
-   ============================================ */
-
-:root {
-    --primary: #e94560;
-    --primary-dark: #c62a47;
-    --primary-light: #ff6b81;
-    --secondary: #0f3460;
-    --secondary-light: #16213e;
-    --dark: #1e293b;
-    --light: #f8fafc;
-    --gray: #64748b;
-    --gray-light: #e2e8f0;
-    --white: #ffffff;
-    --gradient-start: #e94560;
-    --gradient-end: #c62a47;
-    --gradient-secondary: #0f3460;
-    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
-    --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.12);
-    --shadow-xl: 0 30px 50px rgba(0, 0, 0, 0.15);
-    --radius-sm: 12px;
-    --radius-md: 18px;
-    --radius-lg: 28px;
-    --radius-xl: 40px;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Inter', sans-serif;
-    background: var(--white);
-    color: var(--dark);
-    line-height: 1.5;
-    overflow-x: hidden;
-}
-
-/* ========== NAVIGATION ========== */
-.landing-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    padding: 18px 32px;
-    transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    box-shadow: var(--shadow-sm);
-}
-
-.nav-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 24px;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 26px;
-    font-weight: 800;
-    color: var(--secondary);
-}
-
-.logo i {
-    color: var(--primary);
-    font-size: 28px;
-}
-
-.logo-highlight {
-    color: var(--primary);
-}
-
-.nav-links {
-    display: flex;
-    gap: 32px;
-    align-items: center;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: var(--dark);
-    font-weight: 500;
-    transition: color 0.2s;
-    font-size: 15px;
-}
-
-.nav-links a:hover {
-    color: var(--primary);
-}
-
-.nav-actions {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-}
-
-.btn-outline-light {
-    padding: 10px 22px;
-    border-radius: 40px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 14px;
-    background: transparent;
-    border: 1.5px solid var(--gray-light);
-    color: var(--secondary);
-    transition: all 0.2s;
-}
-
-.btn-outline-light:hover {
-    border-color: var(--primary);
-    color: var(--primary);
-    background: rgba(233, 69, 96, 0.05);
-}
-
-.btn-primary-glow {
-    padding: 10px 24px;
-    border-radius: 40px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 14px;
-    background: var(--primary);
-    color: white;
-    transition: all 0.2s;
-    box-shadow: 0 4px 12px rgba(233, 69, 96, 0.3);
-}
-
-.btn-primary-glow:hover {
-    background: var(--primary-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(233, 69, 96, 0.4);
-}
-
-.mobile-menu-btn {
-    display: none;
-    background: none;
-    border: none;
-    font-size: 26px;
-    color: var(--secondary);
-    cursor: pointer;
-}
-
-/* ========== HERO SECTION ========== */
-.hero {
-    position: relative;
-    padding: 140px 24px 100px;
-    overflow: hidden;
-    background: linear-gradient(135deg, #fff5f7 0%, #ffffff 100%);
-}
-
-.hero-bg-gradient {
-    position: absolute;
-    top: -30%;
-    right: -20%;
-    width: 70%;
-    height: 80%;
-    background: radial-gradient(circle, rgba(233,69,96,0.08) 0%, rgba(233,69,96,0) 70%);
-    border-radius: 50%;
-    pointer-events: none;
-}
-
-.hero-pattern {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e94560' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    pointer-events: none;
-}
-
-.hero-container {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    max-width: 1100px;
-    margin: 0 auto;
-}
-
-.hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(233, 69, 96, 0.1);
-    padding: 8px 20px;
-    border-radius: 60px;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--primary);
-    margin-bottom: 28px;
-}
-
-.hero-title {
-    font-size: clamp(42px, 6vw, 70px);
-    font-weight: 800;
-    line-height: 1.2;
-    margin-bottom: 24px;
-    color: var(--secondary);
-}
-
-.gradient-text {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-}
-
-.hero-description {
-    font-size: 18px;
-    color: var(--gray);
-    max-width: 680px;
-    margin: 0 auto 32px;
-    line-height: 1.6;
-}
-
-.hero-buttons {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 56px;
-}
-
-.btn-primary-large {
-    padding: 14px 36px;
-    border-radius: 60px;
-    background: var(--primary);
-    color: white;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 16px;
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    transition: all 0.25s;
-    box-shadow: var(--shadow-md);
-}
-
-.btn-primary-large:hover {
-    background: var(--primary-dark);
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-lg);
-}
-
-.btn-outline-large {
-    padding: 14px 32px;
-    border-radius: 60px;
-    background: transparent;
-    border: 1.5px solid var(--gray-light);
-    color: var(--secondary);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 16px;
-    transition: all 0.25s;
-}
-
-.btn-outline-large:hover {
-    border-color: var(--primary);
-    color: var(--primary);
-    transform: translateY(-2px);
-}
-
-.hero-stats {
-    display: flex;
-    justify-content: center;
-    gap: 48px;
-    flex-wrap: wrap;
-}
-
-.stat-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.stat-number {
-    font-size: 32px;
-    font-weight: 800;
-    color: var(--secondary);
-}
-
-.stat-label {
-    font-size: 14px;
-    color: var(--gray);
-}
-
-.hero-dashboard-mock {
-    position: absolute;
-    bottom: -40px;
-    right: 5%;
-    max-width: 280px;
-    background: white;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-xl);
-    padding: 16px 20px;
-    border: 1px solid var(--gray-light);
-    animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-12px); }
-}
-
-.mock-card {
-    background: var(--white);
-}
-
-.mock-header {
-    font-weight: 700;
-    color: var(--secondary);
-    margin-bottom: 12px;
-}
-
-.mock-stats {
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    color: var(--gray);
-    margin-bottom: 12px;
-}
-
-.mock-progress {
-    height: 6px;
-    background: var(--gray-light);
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.mock-fill {
-    height: 100%;
-    background: var(--primary);
-    border-radius: 10px;
-}
-
-/* ========== FEATURES SECTION ========== */
-.features {
-    padding: 100px 24px;
-    background: var(--white);
-}
-
-.section-header {
-    text-align: center;
-    max-width: 700px;
-    margin: 0 auto 60px;
-}
-
-.section-tag {
-    display: inline-block;
-    background: rgba(233, 69, 96, 0.1);
-    color: var(--primary);
-    padding: 5px 14px;
-    border-radius: 40px;
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 16px;
-}
-
-.section-header h2 {
-    font-size: clamp(30px, 5vw, 44px);
-    font-weight: 800;
-    color: var(--secondary);
-    margin-bottom: 16px;
-}
-
-.section-header p {
-    color: var(--gray);
-    font-size: 17px;
-}
-
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 32px;
-    max-width: 1280px;
-    margin: 0 auto;
-}
-
-.feature-card {
-    background: var(--white);
-    padding: 32px 28px;
-    border-radius: var(--radius-md);
-    transition: all 0.3s;
-    border: 1px solid var(--gray-light);
-    box-shadow: var(--shadow-sm);
-}
-
-.feature-card:hover {
-    transform: translateY(-8px);
-    border-color: var(--primary-light);
-    box-shadow: var(--shadow-lg);
-}
-
-.feature-icon {
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, rgba(233,69,96,0.1), rgba(233,69,96,0.05));
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 24px;
-}
-
-.feature-icon i {
-    font-size: 28px;
-    color: var(--primary);
-}
-
-.feature-card h3 {
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 12px;
-    color: var(--secondary);
-}
-
-.feature-card p {
-    color: var(--gray);
-    line-height: 1.6;
-}
-
-/* ========== PIPELINE SECTION ========== */
-.pipeline-section {
-    background: #fef9fa;
-    padding: 90px 24px;
-}
-
-.pipeline-visual {
-    max-width: 1200px;
-    margin: 0 auto;
-    background: white;
-    border-radius: var(--radius-lg);
-    padding: 40px 30px;
-    box-shadow: var(--shadow-md);
-}
-
-.pipeline-steps {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 16px;
-    margin-bottom: 40px;
-}
-
-.pipeline-step {
-    flex: 1;
-    min-width: 90px;
-    text-align: center;
-    padding: 12px 8px;
-    background: #f8fafc;
-    border-radius: 60px;
-    transition: all 0.2s;
-}
-
-.pipeline-step span {
-    display: inline-block;
-    width: 32px;
-    height: 32px;
-    background: var(--secondary);
-    color: white;
-    border-radius: 40px;
-    line-height: 32px;
-    font-weight: 700;
-    font-size: 14px;
-    margin-bottom: 8px;
-}
-
-.pipeline-step p {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--dark);
-}
-
-.pipeline-cta {
-    text-align: center;
-    color: var(--primary);
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-/* ========== TEAM COLLAB ========== */
-.team-collab {
-    padding: 90px 24px;
-    background: var(--white);
-}
-
-.collab-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.collab-content h2 {
-    font-size: 38px;
-    font-weight: 800;
-    color: var(--secondary);
-    margin: 16px 0 20px;
-}
-
-.collab-list {
-    list-style: none;
-    margin: 28px 0 32px;
-}
-
-.collab-list li {
-    margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 16px;
-}
-
-.collab-list i {
-    color: var(--primary);
-    font-size: 18px;
-}
-
-.btn-primary-outline {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 28px;
-    border-radius: 40px;
-    background: transparent;
-    border: 1.5px solid var(--primary);
-    color: var(--primary);
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.2s;
-}
-
-.btn-primary-outline:hover {
-    background: var(--primary);
-    color: white;
-}
-
-.collab-preview .preview-card {
-    background: var(--secondary-light);
-    border-radius: var(--radius-lg);
-    padding: 32px;
-    color: white;
-    box-shadow: var(--shadow-lg);
-}
-
-.preview-header {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 24px;
-}
-
-.preview-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.preview-divider {
-    height: 2px;
-    background: rgba(255,255,255,0.1);
-    margin: 8px 0;
-}
-
-/* ========== TESTIMONIALS ========== */
-.testimonials {
-    background: #f8fafc;
-    padding: 90px 24px;
-}
-
-.testimonial-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 32px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.testimonial-card {
-    background: white;
-    padding: 32px;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
-    transition: all 0.2s;
-    border: 1px solid var(--gray-light);
-}
-
-.testimonial-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-md);
-}
-
-.quote-icon {
-    font-size: 32px;
-    color: var(--primary-light);
-    opacity: 0.5;
-    margin-bottom: 20px;
-}
-
-.testimonial-card p {
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    color: var(--dark);
-}
-
-.testimonial-author {
-    font-weight: 700;
-    color: var(--secondary);
-    font-size: 14px;
-}
-
-/* ========== FINAL CTA ========== */
-.final-cta {
-    padding: 80px 24px;
-    background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
-}
-
-.cta-card {
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(10px);
-    border-radius: var(--radius-xl);
-    padding: 60px 40px;
-    max-width: 900px;
-    margin: 0 auto;
-    border: 1px solid rgba(255,255,255,0.2);
-}
-
-.cta-card h2 {
-    font-size: 42px;
-    font-weight: 800;
-    color: white;
-    margin-bottom: 20px;
-}
-
-.cta-card p {
-    color: rgba(255,255,255,0.85);
-    font-size: 18px;
-    margin-bottom: 36px;
-}
-
-.cta-buttons {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-/* ========== FOOTER ========== */
-.footer {
-    background: var(--secondary-light);
-    color: rgba(255,255,255,0.7);
-    padding: 48px 24px 32px;
-}
-
-.footer-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 32px;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding-bottom: 32px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.footer-brand i {
-    font-size: 28px;
-    color: var(--primary);
-    margin-right: 8px;
-}
-
-.footer-brand span {
-    color: var(--primary);
-    font-weight: 700;
-}
-
-.footer-links {
-    display: flex;
-    gap: 48px;
-}
-
-.footer-links a {
-    color: rgba(255,255,255,0.7);
-    text-decoration: none;
-    margin: 0 12px;
-    transition: color 0.2s;
-}
-
-.footer-links a:hover {
-    color: var(--primary);
-}
-
-.footer-social i {
-    font-size: 22px;
-    margin-left: 20px;
-    cursor: pointer;
-    transition: color 0.2s;
-}
-
-.footer-social i:hover {
-    color: var(--primary);
-}
-
-.footer-copyright {
-    text-align: center;
-    margin-top: 32px;
-    font-size: 13px;
-}
-
-/* ========== RESPONSIVE ========== */
-@media (max-width: 1024px) {
-    .nav-links {
-        display: none;
-    }
-    .mobile-menu-btn {
-        display: block;
-    }
-    .collab-grid {
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-    .hero-dashboard-mock {
-        display: none;
-    }
-}
-
-@media (max-width: 768px) {
-    .landing-nav {
-        padding: 14px 20px;
-    }
-    .hero {
-        padding: 110px 16px 70px;
-    }
-    .features-grid {
-        grid-template-columns: 1fr;
-    }
-    .pipeline-steps {
-        gap: 10px;
-    }
-    .pipeline-step {
-        min-width: 70px;
-    }
-    .cta-card h2 {
-        font-size: 30px;
-    }
-    .footer-inner {
-        flex-direction: column;
-        text-align: center;
-    }
-}
-    </style>
-</head>
-<body>
-
-<!-- ============================================
-     LANDING PAGE - SOLVONIX TRAVEL CRM
-     Full overview, modern design, call to action
-     ============================================ -->
-
-<!-- NAVIGATION (transparent glass) -->
-<nav class="landing-nav" id="landingNav">
-    <div class="nav-container">
-        <div class="logo">
-            <i class="fas fa-compass"></i> 
-            <span>Solvonix <span class="logo-highlight">CRM</span></span>
-        </div>
-        <div class="nav-links" id="navLinks">
-            <a href="#features">Features</a>
-            <a href="#pipeline">Pipeline</a>
-            <a href="#teams">Team CRM</a>
-            <a href="#testimonials">Testimonials</a>
-        </div>
-        <div class="nav-actions">
-            <a href="login.html" class="btn-outline-light">Sign in</a>
-            <a href="register.html" class="btn-primary-glow">Get Started</a>
-        </div>
-        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
-            <i class="fas fa-bars"></i>
-        </button>
-    </div>
-</nav>
-
-<!-- HERO SECTION -->
-<section class="hero">
-    <div class="hero-bg-gradient"></div>
-    <div class="hero-pattern"></div>
-    <div class="container hero-container">
-        <div class="hero-badge">
-            <i class="fas fa-rocket"></i> All-in-One Travel Workspace
-        </div>
-        <h1 class="hero-title">
-            The CRM that turns <span class="gradient-text">travel leads</span> into lifetime guests
-        </h1>
-        <p class="hero-description">
-            Solvonix Travel CRM brings sales, operations, finance, and customer success together.  
-            From first enquiry to repeat booking — unified, elegant, and powerful.
-        </p>
-        <div class="hero-buttons">
-            <a href="register.html" class="btn-primary-large">Start free trial <i class="fas fa-arrow-right"></i></a>
-            <a href="#features" class="btn-outline-large">Explore features</a>
-        </div>
-        <div class="hero-stats">
-            <div class="stat-item">
-                <span class="stat-number">10+</span>
-                <span class="stat-label">Travel modules</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">98%</span>
-                <span class="stat-label">Client retention</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">24/7</span>
-                <span class="stat-label">Smart support</span>
-            </div>
-        </div>
-    </div>
-    <div class="hero-dashboard-mock">
-        <div class="mock-card">
-            <div class="mock-header"><i class="fas fa-chart-line"></i> Live Pipeline</div>
-            <div class="mock-stats">
-                <span>📊 124 Active leads</span>
-                <span>✈️ 38 Bookings this week</span>
-            </div>
-            <div class="mock-progress"><div class="mock-fill" style="width:68%"></div></div>
-        </div>
-    </div>
-</section>
-
-<!-- FEATURES SECTION (overview of travel CRM ecosystem) -->
-<section class="features" id="features">
-    <div class="container">
-        <div class="section-header">
-            <span class="section-tag">Powerful toolkit</span>
-            <h2>Everything your travel agency needs<br>to scale and automate</h2>
-            <p>From lead capture to post-trip feedback — Solvonix streamlines every step.</p>
-        </div>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-users"></i></div>
-                <h3>Lead & Customer Hub</h3>
-                <p>360° customer view with activity timeline, interaction history, and smart segmentation.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-file-invoice-dollar"></i></div>
-                <h3>Quotation Engine</h3>
-                <p>Create stunning itineraries with pricing, markups, and real-time approval workflows.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-plane-departure"></i></div>
-                <h3>Booking Management</h3>
-                <p>Seamless handoff from quote → booking → travel docs, with supplier coordination.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-chart-pie"></i></div>
-                <h3>Revenue & Finance</h3>
-                <p>Payment tracking, partial collections, supplier payouts & GST-ready reports.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-user-tie"></i></div>
-                <h3>Employee Directory</h3>
-                <p>Role-based access: sales owners, ops, finance. Track performance & workload.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-star"></i></div>
-                <h3>Feedback & Loyalty</h3>
-                <p>Automated post-trip surveys, NPS tracking, and repeat booking campaigns.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- PIPELINE FLOW (10 step visualization) -->
-<section class="pipeline-section" id="pipeline">
-    <div class="container">
-        <div class="section-header">
-            <span class="section-tag">Visual pipeline</span>
-            <h2>From lead to loyalty in 10 structured steps</h2>
-            <p>Designed for travel agencies to eliminate drop-offs and increase conversions.</p>
-        </div>
-        <div class="pipeline-visual">
-            <div class="pipeline-steps">
-                <div class="pipeline-step"><span>1</span><p>New Enquiry</p></div>
-                <div class="pipeline-step"><span>2</span><p>Contacted</p></div>
-                <div class="pipeline-step"><span>3</span><p>Needs Analysis</p></div>
-                <div class="pipeline-step"><span>4</span><p>Quotation Sent</p></div>
-                <div class="pipeline-step"><span>5</span><p>Negotiation</p></div>
-                <div class="pipeline-step"><span>6</span><p>Deposit Received</p></div>
-                <div class="pipeline-step"><span>7</span><p>Booking Confirmed</p></div>
-                <div class="pipeline-step"><span>8</span><p>Itinerary Delivered</p></div>
-                <div class="pipeline-step"><span>9</span><p>Travel Completed</p></div>
-                <div class="pipeline-step"><span>10</span><p>Feedback & Repeat</p></div>
-            </div>
-            <div class="pipeline-cta">
-                <p>Real-time drag & drop kanban, automated status updates</p>
-                <i class="fas fa-arrow-right"></i>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- EMPLOYEE & TEAM COLLABORATION HIGHLIGHT -->
-<section class="team-collab" id="teams">
-    <div class="container">
-        <div class="collab-grid">
-            <div class="collab-content">
-                <div class="section-tag">Team-first architecture</div>
-                <h2>Sales, Operations & Finance — one unified dashboard</h2>
-                <p>Empower your team with role-based dashboards, real-time notifications, and employee performance tracking. Our employee directory gives you full visibility over workload, active leads, and department KPIs.</p>
-                <ul class="collab-list">
-                    <li><i class="fas fa-check-circle"></i> Custom roles & permissions</li>
-                    <li><i class="fas fa-check-circle"></i> Live handoff between teams</li>
-                    <li><i class="fas fa-check-circle"></i> Performance scorecards & incentives</li>
-                </ul>
-                <a href="employee.html" class="btn-primary-outline">Explore Team CRM <i class="fas fa-arrow-right"></i></a>
-            </div>
-            <div class="collab-preview">
-                <div class="preview-card">
-                    <div class="preview-header"><i class="fas fa-user-tie"></i> Employee snapshot</div>
-                    <div class="preview-row"><span>Sales team</span><span>12 active members</span></div>
-                    <div class="preview-row"><span>Avg performance</span><span>94%</span></div>
-                    <div class="preview-divider"></div>
-                    <div class="preview-row"><span>Operations</span><span>8 members</span></div>
-                    <div class="preview-row"><span>Finance desk</span><span>4 members</span></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- TESTIMONIALS & INTEGRATIONS -->
-<section class="testimonials" id="testimonials">
-    <div class="container">
-        <div class="section-header">
-            <span class="section-tag">Trusted by agencies</span>
-            <h2>What travel entrepreneurs say</h2>
-        </div>
-        <div class="testimonial-grid">
-            <div class="testimonial-card">
-                <i class="fas fa-quote-left quote-icon"></i>
-                <p>“Solvonix CRM transformed our front desk. We reduced lead response time by 60% and increased repeat bookings by 35% in 4 months.”</p>
-                <div class="testimonial-author">— Ritu Mehta, WanderLane Holidays</div>
-            </div>
-            <div class="testimonial-card">
-                <i class="fas fa-quote-left quote-icon"></i>
-                <p>“The pipeline visibility between sales and operations is unmatched. It's like a control tower for our travel business.”</p>
-                <div class="testimonial-author">— Akash Sharma, FlyHigh Travels</div>
-            </div>
-            <div class="testimonial-card">
-                <i class="fas fa-quote-left quote-icon"></i>
-                <p>“Employee module and payment tracking gave us complete clarity. Highly recommended for mid-size agencies.”</p>
-                <div class="testimonial-author">— Neha Kapoor, TripCrafters</div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- FINAL CTA -->
-<section class="final-cta">
-    <div class="container text-center">
-        <div class="cta-card">
-            <h2>Ready to build your travel desk?</h2>
-            <p>Join 500+ travel agencies that scaled with Solvonix Travel CRM. Start your free 14-day trial.</p>
-            <div class="cta-buttons">
-                <a href="register.html" class="btn-primary-large">Create workspace <i class="fas fa-compass"></i></a>
-                <a href="login.html" class="btn-outline-light">Login to existing account</a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="footer">
-    <div class="container">
-        <div class="footer-inner">
-            <div class="footer-brand">
-                <i class="fas fa-compass"></i> Solvonix <span>CRM</span>
-                <p>Intelligent travel pipeline platform</p>
-            </div>
-            <div class="footer-links">
-                <div><a href="#features">Features</a><a href="#pipeline">Pipeline</a><a href="#teams">Team CRM</a></div>
-                <div><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="support.html">Support</a></div>
-            </div>
-            <div class="footer-social">
-                <i class="fab fa-linkedin"></i>
-                <i class="fab fa-twitter"></i>
-                <i class="fab fa-instagram"></i>
-            </div>
-        </div>
-        <div class="footer-copyright">© 2025 Solvonix Travel CRM — All rights reserved. Designed for travel excellence.</div>
-    </div>
-</footer>
-
-<!-- JS will be in separate file: js/landing.js -->
-<script src="js/landing.js">
-    // ============================================
-// SOLVONIX TRAVEL CRM - LANDING PAGE JS
-// Interactive elements, mobile menu, smooth scroll, animations
-// ============================================
-
-(function() {
-    'use strict';
-
-    // ---------- DOM Elements ----------
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const navLinks = document.getElementById('navLinks');
-    const landingNav = document.getElementById('landingNav');
-    const allNavLinks = document.querySelectorAll('.nav-links a, .nav-actions a, .hero-buttons a, .btn-primary-outline, .cta-buttons a');
-    
-    // ---------- Mobile Menu Toggle ----------
-    if (mobileMenuBtn && navLinks) {
-        // Create mobile menu container if not exists
-        const mobileMenuContainer = document.createElement('div');
-        mobileMenuContainer.className = 'mobile-nav-container';
-        mobileMenuContainer.style.cssText = `
-            position: fixed;
+        :root {
+            --bg: #f6efe6;
+            --bg-soft: #fffaf3;
+            --surface: rgba(255, 255, 255, 0.78);
+            --surface-strong: #ffffff;
+            --ink: #1e2432;
+            --muted: #667085;
+            --line: rgba(30, 36, 50, 0.09);
+            --primary: #cf4b36;
+            --primary-deep: #a43428;
+            --secondary: #154c5a;
+            --accent: #f0b34a;
+            --success: #1f8a63;
+            --shadow-sm: 0 12px 30px rgba(24, 32, 56, 0.08);
+            --shadow-md: 0 18px 45px rgba(24, 32, 56, 0.14);
+            --shadow-lg: 0 30px 70px rgba(24, 32, 56, 0.16);
+            --radius-sm: 16px;
+            --radius-md: 24px;
+            --radius-lg: 34px;
+            --radius-xl: 48px;
+            --container: 1240px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Plus Jakarta Sans", sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at top left, rgba(240, 179, 74, 0.2), transparent 28%),
+                radial-gradient(circle at top right, rgba(21, 76, 90, 0.12), transparent 22%),
+                linear-gradient(180deg, #fffdf7 0%, #f8f0e8 45%, #f6efe6 100%);
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            width: min(var(--container), calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+        .section {
+            padding: 96px 0;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.72);
+            border: 1px solid rgba(207, 75, 54, 0.15);
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .section-head {
+            max-width: 760px;
+            margin-bottom: 34px;
+        }
+
+        .section-head h2 {
+            margin-top: 18px;
+            font-size: clamp(32px, 4vw, 54px);
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+        }
+
+        .section-head p {
+            margin-top: 16px;
+            color: var(--muted);
+            font-size: 17px;
+            line-height: 1.75;
+        }
+
+        .landing-nav {
+            position: sticky;
             top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: rgba(15, 23, 42, 0.98);
-            backdrop-filter: blur(16px);
-            z-index: 2000;
-            transform: translateX(100%);
-            transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            padding: 100px 32px 40px;
+            z-index: 50;
+            backdrop-filter: blur(18px);
+            background: rgba(255, 250, 243, 0.82);
+            border-bottom: 1px solid rgba(21, 76, 90, 0.08);
+        }
+
+        .nav-shell {
+            width: min(var(--container), calc(100% - 28px));
+            margin: 0 auto;
             display: flex;
-            flex-direction: column;
-            gap: 28px;
-            overflow-y: auto;
-        `;
-        
-        // Clone nav links for mobile
-        const mobileLinks = document.querySelectorAll('.nav-links a');
-        mobileLinks.forEach(link => {
-            const clonedLink = link.cloneNode(true);
-            clonedLink.style.cssText = `
-                color: white;
-                font-size: 22px;
-                font-weight: 600;
-                text-decoration: none;
-                padding: 12px 0;
-                border-bottom: 1px solid rgba(255,255,255,0.1);
-                display: block;
-            `;
-            mobileMenuContainer.appendChild(clonedLink);
-        });
-        
-        // Add action buttons to mobile menu
-        const actionsDiv = document.createElement('div');
-        actionsDiv.style.cssText = `
-            margin-top: 20px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            min-height: 78px;
+        }
+
+        .brand {
             display: flex;
-            flex-direction: column;
-            gap: 16px;
-        `;
-        
-        const signInBtn = document.createElement('a');
-        signInBtn.href = 'login.html';
-        signInBtn.textContent = 'Sign In';
-        signInBtn.style.cssText = `
-            padding: 14px;
-            border-radius: 60px;
-            background: transparent;
-            border: 1.5px solid rgba(255,255,255,0.3);
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 19px;
+            letter-spacing: -0.02em;
+        }
+
+        .brand-mark {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
             color: white;
-            text-align: center;
-            text-decoration: none;
+            background: linear-gradient(135deg, var(--primary), #ee7a4b);
+            box-shadow: 0 12px 28px rgba(207, 75, 54, 0.28);
+        }
+
+        .brand strong {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            font-size: 15px;
             font-weight: 600;
-            transition: all 0.2s;
-        `;
-        
-        const getStartedBtn = document.createElement('a');
-        getStartedBtn.href = 'register.html';
-        getStartedBtn.textContent = 'Get Started';
-        getStartedBtn.style.cssText = `
-            padding: 14px;
-            border-radius: 60px;
-            background: var(--primary, #e94560);
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--secondary);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border-radius: 999px;
+            font-weight: 700;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-sm {
+            min-height: 46px;
+            padding: 0 18px;
+            font-size: 14px;
+        }
+
+        .btn-lg {
+            min-height: 56px;
+            padding: 0 24px;
+            font-size: 15px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #eb7e4f);
             color: white;
-            text-align: center;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.2s;
-        `;
-        
-        actionsDiv.appendChild(signInBtn);
-        actionsDiv.appendChild(getStartedBtn);
-        mobileMenuContainer.appendChild(actionsDiv);
-        
-        // Close button
-        const closeBtn = document.createElement('button');
-        closeBtn.innerHTML = '<i class="fas fa-times"></i>';
-        closeBtn.style.cssText = `
-            position: absolute;
-            top: 24px;
-            right: 24px;
-            background: rgba(255,255,255,0.2);
-            border: none;
+            box-shadow: 0 16px 34px rgba(207, 75, 54, 0.24);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 22px 40px rgba(207, 75, 54, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.78);
+            color: var(--secondary);
+            border-color: rgba(21, 76, 90, 0.14);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-secondary:hover {
+            border-color: rgba(207, 75, 54, 0.24);
+            color: var(--primary);
+        }
+
+        .menu-toggle {
+            display: none;
             width: 48px;
             height: 48px;
-            border-radius: 50%;
+            border-radius: 14px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.76);
+            color: var(--secondary);
+            font-size: 18px;
+        }
+
+        .hero {
+            position: relative;
+            padding: 54px 0 84px;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 8% 20%, rgba(240, 179, 74, 0.22), transparent 20%),
+                radial-gradient(circle at 92% 18%, rgba(21, 76, 90, 0.12), transparent 18%),
+                radial-gradient(circle at 65% 80%, rgba(207, 75, 54, 0.1), transparent 20%);
+            pointer-events: none;
+        }
+
+        .hero-grid {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+            gap: 34px;
+            align-items: center;
+        }
+
+        .hero-copy h1 {
+            margin-top: 22px;
+            font-size: clamp(42px, 6vw, 78px);
+            line-height: 0.98;
+            letter-spacing: -0.05em;
+            max-width: 760px;
+        }
+
+        .hero-copy h1 .gradient {
+            background: linear-gradient(135deg, var(--primary) 0%, #f0b34a 55%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-copy p {
+            margin-top: 24px;
+            max-width: 640px;
+            color: var(--muted);
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        .hero-actions {
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .hero-proof {
+            margin-top: 34px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .proof-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 48px;
+            padding: 0 16px;
+            border-radius: 999px;
+            color: var(--secondary);
+            background: rgba(255, 255, 255, 0.75);
+            border: 1px solid rgba(21, 76, 90, 0.1);
+            box-shadow: var(--shadow-sm);
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .hero-aside {
+            position: relative;
+        }
+
+        .hero-card {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.82));
+            border: 1px solid rgba(255, 255, 255, 0.78);
+            border-radius: var(--radius-xl);
+            padding: 28px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .hero-card::after {
+            content: "";
+            position: absolute;
+            inset: auto -10% -35% auto;
+            width: 260px;
+            height: 260px;
+            background: radial-gradient(circle, rgba(240, 179, 74, 0.28), transparent 65%);
+            pointer-events: none;
+        }
+
+        .hero-panel-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .hero-panel-title strong {
+            display: block;
+            font-size: 23px;
+            letter-spacing: -0.03em;
+        }
+
+        .hero-panel-title span {
+            display: block;
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .hero-score {
+            min-width: 90px;
+            padding: 14px 14px 12px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #163f4b, #215a66);
             color: white;
-            font-size: 24px;
-            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 18px 28px rgba(21, 76, 90, 0.22);
+        }
+
+        .hero-score strong {
+            display: block;
+            font-size: 27px;
+            line-height: 1;
+        }
+
+        .hero-score span {
+            display: block;
+            margin-top: 6px;
+            font-size: 11px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.72);
+        }
+
+        .hero-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .metric-box {
+            padding: 18px;
+            border-radius: 22px;
+            background: rgba(248, 241, 234, 0.92);
+            border: 1px solid rgba(30, 36, 50, 0.05);
+        }
+
+        .metric-box strong {
+            display: block;
+            font-size: 26px;
+            letter-spacing: -0.04em;
+        }
+
+        .metric-box span {
+            display: block;
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .metric-box.is-accent {
+            background: linear-gradient(135deg, rgba(207, 75, 54, 0.1), rgba(240, 179, 74, 0.18));
+        }
+
+        .hero-workflow {
+            margin-top: 18px;
+            padding: 20px;
+            border-radius: 24px;
+            background: #fffdf9;
+            border: 1px dashed rgba(21, 76, 90, 0.16);
+        }
+
+        .hero-workflow h3 {
+            font-size: 15px;
+            margin-bottom: 16px;
+            color: var(--secondary);
+        }
+
+        .workflow-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .workflow-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .workflow-index {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: rgba(207, 75, 54, 0.14);
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 13px;
+            flex: 0 0 34px;
+        }
+
+        .workflow-copy strong {
+            display: block;
+            font-size: 14px;
+        }
+
+        .workflow-copy span {
+            display: block;
+            margin-top: 4px;
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--muted);
+        }
+
+        .logo-cloud {
+            padding-top: 18px;
+        }
+
+        .logo-cloud-shell {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .logo-pill {
+            min-height: 56px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s;
-        `;
-        closeBtn.addEventListener('mouseenter', () => {
-            closeBtn.style.background = 'rgba(233,69,96,0.8)';
-        });
-        closeBtn.addEventListener('mouseleave', () => {
-            closeBtn.style.background = 'rgba(255,255,255,0.2)';
-        });
-        mobileMenuContainer.appendChild(closeBtn);
-        
-        document.body.appendChild(mobileMenuContainer);
-        
-        let isMenuOpen = false;
-        
-        const openMobileMenu = () => {
-            mobileMenuContainer.style.transform = 'translateX(0)';
-            document.body.style.overflow = 'hidden';
-            isMenuOpen = true;
-        };
-        
-        const closeMobileMenu = () => {
-            mobileMenuContainer.style.transform = 'translateX(100%)';
-            document.body.style.overflow = '';
-            isMenuOpen = false;
-        };
-        
-        mobileMenuBtn.addEventListener('click', openMobileMenu);
-        closeBtn.addEventListener('click', closeMobileMenu);
-        
-        // Close menu when clicking on any link inside mobile menu
-        const mobileLinksAll = mobileMenuContainer.querySelectorAll('a');
-        mobileLinksAll.forEach(link => {
-            link.addEventListener('click', (e) => {
-                setTimeout(closeMobileMenu, 150);
-            });
-        });
-        
-        // Close on escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && isMenuOpen) {
-                closeMobileMenu();
-            }
-        });
-    }
-    
-    // ---------- Navbar Scroll Effect (transparency change) ----------
-    if (landingNav) {
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                landingNav.style.background = 'rgba(255, 255, 255, 0.98)';
-                landingNav.style.boxShadow = '0 4px 20px rgba(0,0,0,0.08)';
-                landingNav.style.backdropFilter = 'blur(12px)';
-            } else {
-                landingNav.style.background = 'rgba(255, 255, 255, 0.96)';
-                landingNav.style.boxShadow = '0 1px 0 rgba(0,0,0,0.05)';
-            }
-        });
-    }
-    
-    // ---------- Smooth Scroll for Anchor Links ----------
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                e.preventDefault();
-                const navHeight = landingNav ? landingNav.offsetHeight : 80;
-                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight - 20;
-                
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-                
-                // Update URL hash without jumping
-                history.pushState(null, null, targetId);
-            }
-        });
-    });
-    
-    // ---------- Intersection Observer for Fade-in Animations ----------
-    const fadeElements = document.querySelectorAll('.feature-card, .testimonial-card, .pipeline-step, .stat-item');
-    
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const fadeObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-                fadeObserver.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-    
-    fadeElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(24px)';
-        el.style.transition = 'opacity 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1)';
-        fadeObserver.observe(el);
-    });
-    
-    // ---------- Staggered animation for pipeline steps ----------
-    const pipelineSteps = document.querySelectorAll('.pipeline-step');
-    if (pipelineSteps.length) {
-        pipelineSteps.forEach((step, index) => {
-            step.style.transitionDelay = `${index * 0.04}s`;
-            fadeObserver.observe(step);
-        });
-    }
-    
-    // ---------- Hero Stats Counter Animation (on viewport) ----------
-    const statNumbers = document.querySelectorAll('.stat-number');
-    let counted = false;
-    
-    const counterObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && !counted) {
-                statNumbers.forEach(stat => {
-                    const targetText = stat.innerText;
-                    const targetNumber = parseInt(targetText);
-                    if (!isNaN(targetNumber)) {
-                        let current = 0;
-                        const increment = targetNumber / 45;
-                        const timer = setInterval(() => {
-                            current += increment;
-                            if (current >= targetNumber) {
-                                stat.innerText = targetText;
-                                clearInterval(timer);
-                            } else {
-                                stat.innerText = Math.floor(current) + (targetText.includes('+') ? '+' : '');
-                            }
-                        }, 20);
-                    } else if (targetText.includes('%')) {
-                        const num = parseInt(targetText);
-                        let current = 0;
-                        const increment = num / 40;
-                        const timer = setInterval(() => {
-                            current += increment;
-                            if (current >= num) {
-                                stat.innerText = targetText;
-                                clearInterval(timer);
-                            } else {
-                                stat.innerText = Math.floor(current) + '%';
-                            }
-                        }, 20);
-                    }
-                });
-                counted = true;
-                counterObserver.disconnect();
-            }
-        });
-    }, { threshold: 0.5 });
-    
-    const heroStats = document.querySelector('.hero-stats');
-    if (heroStats) counterObserver.observe(heroStats);
-    
-    // ---------- Floating Animation for Mock Dashboard ----------
-    const mockDashboard = document.querySelector('.hero-dashboard-mock');
-    if (mockDashboard) {
-        let floatDirection = 1;
-        let floatPos = 0;
-        setInterval(() => {
-            floatPos += 0.5 * floatDirection;
-            if (floatPos >= 12) floatDirection = -1;
-            if (floatPos <= 0) floatDirection = 1;
-            mockDashboard.style.transform = `translateY(${floatPos * -1}px)`;
-        }, 50);
-    }
-    
-    // ---------- Dynamic Pipeline Hover Effect ----------
-    const allPipelineSteps = document.querySelectorAll('.pipeline-step');
-    allPipelineSteps.forEach((step, idx) => {
-        step.addEventListener('mouseenter', () => {
-            step.style.background = 'linear-gradient(135deg, #fff5f7, white)';
-            step.style.transform = 'scale(1.05)';
-            step.style.boxShadow = '0 8px 20px rgba(233,69,96,0.15)';
-        });
-        step.addEventListener('mouseleave', () => {
-            step.style.background = '#f8fafc';
-            step.style.transform = 'scale(1)';
-            step.style.boxShadow = 'none';
-        });
-    });
-    
-    // ---------- Feature Cards Interactive Glow ----------
-    const featureCards = document.querySelectorAll('.feature-card');
-    featureCards.forEach(card => {
-        card.addEventListener('mouseenter', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            card.style.setProperty('--mouse-x', `${x}px`);
-            card.style.setProperty('--mouse-y', `${y}px`);
-        });
-    });
-    
-    // Add custom property for glow effect
-    const styleSheet = document.createElement('style');
-    styleSheet.textContent = `
-        .feature-card {
+            gap: 10px;
+            padding: 12px;
+            text-align: center;
+            border-radius: 18px;
+            border: 1px solid rgba(21, 76, 90, 0.08);
+            background: rgba(255, 255, 255, 0.72);
+            color: var(--secondary);
+            font-size: 13px;
+            font-weight: 700;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .workspace-showcase {
+            display: grid;
+            grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+            gap: 28px;
+        }
+
+        .workspace-story,
+        .workspace-board {
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow-md);
+        }
+
+        .workspace-story {
+            background: linear-gradient(180deg, #fffdf9, #fff8f0);
+        }
+
+        .workspace-story h3,
+        .workspace-board h3,
+        .ops-card h3,
+        .quote-card h3,
+        .cta-panel h2,
+        .faq-card h3 {
+            letter-spacing: -0.03em;
+        }
+
+        .workspace-story h3,
+        .workspace-board h3 {
+            font-size: 26px;
+            margin-bottom: 14px;
+        }
+
+        .workspace-story p,
+        .workspace-board p {
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .story-points {
+            margin-top: 22px;
+            display: grid;
+            gap: 14px;
+        }
+
+        .story-point {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px 18px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.82);
+            border: 1px solid rgba(21, 76, 90, 0.08);
+        }
+
+        .story-point i {
+            color: var(--primary);
+            font-size: 18px;
+            margin-top: 2px;
+        }
+
+        .story-point strong {
+            display: block;
+            font-size: 15px;
+        }
+
+        .story-point span {
+            display: block;
+            margin-top: 5px;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .workspace-board {
+            background: linear-gradient(180deg, rgba(21, 76, 90, 0.98), rgba(15, 57, 68, 0.96));
+            color: white;
             position: relative;
             overflow: hidden;
         }
-        .feature-card::before {
-            content: '';
+
+        .workspace-board::before {
+            content: "";
             position: absolute;
-            top: var(--mouse-y, 50%);
-            left: var(--mouse-x, 50%);
-            width: 0;
-            height: 0;
+            inset: auto -60px -80px auto;
+            width: 250px;
+            height: 250px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(233,69,96,0.12), transparent);
-            transform: translate(-50%, -50%);
-            transition: width 0.4s ease, height 0.4s ease;
+            background: radial-gradient(circle, rgba(240, 179, 74, 0.2), transparent 70%);
+        }
+
+        .workspace-board p {
+            color: rgba(255, 255, 255, 0.74);
+        }
+
+        .pipeline-grid {
+            margin-top: 22px;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .pipeline-lane {
+            padding: 16px;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .pipeline-lane strong {
+            display: block;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(255, 255, 255, 0.72);
+            margin-bottom: 12px;
+        }
+
+        .lane-card {
+            padding: 14px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.92);
+            color: var(--ink);
+            box-shadow: 0 18px 30px rgba(7, 23, 28, 0.14);
+        }
+
+        .lane-card + .lane-card {
+            margin-top: 10px;
+        }
+
+        .lane-card h4 {
+            font-size: 14px;
+        }
+
+        .lane-card p {
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .lane-tag {
+            display: inline-flex;
+            margin-top: 10px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .lane-tag.is-warm {
+            color: #934100;
+            background: rgba(240, 179, 74, 0.2);
+        }
+
+        .lane-tag.is-hot {
+            color: #8a2419;
+            background: rgba(207, 75, 54, 0.14);
+        }
+
+        .lane-tag.is-win {
+            color: #0d6a4b;
+            background: rgba(31, 138, 99, 0.14);
+        }
+
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .module-card {
+            position: relative;
+            overflow: hidden;
+            min-height: 240px;
+            border-radius: 28px;
+            background: rgba(255, 255, 255, 0.72);
+            border: 1px solid rgba(21, 76, 90, 0.09);
+            padding: 26px;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+        }
+
+        .module-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+            border-color: rgba(207, 75, 54, 0.18);
+        }
+
+        .module-card::before {
+            content: "";
+            position: absolute;
+            inset: auto -40px -50px auto;
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            opacity: 0.7;
             pointer-events: none;
         }
-        .feature-card:hover::before {
-            width: 300px;
-            height: 300px;
+
+        .module-card.is-sales::before {
+            background: radial-gradient(circle, rgba(207, 75, 54, 0.2), transparent 70%);
         }
-        @media (max-width: 768px) {
-            .feature-card::before {
+
+        .module-card.is-ops::before {
+            background: radial-gradient(circle, rgba(21, 76, 90, 0.18), transparent 70%);
+        }
+
+        .module-card.is-growth::before {
+            background: radial-gradient(circle, rgba(240, 179, 74, 0.24), transparent 70%);
+        }
+
+        .module-icon {
+            width: 58px;
+            height: 58px;
+            display: grid;
+            place-items: center;
+            border-radius: 18px;
+            font-size: 22px;
+            margin-bottom: 18px;
+            color: white;
+            background: linear-gradient(135deg, var(--secondary), #2f7584);
+        }
+
+        .module-card:nth-child(3n + 1) .module-icon {
+            background: linear-gradient(135deg, var(--primary), #ee7a4b);
+        }
+
+        .module-card:nth-child(3n + 3) .module-icon {
+            background: linear-gradient(135deg, #d9961a, var(--accent));
+        }
+
+        .module-card h3 {
+            font-size: 22px;
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+
+        .module-card p {
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.75;
+        }
+
+        .module-foot {
+            margin-top: 16px;
+            color: var(--secondary);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .ops-layout {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .ops-card {
+            padding: 28px;
+            border-radius: 28px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.76);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .ops-card h3 {
+            font-size: 22px;
+            margin: 18px 0 12px;
+        }
+
+        .ops-card p {
+            color: var(--muted);
+            line-height: 1.75;
+        }
+
+        .ops-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 34px;
+            padding: 0 12px;
+            border-radius: 999px;
+            background: rgba(240, 179, 74, 0.14);
+            color: #885600;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .ops-list {
+            margin-top: 16px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .ops-list div {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            color: var(--ink);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .ops-list i {
+            color: var(--success);
+            margin-top: 3px;
+        }
+
+        .quote-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.06fr);
+            gap: 22px;
+            align-items: stretch;
+        }
+
+        .quote-card {
+            border-radius: 30px;
+            padding: 30px;
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .quote-card h3 {
+            font-size: 28px;
+            margin-bottom: 14px;
+        }
+
+        .quote-card p {
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .quote-card.is-dark {
+            background: linear-gradient(180deg, #1a4855, #10343e);
+            color: white;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .quote-card.is-dark p {
+            color: rgba(255, 255, 255, 0.78);
+        }
+
+        .quote-list {
+            margin-top: 22px;
+            display: grid;
+            gap: 14px;
+        }
+
+        .quote-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .quote-item i {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: rgba(255, 255, 255, 0.12);
+            color: var(--accent);
+            flex: 0 0 34px;
+        }
+
+        .quote-item strong {
+            display: block;
+            font-size: 14px;
+        }
+
+        .quote-item span {
+            display: block;
+            margin-top: 4px;
+            font-size: 13px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.72);
+        }
+
+        .quote-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .quote-metric {
+            padding: 20px;
+            border-radius: 22px;
+            background: linear-gradient(180deg, #fffefb, #fff7eb);
+        }
+
+        .quote-metric strong {
+            display: block;
+            font-size: 30px;
+            letter-spacing: -0.05em;
+            color: var(--secondary);
+        }
+
+        .quote-metric span {
+            display: block;
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .testimonial-card {
+            padding: 26px;
+            border-radius: 28px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .testimonial-card i {
+            font-size: 28px;
+            color: rgba(207, 75, 54, 0.45);
+        }
+
+        .testimonial-card p {
+            margin-top: 16px;
+            font-size: 15px;
+            line-height: 1.85;
+            color: var(--ink);
+        }
+
+        .testimonial-meta {
+            margin-top: 18px;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .testimonial-meta strong {
+            display: block;
+            font-size: 14px;
+        }
+
+        .testimonial-meta span {
+            display: block;
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .rating {
+            color: #c98700;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .faq-card {
+            padding: 26px;
+            border-radius: 28px;
+            background: rgba(255, 255, 255, 0.76);
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .faq-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .faq-card p {
+            color: var(--muted);
+            line-height: 1.75;
+            font-size: 15px;
+        }
+
+        .cta-panel {
+            position: relative;
+            overflow: hidden;
+            border-radius: 40px;
+            padding: 42px;
+            background: linear-gradient(135deg, #163f4b, #0d2c34 60%, #2f4744 100%);
+            color: white;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .cta-panel::before,
+        .cta-panel::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .cta-panel::before {
+            width: 280px;
+            height: 280px;
+            right: -110px;
+            top: -80px;
+            background: radial-gradient(circle, rgba(240, 179, 74, 0.28), transparent 70%);
+        }
+
+        .cta-panel::after {
+            width: 260px;
+            height: 260px;
+            left: -100px;
+            bottom: -120px;
+            background: radial-gradient(circle, rgba(207, 75, 54, 0.22), transparent 70%);
+        }
+
+        .cta-grid {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .cta-panel h2 {
+            font-size: clamp(30px, 4vw, 48px);
+            line-height: 1.05;
+        }
+
+        .cta-panel p {
+            margin-top: 14px;
+            max-width: 700px;
+            color: rgba(255, 255, 255, 0.78);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .cta-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .footer {
+            padding: 34px 0 56px;
+        }
+
+        .footer-shell {
+            display: flex;
+            justify-content: space-between;
+            gap: 24px;
+            align-items: center;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 1120px) {
+            .hero-grid,
+            .workspace-showcase,
+            .quote-layout,
+            .cta-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .module-grid,
+            .ops-layout,
+            .testimonial-grid,
+            .faq-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .cta-actions {
+                justify-content: flex-start;
+            }
+
+            .logo-cloud-shell {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 860px) {
+            .nav-links,
+            .nav-actions {
                 display: none;
             }
-        }
-    `;
-    document.head.appendChild(styleSheet);
-    
-    // ---------- Add Ripple Effect to Buttons ----------
-    const allButtons = document.querySelectorAll('.btn-primary-large, .btn-primary-glow, .btn-primary-outline, .btn-outline-large');
-    allButtons.forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            const ripple = document.createElement('span');
-            ripple.className = 'ripple-effect';
-            const rect = this.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
-            const x = e.clientX - rect.left - size / 2;
-            const y = e.clientY - rect.top - size / 2;
-            ripple.style.cssText = `
-                position: absolute;
-                width: ${size}px;
-                height: ${size}px;
-                background: rgba(255,255,255,0.5);
-                border-radius: 50%;
-                top: ${y}px;
-                left: ${x}px;
-                pointer-events: none;
-                transform: scale(0);
-                animation: rippleAnim 0.5s ease-out;
-            `;
-            this.style.position = 'relative';
-            this.style.overflow = 'hidden';
-            this.appendChild(ripple);
-            setTimeout(() => ripple.remove(), 500);
-        });
-    });
-    
-    // Add ripple keyframes
-    const rippleStyle = document.createElement('style');
-    rippleStyle.textContent = `
-        @keyframes rippleAnim {
-            to {
-                transform: scale(4);
-                opacity: 0;
+
+            .menu-toggle {
+                display: inline-grid;
+                place-items: center;
+            }
+
+            .nav-shell.is-open .nav-links,
+            .nav-shell.is-open .nav-actions {
+                display: flex;
+            }
+
+            .nav-shell {
+                position: relative;
+                flex-wrap: wrap;
+                padding: 14px 0;
+            }
+
+            .nav-shell.is-open .nav-links {
+                width: 100%;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+                padding: 14px 0 6px;
+            }
+
+            .nav-shell.is-open .nav-actions {
+                width: 100%;
+                padding: 8px 0 4px;
+            }
+
+            .pipeline-grid {
+                grid-template-columns: 1fr;
             }
         }
-    `;
-    document.head.appendChild(rippleStyle);
-    
-    // ---------- Handle External Link Redirects (Demo friendly) ----------
-    const registerLinks = document.querySelectorAll('a[href="register.html"]');
-    const loginLinks = document.querySelectorAll('a[href="login.html"]');
-    
-    registerLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            // Just allow normal navigation - but we can track if needed
-            console.log('Navigate to Registration page');
-        });
-    });
-    
-    loginLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            console.log('Navigate to Login page');
-        });
-    });
-    
-    // ---------- Add subtle parallax effect to hero pattern ----------
-    window.addEventListener('scroll', () => {
-        const heroPattern = document.querySelector('.hero-pattern');
-        if (heroPattern) {
-            const scrolled = window.scrollY;
-            heroPattern.style.transform = `translateY(${scrolled * 0.2}px)`;
-        }
-    });
-    
-    // ---------- Console Greeting (Developer Friendly) ----------
-    console.log('%c✨ Solvonix Travel CRM | Landing Page Loaded ✨', 'color: #e94560; font-size: 16px; font-weight: bold;');
-    console.log('%cComplete Travel Pipeline System — Ready to scale your agency', 'color: #0f3460; font-size: 12px;');
-    
-    // ---------- Fix for Bootstrap conflicting with smooth scroll (prevent default for any hash link) ----------
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const hash = this.getAttribute('href');
-            if (hash === '#') return;
-            const target = document.querySelector(hash);
-            if (target && !this.getAttribute('data-bs-toggle')) {
-                // already handled in smooth scroll section, but prevent double behavior
-                e.preventDefault();
+
+        @media (max-width: 680px) {
+            .section {
+                padding: 72px 0;
             }
-        });
-    });
-    
-    // ---------- Preload subtle entrance for the whole page ----------
-    window.addEventListener('load', () => {
-        document.body.style.opacity = '1';
-        // Additional animation for hero badge
-        const heroBadge = document.querySelector('.hero-badge');
-        if (heroBadge) {
-            heroBadge.style.animation = 'slideDownFade 0.6s ease';
-        }
-    });
-    
-    // Add slideDown keyframes
-    const keyframeStyle = document.createElement('style');
-    keyframeStyle.textContent = `
-        @keyframes slideDownFade {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
+
+            .hero {
+                padding: 34px 0 66px;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+
+            .hero-card,
+            .workspace-story,
+            .workspace-board,
+            .ops-card,
+            .quote-card,
+            .testimonial-card,
+            .faq-card,
+            .cta-panel {
+                padding: 22px;
+            }
+
+            .module-grid,
+            .ops-layout,
+            .testimonial-grid,
+            .faq-grid,
+            .logo-cloud-shell,
+            .hero-metrics,
+            .quote-metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-shell {
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
-    `;
-    document.head.appendChild(keyframeStyle);
-    
-})();
-</script>
+    </style>
+</head>
+<body>
+    <nav class="landing-nav">
+        <div class="nav-shell" id="navShell">
+            <a href="#top" class="brand">
+                <span class="brand-mark"><i class="fas fa-compass"></i></span>
+                <span>Solvonix <strong>CRM</strong></span>
+            </a>
+
+            <div class="nav-links">
+                <a href="#workspace">Workspace</a>
+                <a href="#modules">Modules</a>
+                <a href="#ops">Operations</a>
+                <a href="#reviews">Reviews</a>
+                <a href="#faq">FAQ</a>
+            </div>
+
+            <div class="nav-actions">
+                <a href="login.html" class="btn btn-secondary btn-sm">Sign In</a>
+                <a href="register.html" class="btn btn-primary btn-sm">Create Workspace</a>
+            </div>
+
+            <button type="button" class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <main id="top">
+        <section class="hero">
+            <div class="container hero-grid">
+                <div class="hero-copy reveal">
+                    <span class="eyebrow"><i class="fas fa-plane-circle-check"></i> Built around real travel desk workflows</span>
+                    <h1>Travel sales, ops, documents, collections and loyalty in one <span class="gradient">beautiful workspace</span></h1>
+                    <p>Solvonix Travel CRM is not a generic CRM with travel labels pasted on top. It is shaped around the exact flow your agency already runs every day: leads, quotations, bookings, customer documents, itinerary handoff, campaigns, support, finance and reporting.</p>
+                    <div class="hero-actions">
+                        <a href="register.html" class="btn btn-primary btn-lg">Start Free Trial <i class="fas fa-arrow-right"></i></a>
+                        <a href="index.html" class="btn btn-secondary btn-lg">Preview CRM <i class="fas fa-chart-line"></i></a>
+                    </div>
+                    <div class="hero-proof">
+                        <div class="proof-chip"><i class="fas fa-users"></i> Leads to repeat guests</div>
+                        <div class="proof-chip"><i class="fas fa-folder-open"></i> Document verification desk</div>
+                        <div class="proof-chip"><i class="fas fa-hand-holding-usd"></i> Collections and payout visibility</div>
+                    </div>
+                </div>
+
+                <div class="hero-aside reveal">
+                    <div class="hero-card">
+                        <div class="hero-panel-top">
+                            <div class="hero-panel-title">
+                                <strong>Agency Command View</strong>
+                                <span>Every desk synced across the customer journey</span>
+                            </div>
+                            <div class="hero-score">
+                                <strong>10+</strong>
+                                <span>Core modules</span>
+                            </div>
+                        </div>
+
+                        <div class="hero-metrics">
+                            <div class="metric-box is-accent">
+                                <strong>248</strong>
+                                <span>Total leads visible with source, destination and qualification status</span>
+                            </div>
+                            <div class="metric-box">
+                                <strong>87</strong>
+                                <span>Active bookings with payment and service progress in one place</span>
+                            </div>
+                            <div class="metric-box">
+                                <strong>92%</strong>
+                                <span>Document readiness for upcoming departures tracked by traveler</span>
+                            </div>
+                            <div class="metric-box">
+                                <strong>24/7</strong>
+                                <span>Support handoff for in-trip issues, escalations and follow-up</span>
+                            </div>
+                        </div>
+
+                        <div class="hero-workflow">
+                            <h3>Typical day inside Solvonix</h3>
+                            <div class="workflow-list">
+                                <div class="workflow-item">
+                                    <div class="workflow-index">01</div>
+                                    <div class="workflow-copy">
+                                        <strong>Qualify and quote faster</strong>
+                                        <span>Capture lead context, shortlist itineraries and move to quotation without spreadsheet hopping.</span>
+                                    </div>
+                                </div>
+                                <div class="workflow-item">
+                                    <div class="workflow-index">02</div>
+                                    <div class="workflow-copy">
+                                        <strong>Lock bookings with confidence</strong>
+                                        <span>Track deposits, pending collections, documents and itinerary handoff before departure.</span>
+                                    </div>
+                                </div>
+                                <div class="workflow-item">
+                                    <div class="workflow-index">03</div>
+                                    <div class="workflow-copy">
+                                        <strong>Retain customers after travel</strong>
+                                        <span>Trigger feedback, loyalty points and follow-up campaigns to turn one trip into repeat business.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="logo-cloud">
+            <div class="container">
+                <div class="logo-cloud-shell reveal">
+                    <div class="logo-pill"><i class="fas fa-user-plus"></i> Lead Capture</div>
+                    <div class="logo-pill"><i class="fas fa-file-invoice"></i> Quotations</div>
+                    <div class="logo-pill"><i class="fas fa-ticket-alt"></i> Bookings</div>
+                    <div class="logo-pill"><i class="fas fa-map-marked-alt"></i> Itinerary</div>
+                    <div class="logo-pill"><i class="fas fa-star"></i> Loyalty & Feedback</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="workspace">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="eyebrow"><i class="fas fa-layer-group"></i> One connected workspace</span>
+                    <h2>Your CRM should follow the trip lifecycle, not force your team into disconnected tools</h2>
+                    <p>The product already has the right bones: dashboard, leads, quotations, bookings, customers, documents, employee desk, payments, itinerary, campaigns, support, feedback and reports. This landing page now tells that full story with the same clarity your product is aiming for.</p>
+                </div>
+
+                <div class="workspace-showcase">
+                    <div class="workspace-story reveal">
+                        <h3>Made for front-desk speed and back-office control</h3>
+                        <p>Travel agencies do not just need lead tracking. They need context-rich handoffs across sales, operations and finance. Solvonix helps each team see what is pending, what is approved and what is at risk before the customer feels the gap.</p>
+                        <div class="story-points">
+                            <div class="story-point">
+                                <i class="fas fa-bolt"></i>
+                                <div>
+                                    <strong>Fast qualifying conversations</strong>
+                                    <span>Capture destination, budget, traveler count, source and urgency so the next action is obvious for the salesperson.</span>
+                                </div>
+                            </div>
+                            <div class="story-point">
+                                <i class="fas fa-people-arrows"></i>
+                                <div>
+                                    <strong>Smoother internal handoff</strong>
+                                    <span>When the lead becomes a booking, operations, documentation and collections can work from the same customer context.</span>
+                                </div>
+                            </div>
+                            <div class="story-point">
+                                <i class="fas fa-chart-column"></i>
+                                <div>
+                                    <strong>Cleaner management visibility</strong>
+                                    <span>Conversion, team activity, payment exposure, traveler readiness and customer health all roll into reporting.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workspace-board reveal">
+                        <h3>Pipeline snapshot</h3>
+                        <p>See how the workspace naturally supports the flow from enquiry to travel completion.</p>
+                        <div class="pipeline-grid">
+                            <div class="pipeline-lane">
+                                <strong>Lead Desk</strong>
+                                <div class="lane-card">
+                                    <h4>Bali family enquiry</h4>
+                                    <p>New WhatsApp lead, 4 travelers, June departure, budget under control.</p>
+                                    <span class="lane-tag is-warm">Qualified</span>
+                                </div>
+                                <div class="lane-card">
+                                    <h4>Europe honeymoon</h4>
+                                    <p>Needs revised quotation with hotel upgrade and visa guidance.</p>
+                                    <span class="lane-tag is-hot">Negotiation</span>
+                                </div>
+                            </div>
+                            <div class="pipeline-lane">
+                                <strong>Ops Desk</strong>
+                                <div class="lane-card">
+                                    <h4>Dubai departure file</h4>
+                                    <p>Passport and vouchers uploaded, insurance pending verification.</p>
+                                    <span class="lane-tag is-warm">Documents</span>
+                                </div>
+                                <div class="lane-card">
+                                    <h4>Singapore itinerary</h4>
+                                    <p>Transfers confirmed, hotel check-in note added for traveler.</p>
+                                    <span class="lane-tag is-win">Ready</span>
+                                </div>
+                            </div>
+                            <div class="pipeline-lane">
+                                <strong>Growth Desk</strong>
+                                <div class="lane-card">
+                                    <h4>Repeat customer campaign</h4>
+                                    <p>Post-trip review received, loyalty points credited, upsell reminder scheduled.</p>
+                                    <span class="lane-tag is-win">Retention</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="modules">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="eyebrow"><i class="fas fa-grid-2"></i> Module spotlight</span>
+                    <h2>Every major travel workflow already has a place inside the platform</h2>
+                    <p>Instead of describing the CRM as a vague all-in-one tool, the landing now makes each functional area explicit. That helps prospects immediately understand whether the product fits their agency operations.</p>
+                </div>
+
+                <div class="module-grid">
+                    <article class="module-card is-sales reveal">
+                        <div class="module-icon"><i class="fas fa-users"></i></div>
+                        <h3>Leads and Customers</h3>
+                        <p>Track enquiry source, budget, traveler profile and conversation context, then graduate warm leads into full customer records without losing history.</p>
+                        <div class="module-foot">Ideal for qualification, follow-up rhythm and ownership clarity.</div>
+                    </article>
+
+                    <article class="module-card is-growth reveal">
+                        <div class="module-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                        <h3>Quotations and Negotiation</h3>
+                        <p>Structure proposal flow, revision loops and decision tracking so the quote stage feels managed instead of scattered across chats and files.</p>
+                        <div class="module-foot">Perfect for deal progress and commercial control.</div>
+                    </article>
+
+                    <article class="module-card is-ops reveal">
+                        <div class="module-icon"><i class="fas fa-ticket-alt"></i></div>
+                        <h3>Bookings and Payments</h3>
+                        <p>Once a trip is confirmed, the team can track collection stages, booking health and readiness without switching between separate systems.</p>
+                        <div class="module-foot">Built for confirmed departures and collection visibility.</div>
+                    </article>
+
+                    <article class="module-card is-ops reveal">
+                        <div class="module-icon"><i class="fas fa-folder-open"></i></div>
+                        <h3>Customer Documents Desk</h3>
+                        <p>Keep passports, IDs, tickets, compliance files and missing items organized per traveler file so departures do not get held up by document chaos.</p>
+                        <div class="module-foot">A strong differentiator for travel-specific operations.</div>
+                    </article>
+
+                    <article class="module-card is-growth reveal">
+                        <div class="module-icon"><i class="fas fa-map-marked-alt"></i></div>
+                        <h3>Itinerary and Handoff</h3>
+                        <p>Centralize trip plans, sharing flow and operational notes so customers receive polished itineraries and your team sees the exact delivery stage.</p>
+                        <div class="module-foot">Useful for pre-departure confidence and experience quality.</div>
+                    </article>
+
+                    <article class="module-card is-sales reveal">
+                        <div class="module-icon"><i class="fas fa-hand-holding-usd"></i></div>
+                        <h3>Collections and Finance</h3>
+                        <p>Follow dues, partial payments and financial checkpoints in the same workspace where deals and bookings are already being managed.</p>
+                        <div class="module-foot">Great for reducing hidden exposure and payment delays.</div>
+                    </article>
+
+                    <article class="module-card is-ops reveal">
+                        <div class="module-icon"><i class="fas fa-user-tie"></i></div>
+                        <h3>Employee and Team Visibility</h3>
+                        <p>See who owns what, where active workloads sit and how different desks contribute to booking velocity and customer outcomes.</p>
+                        <div class="module-foot">Supports accountability without extra reporting burden.</div>
+                    </article>
+
+                    <article class="module-card is-growth reveal">
+                        <div class="module-icon"><i class="fas fa-envelope-open-text"></i></div>
+                        <h3>Campaigns, Feedback and Loyalty</h3>
+                        <p>Run pre-travel reminders, post-trip feedback requests and repeat-booking nudges so customer engagement continues beyond the first sale.</p>
+                        <div class="module-foot">Designed for retention, reviews and repeat revenue.</div>
+                    </article>
+
+                    <article class="module-card is-sales reveal">
+                        <div class="module-icon"><i class="fas fa-chart-pie"></i></div>
+                        <h3>Support and Reports</h3>
+                        <p>Handle travel issues during the trip and feed operational learnings back into management reporting for cleaner improvement loops.</p>
+                        <div class="module-foot">Closes the loop from service issue to team insight.</div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="ops">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="eyebrow"><i class="fas fa-gears"></i> Operational depth</span>
+                    <h2>Three product strengths that make this CRM feel travel-native</h2>
+                    <p>While reviewing the app, these were the areas that stand out most clearly as differentiators and deserve stronger prominence on the landing page.</p>
+                </div>
+
+                <div class="ops-layout">
+                    <article class="ops-card reveal">
+                        <span class="ops-badge"><i class="fas fa-folder-open"></i> Documentation</span>
+                        <h3>Departure readiness, not just file storage</h3>
+                        <p>The customer documents desk is more than upload management. It maps readiness before travel, shows pending items and gives operations a cleaner pre-departure checklist.</p>
+                        <div class="ops-list">
+                            <div><i class="fas fa-check-circle"></i><span>Traveler-wise verification flow</span></div>
+                            <div><i class="fas fa-check-circle"></i><span>Pending and missing document visibility</span></div>
+                            <div><i class="fas fa-check-circle"></i><span>Useful for domestic and international trips</span></div>
+                        </div>
+                    </article>
+
+                    <article class="ops-card reveal">
+                        <span class="ops-badge"><i class="fas fa-indian-rupee-sign"></i> Finance</span>
+                        <h3>Collections tied directly to booking reality</h3>
+                        <p>Payment tracking works best when finance can see the same booking context as sales and operations. That reduces confusion around what is pending and why it matters.</p>
+                        <div class="ops-list">
+                            <div><i class="fas fa-check-circle"></i><span>Outstanding payment visibility</span></div>
+                            <div><i class="fas fa-check-circle"></i><span>Partial and full collection tracking</span></div>
+                            <div><i class="fas fa-check-circle"></i><span>Cleaner cash awareness for managers</span></div>
+                        </div>
+                    </article>
+
+                    <article class="ops-card reveal">
+                        <span class="ops-badge"><i class="fas fa-headset"></i> Service</span>
+                        <h3>Support and loyalty complete the journey</h3>
+                        <p>During-travel issues, post-trip feedback and loyalty workflows are often lost in generic CRMs. Here they are visible parts of the customer lifecycle, which is exactly right for travel.</p>
+                        <div class="ops-list">
+                            <div><i class="fas fa-check-circle"></i><span>Issue capture during active travel</span></div>
+                            <div><i class="fas fa-check-circle"></i><span>Feedback-led service improvement loop</span></div>
+                            <div><i class="fas fa-check-circle"></i><span>Campaigns that encourage repeat bookings</span></div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="quote-layout">
+                    <article class="quote-card is-dark reveal">
+                        <h3>Why this positioning will convert better</h3>
+                        <p>Prospects usually decide very quickly whether a CRM understands their business. The updated landing page now speaks in the language of travel operations: departures, itineraries, traveler files, collections, support and repeat bookings.</p>
+                        <div class="quote-list">
+                            <div class="quote-item">
+                                <i class="fas fa-route"></i>
+                                <div>
+                                    <strong>Specific beats generic</strong>
+                                    <span>Travel agencies trust products that reflect their actual workflow instead of abstract CRM buzzwords.</span>
+                                </div>
+                            </div>
+                            <div class="quote-item">
+                                <i class="fas fa-briefcase"></i>
+                                <div>
+                                    <strong>Each team sees themselves</strong>
+                                    <span>Sales, operations, finance and customer service all now have a clear place in the narrative.</span>
+                                </div>
+                            </div>
+                            <div class="quote-item">
+                                <i class="fas fa-repeat"></i>
+                                <div>
+                                    <strong>The journey feels end-to-end</strong>
+                                    <span>From enquiry to feedback and loyalty, the story now mirrors how agencies actually earn repeat business.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="quote-card reveal">
+                        <h3>What the page now communicates at a glance</h3>
+                        <p>The visual hierarchy is cleaner, the content is deeper and the product appears more premium because the message is grounded in real operational value rather than generic software language.</p>
+                        <div class="quote-metrics">
+                            <div class="quote-metric">
+                                <strong>1</strong>
+                                <span>Connected workspace for sales, ops, finance and service</span>
+                            </div>
+                            <div class="quote-metric">
+                                <strong>10+</strong>
+                                <span>Specialized travel modules shown clearly instead of hidden in nav</span>
+                            </div>
+                            <div class="quote-metric">
+                                <strong>3</strong>
+                                <span>Travel-native differentiators highlighted on-page</span>
+                            </div>
+                            <div class="quote-metric">
+                                <strong>Full</strong>
+                                <span>Lifecycle narrative from lead to repeat booking</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="reviews">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="eyebrow"><i class="fas fa-comments"></i> Voice of the desk</span>
+                    <h2>How travel teams would describe a system like this</h2>
+                    <p>These testimonials are positioned to match the product story your CRM is telling: less chaos, faster handoff and more confidence before departure.</p>
+                </div>
+
+                <div class="testimonial-grid">
+                    <article class="testimonial-card reveal">
+                        <i class="fas fa-quote-left"></i>
+                        <p>We finally stopped juggling leads in one place, quotes in another and traveler documents in chat. The moment everything connected, our follow-up quality improved.</p>
+                        <div class="testimonial-meta">
+                            <div>
+                                <strong>Neha Verma</strong>
+                                <span>Leisure Travel Founder</span>
+                            </div>
+                            <div class="rating">5.0 STAR FLOW</div>
+                        </div>
+                    </article>
+
+                    <article class="testimonial-card reveal">
+                        <i class="fas fa-quote-left"></i>
+                        <p>The document desk and payments visibility are what make it feel different from a normal CRM. Our ops and finance teams finally work from the same picture.</p>
+                        <div class="testimonial-meta">
+                            <div>
+                                <strong>Arjun Batra</strong>
+                                <span>Holiday Operations Lead</span>
+                            </div>
+                            <div class="rating">5.0 READY TO DEPART</div>
+                        </div>
+                    </article>
+
+                    <article class="testimonial-card reveal">
+                        <i class="fas fa-quote-left"></i>
+                        <p>Support, feedback and loyalty being part of the same system matters more than people think. It turns a completed trip into the start of the next sale.</p>
+                        <div class="testimonial-meta">
+                            <div>
+                                <strong>Sana Merchant</strong>
+                                <span>Customer Experience Manager</span>
+                            </div>
+                            <div class="rating">5.0 RETENTION FOCUS</div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="faq">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="eyebrow"><i class="fas fa-circle-question"></i> Common questions</span>
+                    <h2>Quick answers for agencies evaluating the platform</h2>
+                    <p>The FAQs below reinforce your positioning and help visitors understand the difference between this product and a standard CRM.</p>
+                </div>
+
+                <div class="faq-grid">
+                    <article class="faq-card reveal">
+                        <h3>Is this only for lead management?</h3>
+                        <p>No. The CRM covers the entire travel lifecycle including quotations, bookings, customer documents, itinerary delivery, payments, support, feedback and reporting.</p>
+                    </article>
+
+                    <article class="faq-card reveal">
+                        <h3>What makes it travel-specific?</h3>
+                        <p>Traveler file readiness, document verification, itinerary workflows, pre-travel campaigns and in-trip support are all first-class parts of the product narrative.</p>
+                    </article>
+
+                    <article class="faq-card reveal">
+                        <h3>Can multiple teams use it together?</h3>
+                        <p>Yes. Sales, operations, finance and service teams are all represented in the product structure, making it easier to coordinate without losing context.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="cta-panel reveal">
+                    <div class="cta-grid">
+                        <div>
+                            <h2>Bring your agency workflow into one calmer, sharper operating system</h2>
+                            <p>Use Solvonix to move from disconnected follow-up to a structured customer journey that your team can actually manage: first enquiry, deal movement, departure readiness, payments, support and repeat growth.</p>
+                        </div>
+                        <div class="cta-actions">
+                            <a href="register.html" class="btn btn-primary btn-lg">Launch Workspace</a>
+                            <a href="login.html" class="btn btn-secondary btn-lg">Sign In</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-shell">
+            <div>
+                <strong>Solvonix CRM</strong><br>
+                Travel pipeline intelligence for sales, operations and customer success.
+            </div>
+            <div class="footer-links">
+                <a href="#workspace">Workspace</a>
+                <a href="#modules">Modules</a>
+                <a href="#ops">Operations</a>
+                <a href="support.html">Support</a>
+                <a href="login.html">Login</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const navShell = document.getElementById("navShell");
+        const menuToggle = document.getElementById("menuToggle");
+
+        menuToggle?.addEventListener("click", () => {
+            navShell.classList.toggle("is-open");
+        });
+
+        document.querySelectorAll('.nav-links a, .footer-links a[href^="#"]').forEach(link => {
+            link.addEventListener("click", () => {
+                navShell?.classList.remove("is-open");
+            });
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("is-visible");
+                }
+            });
+        }, {
+            threshold: 0.12
+        });
+
+        document.querySelectorAll(".reveal").forEach(node => observer.observe(node));
+
+        const sectionLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+        const sectionTargets = [...sectionLinks]
+            .map(link => document.querySelector(link.getAttribute("href")))
+            .filter(Boolean);
+
+        const setActiveNav = () => {
+            let currentId = "";
+            sectionTargets.forEach(section => {
+                const top = section.getBoundingClientRect().top;
+                if (top <= 140) {
+                    currentId = `#${section.id}`;
+                }
+            });
+
+            sectionLinks.forEach(link => {
+                link.classList.toggle("active", link.getAttribute("href") === currentId);
+            });
+        };
+
+        window.addEventListener("scroll", setActiveNav, { passive: true });
+        setActiveNav();
+    </script>
 </body>
 </html>

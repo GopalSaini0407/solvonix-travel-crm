@@ -23,6 +23,7 @@
                 <li class="nav-item"><a href="quotations.html" class="nav-link"><i class="fas fa-file-invoice"></i><span>Quotations</span></a></li>
                 <li class="nav-item"><a href="bookings.html" class="nav-link"><i class="fas fa-ticket-alt"></i><span>Bookings</span></a></li>
                 <li class="nav-item"><a href="customers.html" class="nav-link"><i class="fas fa-address-book"></i><span>Customers</span></a></li>
+                <li class="nav-item"><a href="documents.html" class="nav-link"><i class="fas fa-folder-open"></i><span>Customer Documents</span></a></li>
                 <li class="nav-item"><a href="employee.html" class="nav-link"><i class="fas fa-user-tie"></i><span>Employees</span></a></li>
                 <li class="nav-item"><a href="payments.html" class="nav-link"><i class="fas fa-hand-holding-usd"></i><span>Payments</span></a></li>
                 <li class="nav-item"><a href="itinerary.html" class="nav-link"><i class="fas fa-map-marked-alt"></i><span>Itinerary</span></a></li>
@@ -65,7 +66,7 @@
                         <div>
                             <h3>87</h3>
                             <p>Active Bookings</p>
-                            <div class="trend-up"><i class="fas fa-arrow-up"></i> 5 new bookings</div>
+                            <div class="trend-up"><i class="fas fa-arrow-up"></i> 5 new bookings today</div>
                         </div>
                         <div class="icon-pill icon-success"><i class="fas fa-calendar-check"></i></div>
                     </article>
@@ -187,7 +188,58 @@
                             </select>
                         </div>
                         <div class="panel-body">
-                            <canvas id="funnelChart"></canvas>
+                            <div class="lead-funnel-shell">
+                                <div class="lead-funnel-stage funnel-stage-1">
+                                    <div>
+                                        <span>Stage 1</span>
+                                        <strong>New Leads</strong>
+                                    </div>
+                                    <div class="lead-funnel-metric">
+                                        <strong>248</strong>
+                                        <small>100% base</small>
+                                    </div>
+                                </div>
+                                <div class="lead-funnel-stage funnel-stage-2">
+                                    <div>
+                                        <span>Stage 2</span>
+                                        <strong>Qualified</strong>
+                                    </div>
+                                    <div class="lead-funnel-metric">
+                                        <strong>174</strong>
+                                        <small>70.2% from leads</small>
+                                    </div>
+                                </div>
+                                <div class="lead-funnel-stage funnel-stage-3">
+                                    <div>
+                                        <span>Stage 3</span>
+                                        <strong>Quote Sent</strong>
+                                    </div>
+                                    <div class="lead-funnel-metric">
+                                        <strong>132</strong>
+                                        <small>53.2% from leads</small>
+                                    </div>
+                                </div>
+                                <div class="lead-funnel-stage funnel-stage-4">
+                                    <div>
+                                        <span>Stage 4</span>
+                                        <strong>Negotiation</strong>
+                                    </div>
+                                    <div class="lead-funnel-metric">
+                                        <strong>94</strong>
+                                        <small>37.9% from leads</small>
+                                    </div>
+                                </div>
+                                <div class="lead-funnel-stage funnel-stage-5">
+                                    <div>
+                                        <span>Stage 5</span>
+                                        <strong>Booked</strong>
+                                    </div>
+                                    <div class="lead-funnel-metric">
+                                        <strong>87</strong>
+                                        <small>35.1% conversion</small>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -309,7 +361,6 @@
                     <div class="panel-card">
                         <div class="panel-header">
                             <h3>Revenue Snapshot</h3>
-                            <span class="text-success-strong">+14.6%</span>
                         </div>
                         <div class="panel-body">
                             <canvas id="revenueChart"></canvas>

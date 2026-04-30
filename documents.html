@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solvonix Travel CRM - Customer Documents | Upload & Verification Desk</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Solvonix <span>CRM</span></h3>
+                <p>Travel Pipeline Intelligence</p>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html" class="nav-link"><i class="fas fa-chart-line"></i><span>Dashboard</span></a></li>
+                <li class="nav-item"><a href="leads.html" class="nav-link"><i class="fas fa-users"></i><span>Leads</span></a></li>
+                <li class="nav-item"><a href="quotations.html" class="nav-link"><i class="fas fa-file-invoice"></i><span>Quotations</span></a></li>
+                <li class="nav-item"><a href="bookings.html" class="nav-link"><i class="fas fa-ticket-alt"></i><span>Bookings</span></a></li>
+                <li class="nav-item"><a href="customers.html" class="nav-link"><i class="fas fa-address-book"></i><span>Customers</span></a></li>
+                <li class="nav-item active"><a href="documents.html" class="nav-link"><i class="fas fa-folder-open"></i><span>Customer Documents</span></a></li>
+                <li class="nav-item"><a href="employee.html" class="nav-link"><i class="fas fa-user-tie"></i><span>Employees</span></a></li>
+                <li class="nav-item"><a href="payments.html" class="nav-link"><i class="fas fa-hand-holding-usd"></i><span>Payments</span></a></li>
+                <li class="nav-item"><a href="itinerary.html" class="nav-link"><i class="fas fa-map-marked-alt"></i><span>Itinerary</span></a></li>
+                <li class="nav-item"><a href="campaigns.html" class="nav-link"><i class="fas fa-envelope-open-text"></i><span>Campaigns</span></a></li>
+                <li class="nav-item"><a href="support.html" class="nav-link"><i class="fas fa-headset"></i><span>Support</span></a></li>
+                <li class="nav-item"><a href="feedback.html" class="nav-link"><i class="fas fa-star"></i><span>Feedback</span></a></li>
+                <li class="nav-item"><a href="reports.html" class="nav-link"><i class="fas fa-chart-pie"></i><span>Reports</span></a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="top-bar">
+                <div class="page-title">
+                    <h1>Customer Documents Desk</h1>
+                    <p>Collect, verify and hand over IDs, tickets and booking documents before departure</p>
+                </div>
+                <div class="user-area">
+                    <div class="notification-badge"><i class="fas fa-bell"></i><span class="badge-dot"></span></div>
+                    <div class="avatar"><span>RK</span></div>
+                </div>
+            </div>
+
+            <div class="stats-grid mb-20">
+                <div class="stat-card">
+                    <div class="stat-info"><h3 id="docsTotalTravelers">0</h3><p>Active Traveler Files</p></div>
+                    <div class="stat-icon"><i class="fas fa-folder-tree"></i></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info"><h3 id="docsPendingItems">0</h3><p>Pending / Missing Docs</p></div>
+                    <div class="stat-icon"><i class="fas fa-hourglass-half"></i></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info"><h3 id="docsVerifiedItems">0%</h3><p>Verification Completion</p></div>
+                    <div class="stat-icon"><i class="fas fa-check-double"></i></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info"><h3 id="docsUrgentDepartures">0</h3><p>Urgent Departures</p></div>
+                    <div class="stat-icon"><i class="fas fa-plane-departure"></i></div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <div class="filter-grid documents-filter-grid">
+                    <div class="search-box search-box-full">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="documentSearch" placeholder="Search traveler, destination, document type..." data-oninput="applyDocumentFilters()">
+                    </div>
+                    <select id="documentTripFilter" class="form-control form-control-soft" data-onchange="applyDocumentFilters()">
+                        <option value="">All Trips</option>
+                        <option value="domestic">Domestic</option>
+                        <option value="international">International</option>
+                    </select>
+                    <select id="documentStatusFilter" class="form-control form-control-soft" data-onchange="applyDocumentFilters()">
+                        <option value="">All Status</option>
+                        <option value="verified">Verified</option>
+                        <option value="uploaded">Uploaded</option>
+                        <option value="pending">Pending</option>
+                        <option value="missing">Missing</option>
+                        <option value="rejected">Needs Correction</option>
+                    </select>
+                    <select id="documentTypeFilter" class="form-control form-control-soft" data-onchange="applyDocumentFilters()">
+                        <option value="">All Types</option>
+                        <option value="identity">Identity Docs</option>
+                        <option value="travel">Travel Vouchers</option>
+                        <option value="finance">Finance Docs</option>
+                        <option value="compliance">Compliance Docs</option>
+                    </select>
+                    <div class="flex gap-10 flex-wrap">
+                        <button class="btn-outline" data-onclick="resetDocumentFilters()">Reset</button>
+                        <button class="btn-primary" data-onclick="openUploadModal()"><i class="fas fa-cloud-upload-alt"></i> Upload Document</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="documents-layout">
+                <section class="panel-card">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-users-viewfinder"></i> Traveler Files</h3>
+                        <span id="documentsTravelerCount" class="customer-count">Showing 0 travelers</span>
+                    </div>
+                    <div id="travelerDocumentList" class="traveler-document-list"></div>
+                </section>
+
+                <section class="documents-main-column">
+                    <div class="panel-card">
+                        <div class="panel-header">
+                            <h3><i class="fas fa-clipboard-check"></i> Required Document Checklist</h3>
+                            <div class="actions-row">
+                                <button class="btn-outline" data-onclick="markAllVisibleVerified()"><i class="fas fa-check-double"></i> Verify Ready Docs</button>
+                                <button class="btn-outline" data-onclick="openUploadModal()"><i class="fas fa-file-arrow-up"></i> Add More</button>
+                            </div>
+                        </div>
+                        <div id="documentProfilePanel" class="panel-body">
+                            <div class="empty-state">
+                                <i class="fas fa-folder-open icon-64"></i>
+                                <h3>Select a traveler file</h3>
+                                <p>Required IDs, tickets, hotel vouchers and verification notes will appear here.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-card">
+                        <div class="panel-header">
+                            <h3><i class="fas fa-lightbulb"></i> Common Travel Documents Staff Usually Collect</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="documents-advice-grid">
+                                <div class="documents-advice-card">
+                                    <strong>Domestic Trips</strong>
+                                    <p>Aadhaar or government ID, PAN for finance, flight tickets, hotel vouchers, payment receipt and emergency contact sheet.</p>
+                                </div>
+                                <div class="documents-advice-card">
+                                    <strong>International Trips</strong>
+                                    <p>Passport, visa copy, PAN, passport-size photo, travel insurance, flight ticket, hotel voucher and compliance papers.</p>
+                                </div>
+                                <div class="documents-advice-card">
+                                    <strong>Family / Minor Travelers</strong>
+                                    <p>Birth certificate or school ID for minors, consent letter when needed, and each traveler's ID mapped clearly.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <div id="uploadDocumentModal" class="modal">
+        <div class="modal-content modal-w-620">
+            <div class="modal-header">
+                <h3><i class="fas fa-file-circle-plus"></i> Upload Document</h3>
+                <button class="close-modal" data-onclick="closeModal('uploadDocumentModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="two-col-form">
+                    <div class="form-group">
+                        <label>Traveler File</label>
+                        <select id="uploadLeadId"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Traveler Name</label>
+                        <input type="text" id="uploadTravelerName" placeholder="Primary traveler or guest name">
+                    </div>
+                    <div class="form-group">
+                        <label>Document Type</label>
+                        <select id="uploadDocumentType"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>File Type</label>
+                        <select id="uploadDocumentPart"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="uploadDocumentStatus">
+                            <option value="uploaded">Uploaded</option>
+                            <option value="pending">Pending Review</option>
+                            <option value="rejected">Needs Correction</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Due Date</label>
+                        <input type="date" id="uploadDueDate">
+                    </div>
+                    <div class="form-group">
+                        <label>File</label>
+                        <input type="file" id="uploadDocumentFile" accept=".pdf,image/*">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Notes</label>
+                    <textarea id="uploadDocumentNotes" rows="3" placeholder="Mismatch, expiry, follow-up note or why this document is needed"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-outline" data-onclick="closeModal('uploadDocumentModal')">Cancel</button>
+                <button class="btn-primary" data-onclick="saveDocumentUpload()">Save Document</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="previewDocumentModal" class="modal">
+        <div class="modal-content modal-w-760">
+            <div class="modal-header">
+                <h3><i class="fas fa-eye"></i> Document Preview</h3>
+                <button class="close-modal" data-onclick="closeModal('previewDocumentModal')">&times;</button>
+            </div>
+            <div class="modal-body" id="previewDocumentBody"></div>
+            <div class="modal-footer" id="previewDocumentFooter">
+                <button class="btn-outline" data-onclick="closeModal('previewDocumentModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/layout.js"></script>
+    <script src="js/dom-events.js"></script>
+    <script src="js/documents.js"></script>
+</body>
+</html>

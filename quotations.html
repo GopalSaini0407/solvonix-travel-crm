@@ -49,6 +49,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="documents.html" class="nav-link">
+                        <i class="fas fa-folder-open"></i>
+                        <span>Customer Documents</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="employee.html" class="nav-link">
                         <i class="fas fa-user-tie"></i>
                         <span>Employees</span>
@@ -185,7 +191,6 @@
                                 <th>Tax (5%)</th>
                                 <th>Total</th>
                                 <th>Status</th>
-                                <th>Version</th>
                                 <th>Valid Till</th>
                                 <th>Actions</th>
                             </tr>
@@ -200,7 +205,6 @@
                                 <td>₹3,250</td>
                                 <td><strong>₹68,250</strong></td>
                                 <td><span class="status-badge status-quotation">sent</span></td>
-                                <td>v1</td>
                                 <td>2024-02-15</td>
                                 <td>
                                     <div class="table-actions">
@@ -219,7 +223,6 @@
                                 <td>₹4,450</td>
                                 <td><strong>₹93,450</strong></td>
                                 <td><span class="status-badge status-negotiation">negotiating</span></td>
-                                <td>v2</td>
                                 <td>2024-02-14</td>
                                 <td>
                                     <div class="table-actions">
@@ -238,7 +241,6 @@
                                 <td>₹2,900</td>
                                 <td><strong>₹60,900</strong></td>
                                 <td><span class="status-badge status-won">accepted</span></td>
-                                <td>v1</td>
                                 <td>2024-02-13</td>
                                 <td>
                                     <div class="table-actions">
@@ -273,7 +275,7 @@
                                 <div><strong>Vikram Singh</strong> - ₹93,450</div>
                                 <span class="status-badge status-negotiation">Negotiation Stage</span>
                             </div>
-                            <div class="text-12 text-warning-dark mt-1">Version 2 sent | Customer asking for discount</div>
+                            <div class="text-12 text-warning-dark mt-1">Revised quote sent | Customer asking for discount</div>
                             <button class="btn-outline mt-10" data-onclick="openNegotiationModal(5002)">Negotiate</button>
                         </div>
                     </div>
@@ -369,6 +371,22 @@
                             <label>Valid Until</label>
                             <input type="date" id="validUntil" class="form-control">
                         </div>
+                        <div class="form-group">
+                            <label>Payment Term</label>
+                            <select id="paymentTermPercent" class="form-control" data-onchange="updateTotals()">
+                                <option value="10">10% Advance</option>
+                                <option value="25" selected>25% Advance</option>
+                                <option value="50">50% Advance</option>
+                                <option value="100">100% Full Payment</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Advance Payment</label>
+                            <select id="advanceRequired" class="form-control">
+                                <option value="yes" selected>Required before booking</option>
+                                <option value="no">Not required</option>
+                            </select>
+                        </div>
                     </div>
                  <div class="grid-4-tight mt-15">
     
@@ -413,6 +431,10 @@
                         <div class="summary-row summary-total">
                             <span class="text-16">Total Amount:</span>
                             <strong class="text-18 text-primary" id="displayTotal">₹0</strong>
+                        </div>
+                        <div class="summary-row">
+                            <span>Advance Due:</span>
+                            <strong id="displayAdvanceAmount">₹0</strong>
                         </div>
                     </div>
                     <div class="form-group mt-15">
@@ -507,8 +529,17 @@
         </div>
     </div>
 
-    <!-- View Quotation Modal -->
-    <div id="viewQuoteModal" class="modal"></div>
+    <!-- View Quotation Offcanvas -->
+    <div class="offcanvas offcanvas-end quote-offcanvas" tabindex="-1" id="viewQuoteCanvas" aria-labelledby="viewQuoteCanvasLabel">
+        <div class="offcanvas-header lead-offcanvas-header">
+            <div>
+                <span class="lead-offcanvas-kicker">Quotation Preview</span>
+                <h5 class="offcanvas-title" id="viewQuoteCanvasLabel">Quotation Details</h5>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body p-0" id="viewQuoteContent"></div>
+    </div>
 
     <!-- Toast Container -->
     <div id="toastContainer" class="toast-container"></div>

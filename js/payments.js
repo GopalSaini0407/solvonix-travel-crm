@@ -6,6 +6,24 @@ function financeLeadForBooking(booking) {
     return window.state.leads.find(item => item.id === booking.leadId) || {};
 }
 
+function financeBookingTransactions(bookingId) {
+    return (window.state.transactions || [])
+        .filter(transaction => transaction.bookingId === bookingId)
+        .sort((a, b) => new Date(a.date || 0) - new Date(b.date || 0));
+}
+
+function financeAdvanceInfo(booking) {
+    const transactions = financeBookingTransactions(booking.id);
+    const firstTransaction = transactions[0] || null;
+    const lastTransaction = transactions[transactions.length - 1] || null;
+    return {
+        firstAmount: Number(firstTransaction?.amount || 0),
+        firstDate: firstTransaction?.date || booking.advancePaymentDate || booking.firstPaymentDate || booking.paymentDate || '',
+        lastAmount: Number(lastTransaction?.amount || 0),
+        lastDate: lastTransaction?.date || booking.lastPaymentDate || booking.paymentDate || ''
+    };
+}
+
 function buildVendorPayouts() {
     if (window.state.vendorPayouts?.length) return window.state.vendorPayouts;
 
@@ -78,14 +96,17 @@ function renderCollectionsTable() {
         const lead = financeLeadForBooking(booking);
         const balance = Number(booking.totalAmount || 0) - Number(booking.paidAmount || 0);
         const statusClass = booking.paymentStatus === 'full' ? 'won' : booking.paymentStatus === 'partial' ? 'partial' : 'new';
+        const paymentInfo = financeAdvanceInfo(booking);
 
         return `
             <tr>
                 <td>${booking.bookingRef}</td>
                 <td>${lead.name || 'Unknown'}<br><small style="color: var(--gray);">${lead.destination || '-'}</small></td>
                 <td>${financeCurrency(booking.totalAmount)}</td>
+                <td>${financeCurrency(paymentInfo.firstAmount)}<br><small style="color: var(--gray);">${paymentInfo.firstDate || '-'}</small></td>
                 <td>${financeCurrency(booking.paidAmount)}</td>
                 <td style="color: ${balance > 0 ? '#e94560' : '#10b981'};">${financeCurrency(balance)}</td>
+                <td>${financeCurrency(paymentInfo.lastAmount)}<br><small style="color: var(--gray);">${paymentInfo.lastDate || '-'}</small></td>
                 <td><span class="status-badge status-${statusClass}">${booking.paymentStatus}</span></td>
                 <td>${booking.assignedTo || lead.assignedTo || 'Unassigned'}</td>
                 <td>
@@ -248,19 +269,41 @@ function loadFinanceBookingDetails() {
 
     const lead = financeLeadForBooking(booking);
     const balance = Number(booking.totalAmount || 0) - Number(booking.paidAmount || 0);
+    const termPercent = Number(booking.paymentTermPercent || 25);
+    const advanceDue = Number(booking.advanceDueAmount || Math.round((Number(booking.totalAmount || 0) * termPercent) / 100));
     preview.style.display = 'block';
     preview.innerHTML = `
         <strong>${lead.name || 'Unknown'}</strong><br>
         ${booking.bookingRef} | ${lead.destination || '-'}<br>
         Total: ${financeCurrency(booking.totalAmount)} | Paid: ${financeCurrency(booking.paidAmount)}<br>
+        Payment Term: ${termPercent}% advance | Advance Due: ${financeCurrency(advanceDue)}<br>
         <span style="color: #e94560;">Balance: ${financeCurrency(balance)}</span>
     `;
 
-    document.getElementById('financePaymentAmount').value = balance > 0 ? balance : '';
+    document.getElementById('financePaymentAmount').value = getFinanceTermAmount(booking, document.getElementById('financePaymentTermSelect')?.value || 'advance') || '';
+}
+
+function getFinanceTermAmount(booking, termValue) {
+    const total = Number(booking.totalAmount || 0);
+    const paid = Number(booking.paidAmount || 0);
+    const balance = Math.max(total - paid, 0);
+    if (termValue === 'advance') {
+        return Math.min(Math.max(Number(booking.advanceDueAmount || 0) - paid, 0) || balance, balance);
+    }
+    if (termValue === '100') return balance;
+    return Math.min(Math.round((total * Number(termValue || booking.paymentTermPercent || 25)) / 100), balance);
+}
+
+function applyFinancePaymentTerm() {
+    const bookingId = Number(document.getElementById('financeBookingId')?.value);
+    const booking = (window.state.bookings || []).find(item => item.id === bookingId);
+    if (!booking) return;
+    document.getElementById('financePaymentAmount').value = getFinanceTermAmount(booking, document.getElementById('financePaymentTermSelect')?.value || 'advance') || '';
 }
 
 function openFinancePaymentModal(bookingId = '') {
     populateFinanceBookingOptions(bookingId);
+    document.getElementById('financePaymentTermSelect').value = 'advance';
     document.getElementById('financePaymentMode').value = 'UPI';
     document.getElementById('financeTransactionId').value = '';
     document.getElementById('financePaymentNotes').value = '';
@@ -287,9 +330,16 @@ function submitFinancePayment() {
         return;
     }
 
+    const paymentDate = new Date().toISOString().split('T')[0];
+    const existingPaidAmount = Number(booking.paidAmount || 0);
     booking.paidAmount = Number(booking.paidAmount || 0) + amount;
     booking.paymentStatus = booking.paidAmount >= booking.totalAmount ? 'full' : 'partial';
-    booking.paymentDate = new Date().toISOString().split('T')[0];
+    booking.paymentDate = paymentDate;
+    booking.lastPaymentDate = paymentDate;
+    if (existingPaidAmount === 0 && amount > 0) {
+        booking.firstPaymentDate = paymentDate;
+        booking.advancePaymentDate = paymentDate;
+    }
     booking.paymentMode = mode;
     booking.status = booking.paymentStatus === 'full' ? 'confirmed' : 'pending_balance';
 
@@ -301,7 +351,7 @@ function submitFinancePayment() {
         mode,
         transactionId,
         notes: notes || 'Recorded from finance desk',
-        date: new Date().toISOString().split('T')[0]
+        date: paymentDate
     });
 
     closeModal('financePaymentModal');
@@ -333,6 +383,9 @@ function refreshFinanceScreen() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('collectionsTableBody')?.setAttribute('data-static', 'false');
+    document.getElementById('vendorPayoutTableBody')?.setAttribute('data-static', 'false');
+    document.getElementById('transactionsLedgerBody')?.setAttribute('data-static', 'false');
     buildVendorPayouts();
     refreshFinanceScreen();
 });
@@ -340,5 +393,6 @@ document.addEventListener('DOMContentLoaded', () => {
 window.openFinancePaymentModal = openFinancePaymentModal;
 window.loadFinanceBookingDetails = loadFinanceBookingDetails;
 window.submitFinancePayment = submitFinancePayment;
+window.applyFinancePaymentTerm = applyFinancePaymentTerm;
 window.markVendorPayout = markVendorPayout;
 window.closeModal = closeModal;

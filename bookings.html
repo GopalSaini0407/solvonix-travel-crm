@@ -49,6 +49,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="documents.html" class="nav-link">
+                        <i class="fas fa-folder-open"></i>
+                        <span>Customer Documents</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="employee.html" class="nav-link">
                         <i class="fas fa-user-tie"></i>
                         <span>Employees</span>
@@ -183,11 +189,15 @@
                                 <th>Paid Amount</th>
                                 <th>Pending</th>
                                 <th>Payment Status</th>
+                                <th>Booking Status</th>
                                 <th>Sales Owner</th>
                                 <th>Incentive</th>
                                 <th>Travel Date</th>
+                                <th>Advance Payment</th>
+                                <th>Last Payment</th>
                                 <th>Payment Due</th>
                                 <th>Actions</th>
+                                <th>Booking Details</th>
                             </tr>
                         </thead>
                         <tbody id="bookingsTableBody" data-static="true">
@@ -195,17 +205,26 @@
                                 <td><strong>SOL-BK-001</strong></td>
                                 <td>Anjali Nair</td>
                                 <td>Kashmir</td>
-                                <td>₹60,900</td>
-                                <td>₹60,900</td>
-                                <td><span style="color: #10b981;">₹0</span></td>
+                                <td>₹60,900<br><small style="color: #64748b;">Booking Value</small></td>
+                                <td>₹60,900<br><small style="color: #64748b;">Paid till 2024-02-18</small></td>
+                                <td><span style="color: #10b981;">₹0</span><br><small style="color: #64748b;">Updated 2024-02-18</small></td>
                                 <td><span class="status-badge status-won">full</span></td>
+                                <td><span class="status-badge status-won">Completed</span></td>
                                 <td>Amit Patel</td>
                                 <td>₹2,436</td>
                                 <td>2024-04-20</td>
+                                <td>₹60,900<br><small style="color: #64748b;">2024-02-09</small></td>
+                                <td>2024-02-09</td>
                                 <td>-</td>
                                 <td>
                                     <div class="table-actions">
                                         <button class="btn-outline btn-sm btn-icon" data-onclick="viewBookingDetails(2001)"><i class="fas fa-eye"></i></button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="btn-primary btn-sm" data-onclick="openVoucherModal(2001)">Add</button>
+                                        <button class="btn-outline btn-sm" data-onclick="viewVoucherDetails(2001)">View</button>
                                     </div>
                                 </td>
                             </tr>
@@ -213,13 +232,16 @@
                                 <td><strong>SOL-BK-002</strong></td>
                                 <td>Sneha Reddy</td>
                                 <td>Rajasthan</td>
-                                <td>₹68,250</td>
-                                <td>₹25,000</td>
-                                <td><span style="color: #f59e0b;">₹43,250</span></td>
+                                <td>₹68,250<br><small style="color: #64748b;">Booking Value</small></td>
+                                <td>₹25,000<br><small style="color: #64748b;">Paid till 2024-02-10</small></td>
+                                <td><span style="color: #f59e0b;">₹43,250</span><br><small style="color: #64748b;">Updated 2024-02-10</small></td>
                                 <td><span class="status-badge status-partial">partial</span></td>
+                                <td><span class="status-badge status-partial">Confirm</span></td>
                                 <td>Neha Singh</td>
                                 <td>₹2,048</td>
                                 <td>2024-03-18</td>
+                                <td>₹25,000<br><small style="color: #64748b;">2024-02-10</small></td>
+                                <td>2024-02-10</td>
                                 <td><span style="color: #e94560;">Immediate</span></td>
                                 <td>
                                     <div class="table-actions">
@@ -227,23 +249,38 @@
                                         <button class="btn-outline btn-sm btn-icon" data-onclick="viewBookingDetails(2002)"><i class="fas fa-eye"></i></button>
                                     </div>
                                 </td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="btn-primary btn-sm" data-onclick="openVoucherModal(2002)">Add</button>
+                                        <button class="btn-outline btn-sm" data-onclick="viewVoucherDetails(2002)">View</button>
+                                    </div>
+                                </td>
                             </tr>
                             <tr>
                                 <td><strong>SOL-BK-003</strong></td>
                                 <td>Vikram Singh</td>
                                 <td>Andaman</td>
-                                <td>₹93,450</td>
-                                <td>₹20,000</td>
-                                <td><span style="color: #f59e0b;">₹73,450</span></td>
+                                <td>₹93,450<br><small style="color: #64748b;">Booking Value</small></td>
+                                <td>₹40,000<br><small style="color: #64748b;">Paid till 2024-02-16</small></td>
+                                <td><span style="color: #f59e0b;">₹53,450</span><br><small style="color: #64748b;">Updated 2024-02-16</small></td>
                                 <td><span class="status-badge status-new">pending</span></td>
+                                <td><span class="status-badge status-processing">In Process</span></td>
                                 <td>Rajesh Kumar</td>
                                 <td>₹3,738</td>
                                 <td>2024-05-10</td>
+                                <td>₹20,000<br><small style="color: #64748b;">2024-02-11</small></td>
+                                <td>2024-02-11</td>
                                 <td><span style="color: #e94560;">Immediate</span></td>
                                 <td>
                                     <div class="table-actions">
                                         <button class="btn-primary btn-sm" data-onclick="openPaymentModal(2003)">Pay Now</button>
                                         <button class="btn-outline btn-sm btn-icon" data-onclick="viewBookingDetails(2003)"><i class="fas fa-eye"></i></button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="btn-primary btn-sm" data-onclick="openVoucherModal(2003)">Add</button>
+                                        <button class="btn-outline btn-sm" data-onclick="viewVoucherDetails(2003)">View</button>
                                     </div>
                                 </td>
                             </tr>
@@ -372,6 +409,16 @@
                     <!-- Dynamic booking details -->
                 </div>
                 <div class="form-group">
+                    <label>Payment Term</label>
+                    <select id="paymentTermQuickSelect" class="form-control" data-onchange="applyBookingPaymentTerm()">
+                        <option value="advance">Advance Due</option>
+                        <option value="10">10% Advance</option>
+                        <option value="25">25% Advance</option>
+                        <option value="50">50% Advance</option>
+                        <option value="100">Full / Balance Payment</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label>Payment Amount (₹)</label>
                     <input type="number" id="paymentAmount" class="form-control" step="100">
                 </div>
@@ -426,7 +473,9 @@
                 <div class="form-group">
                     <label>Payment Type</label>
                     <select id="paymentTypeSelect" class="form-control">
-                        <option value="partial">Partial Payment (30% Booking Amount)</option>
+                        <option value="10">10% Advance Payment</option>
+                        <option value="25" selected>25% Advance Payment</option>
+                        <option value="50">50% Advance Payment</option>
                         <option value="full">Full Payment</option>
                     </select>
                 </div>
@@ -476,6 +525,158 @@
             </div>
             <div class="modal-footer">
                 <button class="btn-outline" data-onclick="closeModal('bookingInfoModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="voucherModal" class="modal">
+        <div class="modal-content modal-w-800">
+            <div class="modal-header">
+                <h3><i class="fas fa-file-signature"></i> Add Booking Details</h3>
+                <button class="close-modal" data-onclick="closeModal('voucherModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="voucherBookingId">
+                <div id="voucherBookingSummary" class="summary-box mb-15"></div>
+                <div class="voucher-tab-row mb-15">
+                    <button type="button" class="voucher-tab is-active" data-tab="pickupdrop" data-onclick="switchVoucherTab('pickupdrop')">Pick & Drop</button>
+                    <button type="button" class="voucher-tab" data-tab="transport" data-onclick="switchVoucherTab('transport')">Transport</button>
+                    <button type="button" class="voucher-tab" data-tab="hotel" data-onclick="switchVoucherTab('hotel')">Hotel</button>
+                    <button type="button" class="voucher-tab" data-tab="sightseeing" data-onclick="switchVoucherTab('sightseeing')">Sightseeing</button>
+                </div>
+
+                <div class="voucher-tab-panel is-active" data-panel="pickupdrop">
+                    <div class="grid-2-form">
+                        <div class="form-group">
+                            <label>Pickup Required</label>
+                            <select id="pickupRequired" class="form-control" onchange="updatePickupDropVisibility()">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="pickupTaxiNoGroup">
+                            <label>Pickup Taxi No.</label>
+                            <input type="text" id="pickupTaxiNo" class="form-control" placeholder="HR29 AZ1234">
+                        </div>
+                        <div class="form-group" id="pickupCabTypeGroup">
+                            <label>Pickup Cab Type</label>
+                            <select id="pickupCabType" class="form-control">
+                                <option value="">Select cab</option>
+                                <option value="Hatchback">Hatchback</option>
+                                <option value="Sedan">Sedan</option>
+                                <option value="SUV">SUV</option>
+                                <option value="Innova">Innova</option>
+                                <option value="Tempo Traveller">Tempo Traveller</option>
+                                <option value="Coach">Coach</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="pickupTimeGroup">
+                            <label>Pickup Time & Date</label>
+                            <input type="datetime-local" id="pickupTime" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Drop Required</label>
+                            <select id="dropRequired" class="form-control" onchange="updatePickupDropVisibility()">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="dropTaxiNoGroup">
+                            <label>Drop Taxi No.</label>
+                            <input type="text" id="dropTaxiNo" class="form-control" placeholder="UAE 517">
+                        </div>
+                        <div class="form-group" id="dropCabTypeGroup">
+                            <label>Drop Cab Type</label>
+                            <select id="dropCabType" class="form-control">
+                                <option value="">Select cab</option>
+                                <option value="Hatchback">Hatchback</option>
+                                <option value="Sedan">Sedan</option>
+                                <option value="SUV">SUV</option>
+                                <option value="Innova">Innova</option>
+                                <option value="Tempo Traveller">Tempo Traveller</option>
+                                <option value="Coach">Coach</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="dropTimeGroup">
+                            <label>Drop Pickup Time</label>
+                            <input type="datetime-local" id="dropTime" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="voucher-tab-panel" data-panel="transport">
+                    <div class="grid-2-form">
+                        <div class="form-group transport-always-field">
+                            <label>Transport Mode</label>
+                            <select id="transportMode" class="form-control" onchange="updateVoucherTransportVisibility()">
+                                <option value="Flight">Flight</option>
+                                <option value="Train">Train</option>
+                                <option value="Taxi">Taxi</option>
+                                <option value="Bus">Bus</option>
+                                <option value="Cruise">Cruise</option>
+                            </select>
+                        </div>
+                        <div class="form-group transport-always-field">
+                            <label id="transportInfoLabel">Flight Number / Sector</label>
+                            <input type="text" id="transportInfo" class="form-control" placeholder="Flight 6E-214 | Delhi to Srinagar">
+                        </div>
+                        <div class="form-group transport-mode-field" id="transportReferenceGroup">
+                            <label id="transportReferenceLabel">PNR / Ticket Reference</label>
+                            <input type="text" id="transportReference" class="form-control" placeholder="PNR / Ticket reference">
+                        </div>
+                        <div class="form-group transport-mode-field" id="transportDocumentGroup">
+                            <label id="transportDocumentLabel">Upload Travel Document</label>
+                            <input type="file" id="transportDocument" class="form-control" accept=".pdf,.png,.jpg,.jpeg,.webp">
+                            <div id="transportDocumentStatus" class="voucher-field-help hidden"></div>
+                            <small class="text-muted">PDF ya image upload kar sakte ho.</small>
+                        </div>
+                        <div class="form-group transport-always-field">
+                            <label>Local Transport Notes</label>
+                            <input type="text" id="transportNotes" class="form-control" placeholder="Driver will contact 30 mins before pickup">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="voucher-tab-panel" data-panel="hotel">
+                    <div class="voucher-section-head mb-15">
+                        <div>
+                            <div class="fw-600">Hotel Stays</div>
+                            <div class="text-12 text-muted">First stay se start karo, phir next day ke liye plus se naya block add karo.</div>
+                        </div>
+                        <button type="button" class="btn-outline btn-sm" data-onclick="addHotelStayForm()">
+                            <i class="fas fa-plus"></i> Add Next Day
+                        </button>
+                    </div>
+                    <div id="hotelStayContainer" class="stack-gap-20"></div>
+                </div>
+
+                <div class="voucher-tab-panel" data-panel="sightseeing">
+                    <div id="sightseeingContainer" class="stack-gap-20"></div>
+                    <button type="button" class="btn-outline btn-sm mt-15" data-onclick="addSightseeingForm()">
+                        <i class="fas fa-plus"></i> Add Sightseeing
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-outline" data-onclick="closeModal('voucherModal')">Cancel</button>
+                <button class="btn-primary" data-onclick="saveVoucherDetails()">
+                    <i class="fas fa-save"></i> Save Voucher
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="voucherViewModal" class="modal">
+        <div class="modal-content modal-w-700">
+            <div class="modal-header">
+                <h3><i class="fas fa-eye"></i> View Booking Details</h3>
+                <button class="close-modal" data-onclick="closeModal('voucherViewModal')">&times;</button>
+            </div>
+            <div class="modal-body" id="voucherViewContent">
+                <!-- Dynamic voucher content -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-outline" data-onclick="closeModal('voucherViewModal')">Close</button>
             </div>
         </div>
     </div>

@@ -1,21 +1,7 @@
-new Chart(document.getElementById('funnelChart'), {
-            type: 'bar',
-            data: {
-                labels: ['New Leads', 'Qualified', 'Quote Sent', 'Negotiation', 'Booked'],
-                datasets: [{
-                    label: 'Lead Count',
-                    data: [248, 174, 132, 94, 87],
-                    backgroundColor: ['#e94560', '#10b981', '#3b82f6', '#f59e0b', '#0f3460'],
-                    borderRadius: 10
-                }]
-            },
-            options: {
-                plugins: { legend: { display: false } },
-                scales: { y: { beginAtZero: true } }
-            }
-        });
+const revenueCanvas = document.getElementById('revenueChart');
 
-        new Chart(document.getElementById('revenueChart'), {
+if (revenueCanvas) {
+        new Chart(revenueCanvas, {
             type: 'line',
             data: {
                 labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
@@ -33,3 +19,4 @@ new Chart(document.getElementById('funnelChart'), {
                 scales: { y: { beginAtZero: true } }
             }
         });
+}

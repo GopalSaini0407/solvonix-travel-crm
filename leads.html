@@ -49,6 +49,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="documents.html" class="nav-link">
+                        <i class="fas fa-folder-open"></i>
+                        <span>Customer Documents</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="employee.html" class="nav-link">
                         <i class="fas fa-user-tie"></i>
                         <span>Employees</span>
@@ -152,177 +158,217 @@
                 </div>
             </div>
 
-            <!-- Lead Table -->
-            <div class="table-container">
-                <div class="table-header">
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" id="searchLeads" placeholder="Search by name, destination, email...">
+            <section class="lead-view-shell mb-20">
+                <div class="lead-view-shell-head">
+                    <div>
+                        <h3 class="card-title-no-margin"><i class="fas fa-layer-group"></i> Lead Workspace</h3>
+                        <p class="text-12 text-muted-13 mt-1">Switch between structured table review and drag-drop pipeline view.</p>
                     </div>
-                    <div class="flex gap-10">
-                         <select id="filterSource" class="form-control form-control-pill">
-                            <option value="">All Lead Type</option>
-                            <option value="hot">hot</option>
-                            <option value="cold">cold</option>
-                            <option value="warm">warm</option>
-                        </select>
-
-                        <select id="filterSource" class="form-control form-control-pill">
-                            <option value="">All Sources</option>
-                            <option value="Google Ads">Google Ads</option>
-                            <option value="Instagram">Instagram</option>
-                            <option value="Facebook">Facebook</option>
-                            <option value="Referral">Referral</option>
-                            <option value="Website">Website</option>
-                        </select>
-                        <select id="filterStatus" class="form-control form-control-pill">
-                            <option value="">All Status</option>
-                            <option value="new">New</option>
-                            <option value="contacted">Contacted</option>
-                            <option value="interested">Interested</option>
-                            <option value="quotation_sent">Quotation Sent</option>
-                            <option value="negotiation">Negotiation</option>
-                            <option value="won">Won</option>
-                            <option value="lost">Lost</option>
-                        </select>
-                        <button class="btn-primary" data-onclick="openAddLeadModal()">
-                            <i class="fas fa-plus"></i> Add Lead
-                        </button>
-                    </div>
+                    <ul class="nav nav-tabs lead-tabs-nav lead-view-tabs" id="leadViewTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="lead-table-tab" data-bs-toggle="tab" data-bs-target="#lead-table-pane" type="button" role="tab" aria-controls="lead-table-pane" aria-selected="true">
+                                <i class="fas fa-table"></i>View
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="lead-kanban-tab" data-bs-toggle="tab" data-bs-target="#lead-kanban-pane" type="button" role="tab" aria-controls="lead-kanban-pane" aria-selected="false">
+                                <i class="fas fa-grip-horizontal"></i>View
+                            </button>
+                        </li>
+                    </ul>
                 </div>
 
-                <div class="table-scroll">
-                    <table class="table-full">
-                        <thead>
-                            <tr>
-                                <th><input type="checkbox" id="selectAll"></th>
-                                <th>Lead Name</th>
-                                <th>Source</th>
-                                <th>Destination</th>
-                                <th>Budget</th>
-                                <th>Travelers</th>
-                                <th>Status</th>
-                                <th>Score</th>
-                                <th>Assigned To</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="leadsTableBody" data-static="true">
-                            <tr>
-                                <td><input type="checkbox" class="lead-checkbox" data-id="1001"></td>
-                                <td>
-                                    <strong>Amit Sharma</strong><br>
-                                    <small style="color:#64748b;" class="d-flex">amit.sharma@gmail.com</small>
-                                    <small style="color:#64748b;" class="d-flex align-items-center">
-                                        9876543210
-                                        <button class="btn-outline lead-whatsapp-btn" data-onclick="shareWhatsApp()"><i class="fab fa-whatsapp"></i></button>
-                                    </small>
-                                </td>
-                                <td>Google Ads</td>
-                                <td>Goa</td>
-                                <td>₹55,000</td>
-                                <td>4</td>
-                                <td><span class="status-badge status-new">new</span></td>
-                                <td><div style="display: flex; align-items: center; gap: 5px;"><div style="background: #e94560; color: white; border-radius: 20px; padding: 2px 8px; font-size: 11px; font-weight: bold;">85</div></div></td>
-                                <td>Neha Singh</td>
-                                <td>
-                                    <div class="table-actions">
-                                        <button class="btn-outline btn-icon" data-onclick="viewLead(1001)"><i class="fas fa-eye"></i></button>
-                                        <button class="btn-outline btn-accent btn-icon" data-onclick="sendQuotation(1001)"><i class="fas fa-file-invoice"></i></button>
-                                        <button class="btn-outline btn-danger-outline btn-icon" data-onclick="deleteLead(1001)"><i class="fas fa-trash"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="lead-checkbox" data-id="1003"></td>
-                                <td>
-                                    <strong>Rahul Mehta</strong><br>
-                                    <small style="color:#64748b;" class="d-flex">rahul.mehta@gmail.com</small>
-                                    <small style="color:#64748b;" class="d-flex align-items-center">
-                                        9876543212
-                                        <button class="btn-outline lead-whatsapp-btn" data-onclick="shareWhatsApp()"><i class="fab fa-whatsapp"></i></button>
-                                    </small>
-                                </td>
-                                <td>Instagram</td>
-                                <td>Kerala</td>
-                                <td>₹68,000</td>
-                                <td>3</td>
-                                <td><span class="status-badge status-interested">interested</span></td>
-                                <td><div style="display: flex; align-items: center; gap: 5px;"><div style="background: #e94560; color: white; border-radius: 20px; padding: 2px 8px; font-size: 11px; font-weight: bold;">92</div></div></td>
-                                <td>Amit Patel</td>
-                                <td>
-                                    <div class="table-actions">
-                                        <button class="btn-outline btn-icon" data-onclick="viewLead(1003)"><i class="fas fa-eye"></i></button>
-                                        <button class="btn-outline btn-accent btn-icon" data-onclick="sendQuotation(1003)"><i class="fas fa-file-invoice"></i></button>
-                                        <button class="btn-outline btn-danger-outline btn-icon" data-onclick="deleteLead(1003)"><i class="fas fa-trash"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="lead-checkbox" data-id="1004"></td>
-                                <td>
-                                    <strong>Sneha Reddy</strong><br>
-                                    <small style="color:#64748b;" class="d-flex">sneha.r@rediff.com</small>
-                                    <small style="color:#64748b;" class="d-flex align-items-center">
-                                        9876543213
-                                        <button class="btn-outline lead-whatsapp-btn" data-onclick="shareWhatsApp()"><i class="fab fa-whatsapp"></i></button>
-                                    </small>
-                                </td>
-                                <td>Website</td>
-                                <td>Rajasthan</td>
-                                <td>₹75,000</td>
-                                <td>5</td>
-                                <td><span class="status-badge status-quotation">quotation sent</span></td>
-                                <td><div style="display: flex; align-items: center; gap: 5px;"><div style="background: #e94560; color: white; border-radius: 20px; padding: 2px 8px; font-size: 11px; font-weight: bold;">88</div></div></td>
-                                <td>Neha Singh</td>
-                                <td>
-                                    <div class="table-actions">
-                                        <button class="btn-outline btn-icon" data-onclick="viewLead(1004)"><i class="fas fa-eye"></i></button>
-                                        <button class="btn-outline btn-accent btn-icon" data-onclick="sendQuotation(1004)"><i class="fas fa-file-invoice"></i></button>
-                                        <button class="btn-outline btn-danger-outline btn-icon" data-onclick="deleteLead(1004)"><i class="fas fa-trash"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="lead-checkbox" data-id="1005"></td>
-                                <td>
-                                    <strong>Vikram Singh</strong><br>
-                                    <small style="color:#64748b;" class="d-flex">vikram.singh@gmail.com</small>
-                                    <small style="color:#64748b;" class="d-flex align-items-center">
-                                        9876543214
-                                        <button class="btn-outline lead-whatsapp-btn" data-onclick="shareWhatsApp()"><i class="fab fa-whatsapp"></i></button>
-                                    </small>
-                                </td>
-                                <td>Google Ads</td>
-                                <td>Andaman</td>
-                                <td>₹95,000</td>
-                                <td>2</td>
-                                <td><span class="status-badge status-negotiation">negotiation</span></td>
-                                <td><div style="display: flex; align-items: center; gap: 5px;"><div style="background: #e94560; color: white; border-radius: 20px; padding: 2px 8px; font-size: 11px; font-weight: bold;">94</div></div></td>
-                                <td>Rajesh Kumar</td>
-                                <td>
-                                    <div class="table-actions">
-                                        <button class="btn-outline btn-icon" data-onclick="viewLead(1005)"><i class="fas fa-eye"></i></button>
-                                        <button class="btn-outline btn-accent btn-icon" data-onclick="sendQuotation(1005)"><i class="fas fa-file-invoice"></i></button>
-                                        <button class="btn-outline btn-danger-outline btn-icon" data-onclick="deleteLead(1005)"><i class="fas fa-trash"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <div class="tab-content lead-view-content">
+                    <div class="tab-pane fade show active" id="lead-table-pane" role="tabpanel" aria-labelledby="lead-table-tab">
+                        <div class="table-container lead-view-card">
+                            <div class="table-header">
+                                <div class="search-box">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" id="searchLeads" placeholder="Search by name, destination, email...">
+                                </div>
+                                <div class="flex gap-10 lead-table-toolbar">
+                                     <select id="filterLeadTemperature" class="form-control form-control-pill">
+                                        <option value="">All Lead Type</option>
+                                        <option value="hot">hot</option>
+                                        <option value="cold">cold</option>
+                                        <option value="warm">warm</option>
+                                    </select>
 
-                <!-- Pagination -->
-                <div class="section-divider">
-                    <div class="text-muted-13">
-                        Showing <span id="showingStart">1</span> to <span id="showingEnd">4</span> of <span id="totalRecords">4</span> leads
+                                    <select id="filterSource" class="form-control form-control-pill">
+                                        <option value="">All Sources</option>
+                                        <option value="Google Ads">Google Ads</option>
+                                        <option value="Instagram">Instagram</option>
+                                        <option value="Facebook">Facebook</option>
+                                        <option value="Referral">Referral</option>
+                                        <option value="Website">Website</option>
+                                    </select>
+                                    <select id="filterStatus" class="form-control form-control-pill">
+                                        <option value="">All Status</option>
+                                        <option value="new">New</option>
+                                        <option value="contacted">Contacted</option>
+                                        <option value="interested">Interested</option>
+                                        <option value="quotation_sent">Quotation Sent</option>
+                                        <option value="negotiation">Negotiation</option>
+                                        <option value="won">Won</option>
+                                        <option value="lost">Lost</option>
+                                    </select>
+                                    <button class="btn-primary" data-onclick="openAddLeadModal()">
+                                        <i class="fas fa-plus"></i> Add Lead
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="table-scroll">
+                                <table class="table-full">
+                                    <thead>
+                                        <tr>
+                                            <th><input type="checkbox" id="selectAll"></th>
+                                            <th>Lead Name</th>
+                                            <th>Source</th>
+                                            <th>Destination</th>
+                                            <th>Budget</th>
+                                            <th>Travelers</th>
+                                            <th>Status</th>
+                                            <th>Score</th>
+                                            <th>Assigned To</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="leadsTableBody" data-static="true">
+                                        <tr data-lead-id="1001">
+                                            <td><input type="checkbox" class="lead-checkbox" data-id="1001"></td>
+                                            <td>
+                                                <strong>Amit Sharma</strong><br>
+                                                <small style="color:#64748b;" class="d-flex">amit.sharma@gmail.com</small>
+                                                <small style="color:#64748b;" class="d-flex align-items-center">
+                                                    9876543210
+                                                    <button class="btn-outline lead-whatsapp-btn" data-onclick="shareWhatsApp()"><i class="fab fa-whatsapp"></i></button>
+                                                </small>
+                                            </td>
+                                            <td>Google Ads</td>
+                                            <td>Goa</td>
+                                            <td>₹55,000</td>
+                                            <td>4</td>
+                                            <td><span class="status-badge status-new">new</span></td>
+                                            <td><div style="display: flex; align-items: center; gap: 5px;"><div style="background: #e94560; color: white; border-radius: 20px; padding: 2px 8px; font-size: 11px; font-weight: bold;">85</div></div></td>
+                                            <td>Neha Singh</td>
+                                            <td>
+                                                <div class="table-actions">
+                                                    <button class="btn-outline btn-icon" data-onclick="viewLead(1001)"><i class="fas fa-eye"></i></button>
+                                                    <button class="btn-outline btn-icon" data-onclick="openEditLeadModal(1001)"><i class="fas fa-pen"></i></button>
+                                                    <button class="btn-outline btn-accent btn-icon" data-onclick="sendQuotation(1001)"><i class="fas fa-file-invoice"></i></button>
+                                                    <button class="btn-outline btn-danger-outline btn-icon" data-onclick="deleteLead(1001)"><i class="fas fa-trash"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr data-lead-id="1003">
+                                            <td><input type="checkbox" class="lead-checkbox" data-id="1003"></td>
+                                            <td>
+                                                <strong>Rahul Mehta</strong><br>
+                                                <small style="color:#64748b;" class="d-flex">rahul.mehta@gmail.com</small>
+                                                <small style="color:#64748b;" class="d-flex align-items-center">
+                                                    9876543212
+                                                    <button class="btn-outline lead-whatsapp-btn" data-onclick="shareWhatsApp()"><i class="fab fa-whatsapp"></i></button>
+                                                </small>
+                                            </td>
+                                            <td>Instagram</td>
+                                            <td>Kerala</td>
+                                            <td>₹68,000</td>
+                                            <td>3</td>
+                                            <td><span class="status-badge status-interested">interested</span></td>
+                                            <td><div style="display: flex; align-items: center; gap: 5px;"><div style="background: #e94560; color: white; border-radius: 20px; padding: 2px 8px; font-size: 11px; font-weight: bold;">92</div></div></td>
+                                            <td>Amit Patel</td>
+                                            <td>
+                                                <div class="table-actions">
+                                                    <button class="btn-outline btn-icon" data-onclick="viewLead(1003)"><i class="fas fa-eye"></i></button>
+                                                    <button class="btn-outline btn-icon" data-onclick="openEditLeadModal(1003)"><i class="fas fa-pen"></i></button>
+                                                    <button class="btn-outline btn-accent btn-icon" data-onclick="sendQuotation(1003)"><i class="fas fa-file-invoice"></i></button>
+                                                    <button class="btn-outline btn-danger-outline btn-icon" data-onclick="deleteLead(1003)"><i class="fas fa-trash"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr data-lead-id="1004">
+                                            <td><input type="checkbox" class="lead-checkbox" data-id="1004"></td>
+                                            <td>
+                                                <strong>Sneha Reddy</strong><br>
+                                                <small style="color:#64748b;" class="d-flex">sneha.r@rediff.com</small>
+                                                <small style="color:#64748b;" class="d-flex align-items-center">
+                                                    9876543213
+                                                    <button class="btn-outline lead-whatsapp-btn" data-onclick="shareWhatsApp()"><i class="fab fa-whatsapp"></i></button>
+                                                </small>
+                                            </td>
+                                            <td>Website</td>
+                                            <td>Rajasthan</td>
+                                            <td>₹75,000</td>
+                                            <td>5</td>
+                                            <td><span class="status-badge status-quotation">quotation sent</span></td>
+                                            <td><div style="display: flex; align-items: center; gap: 5px;"><div style="background: #e94560; color: white; border-radius: 20px; padding: 2px 8px; font-size: 11px; font-weight: bold;">88</div></div></td>
+                                            <td>Neha Singh</td>
+                                            <td>
+                                                <div class="table-actions">
+                                                    <button class="btn-outline btn-icon" data-onclick="viewLead(1004)"><i class="fas fa-eye"></i></button>
+                                                    <button class="btn-outline btn-icon" data-onclick="openEditLeadModal(1004)"><i class="fas fa-pen"></i></button>
+                                                    <button class="btn-outline btn-accent btn-icon" data-onclick="sendQuotation(1004)"><i class="fas fa-file-invoice"></i></button>
+                                                    <button class="btn-outline btn-danger-outline btn-icon" data-onclick="deleteLead(1004)"><i class="fas fa-trash"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr data-lead-id="1005">
+                                            <td><input type="checkbox" class="lead-checkbox" data-id="1005"></td>
+                                            <td>
+                                                <strong>Vikram Singh</strong><br>
+                                                <small style="color:#64748b;" class="d-flex">vikram.singh@gmail.com</small>
+                                                <small style="color:#64748b;" class="d-flex align-items-center">
+                                                    9876543214
+                                                    <button class="btn-outline lead-whatsapp-btn" data-onclick="shareWhatsApp()"><i class="fab fa-whatsapp"></i></button>
+                                                </small>
+                                            </td>
+                                            <td>Google Ads</td>
+                                            <td>Andaman</td>
+                                            <td>₹95,000</td>
+                                            <td>2</td>
+                                            <td><span class="status-badge status-negotiation">negotiation</span></td>
+                                            <td><div style="display: flex; align-items: center; gap: 5px;"><div style="background: #e94560; color: white; border-radius: 20px; padding: 2px 8px; font-size: 11px; font-weight: bold;">94</div></div></td>
+                                            <td>Rajesh Kumar</td>
+                                            <td>
+                                                <div class="table-actions">
+                                                    <button class="btn-outline btn-icon" data-onclick="viewLead(1005)"><i class="fas fa-eye"></i></button>
+                                                    <button class="btn-outline btn-icon" data-onclick="openEditLeadModal(1005)"><i class="fas fa-pen"></i></button>
+                                                    <button class="btn-outline btn-accent btn-icon" data-onclick="sendQuotation(1005)"><i class="fas fa-file-invoice"></i></button>
+                                                    <button class="btn-outline btn-danger-outline btn-icon" data-onclick="deleteLead(1005)"><i class="fas fa-trash"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="section-divider">
+                                <div class="text-muted-13">
+                                    Showing <span id="showingStart">1</span> to <span id="showingEnd">4</span> of <span id="totalRecords">4</span> leads
+                                </div>
+                                <div class="flex gap-8">
+                                    <button class="btn-outline" id="prevPage" disabled>&laquo; Previous</button>
+                                    <button class="btn-outline" id="nextPage">Next &raquo;</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="flex gap-8">
-                        <button class="btn-outline" id="prevPage" disabled>&laquo; Previous</button>
-                        <button class="btn-outline" id="nextPage">Next &raquo;</button>
+
+                    <div class="tab-pane fade" id="lead-kanban-pane" role="tabpanel" aria-labelledby="lead-kanban-tab">
+                        <div class="table-container lead-view-card">
+                            <div class="table-header">
+                                <div>
+                                    <h3 class="card-title-no-margin"><i class="fas fa-grip-vertical"></i> Drag & Drop Lead Kanban</h3>
+                                    <p class="text-12 text-muted-13 mt-1">Drop any lead card into a stage to update its status instantly.</p>
+                                </div>
+                                <div class="text-12 text-muted-13">Tip: click a card to open details, or drag it to change stages.</div>
+                            </div>
+                            <div id="leadKanbanBoard" class="kanban-board lead-kanban-board"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
             <!-- Duplicate Check Info -->
             <div class="notice-card notice-card-warning mt-20 flex items-center gap-12">
@@ -336,46 +382,20 @@
             <!-- Qualification Rules Card -->
             <div class="qualification-rules-card grid-2-top">
                 <div class="table-container">
-                    <h3 class="card-title"><i class="fas fa-robot"></i> Lead Qualification Rules</h3>
-                    <div class="rule-list">
-                        <div class="rule-row">
-                            <span>Budget > ₹50,000</span>
-                            <span class="status-badge status-won">+30 points</span>
-                        </div>
-                        <div class="rule-row">
-                            <span>International Destination</span>
-                            <span class="status-badge status-won">+25 points</span>
-                        </div>
-                        <div class="rule-row">
-                            <span>Group Travel (4+ travelers)</span>
-                            <span class="status-badge status-won">+20 points</span>
-                        </div>
-                        <div class="rule-row">
-                            <span>Travel within 30 days</span>
-                            <span class="status-badge status-won">+15 points</span>
-                        </div>
-                        <div class="rule-row">
-                            <span>Referred by existing customer</span>
-                            <span class="status-badge status-won">+10 points</span>
-                        </div>
+                    <div class="rule-card-head">
+                        <h3 class="card-title-no-margin"><i class="fas fa-robot"></i> Lead Qualification Rules</h3>
+                        <button class="btn-outline btn-sm" data-onclick="openLeadRuleModal('qualification')"><i class="fas fa-plus"></i> Add</button>
+                    </div>
+                    <div class="rule-list editable-rule-list" id="qualificationRulesList">
                     </div>
                 </div>
 
                 <div class="table-container">
-                    <h3 class="card-title"><i class="fas fa-user-check"></i> Auto-Assignment Rules</h3>
-                    <div class="rule-list">
-                        <div class="rule-row">
-                            <span>High Score (80+) → Senior Agent</span>
-                            <span>Neha Singh / Amit Patel</span>
-                        </div>
-                        <div class="rule-row">
-                            <span>International → International Desk</span>
-                            <span>Rajesh Kumar</span>
-                        </div>
-                        <div class="rule-row">
-                            <span>Low Score → Auto Nurture Campaign</span>
-                            <span>Email Drip Sequence</span>
-                        </div>
+                    <div class="rule-card-head">
+                        <h3 class="card-title-no-margin"><i class="fas fa-user-check"></i> Auto-Assignment Rules</h3>
+                        <button class="btn-outline btn-sm" data-onclick="openLeadRuleModal('assignment')"><i class="fas fa-plus"></i> Add</button>
+                    </div>
+                    <div class="rule-list editable-rule-list" id="assignmentRulesList">
                     </div>
                 </div>
             </div>
@@ -384,9 +404,9 @@
 
     <!-- Add Lead Modal -->
     <div id="addLeadModal" class="modal">
-        <div class="modal-content">
+            <div class="modal-content">
             <div class="modal-header">
-                <h3><i class="fas fa-user-plus"></i> Capture New Lead</h3>
+                <h3 id="leadModalTitle"><i class="fas fa-user-plus"></i> Capture New Lead</h3>
                 <button class="close-modal" data-onclick="closeModal('addLeadModal')">&times;</button>
             </div>
             <div class="modal-body">
@@ -440,6 +460,11 @@
             </select>
         </div>
 
+        <div class="form-group">
+            <label>Destination</label>
+            <input type="text" id="leadDestination" placeholder="e.g. Goa">
+        </div>
+
         <!-- Trip Type Dropdown -->
         <div class="form-group">
             <label>Trip Type </label>
@@ -475,6 +500,11 @@
             <label>Budget If Any </label>
             <input type="text" id="leadBudget" placeholder="e.g. ₹50,000">
         </div>
+
+        <div class="form-group">
+            <label>Travelers</label>
+            <input type="number" id="leadTravelers" min="1" placeholder="e.g. 2">
+        </div>
     </div>
 
     <!-- Notes -->
@@ -487,7 +517,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn-outline" data-onclick="closeModal('addLeadModal')">Cancel</button>
-                <button class="btn-primary" data-onclick="addNewLead()">Save Lead</button>
+                <button id="leadModalSaveButton" class="btn-primary" data-onclick="saveLeadForm()">Save Lead</button>
             </div>
         </div>
     </div>
@@ -502,6 +532,39 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body p-0" id="leadJourneyContent"></div>
+    </div>
+
+    <!-- Lead Rule Modal -->
+    <div id="leadRuleModal" class="modal">
+        <div class="modal-content modal-w-520">
+            <div class="modal-header">
+                <h3 id="leadRuleModalTitle"><i class="fas fa-sliders-h"></i> Add Rule</h3>
+                <button class="close-modal" data-onclick="closeModal('leadRuleModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="leadRuleType">
+                <input type="hidden" id="leadRuleId">
+                <div class="form-group">
+                    <label>Rule Condition</label>
+                    <input type="text" id="leadRuleCondition" class="form-control" placeholder="Budget > ₹50,000">
+                </div>
+                <div class="form-group">
+                    <label>Outcome</label>
+                    <input type="text" id="leadRuleOutcome" class="form-control" placeholder="+30 points / Assign to Senior Agent">
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="leadRuleStatus" class="form-control">
+                        <option value="active">Active</option>
+                        <option value="paused">Paused</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-outline" data-onclick="closeModal('leadRuleModal')">Cancel</button>
+                <button class="btn-primary" data-onclick="saveLeadRule()">Save Rule</button>
+            </div>
+        </div>
     </div>
 
     <!-- Toast Container -->

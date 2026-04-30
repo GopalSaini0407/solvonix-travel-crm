@@ -832,9 +832,13 @@ td {
 
 .column-count {
     background: var(--border);
-    padding: 2px 8px;
     border-radius: 20px;
     font-size: 12px;
+    width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .kanban-card {

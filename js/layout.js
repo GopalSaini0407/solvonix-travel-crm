@@ -46,6 +46,31 @@ function injectSidebarLogout(sidebar) {
     sidebar.appendChild(footer);
 }
 
+function injectDocumentsNavLink(sidebar) {
+    if (!sidebar) return;
+
+    const navMenu = sidebar.querySelector('.nav-menu');
+    if (!navMenu || navMenu.querySelector('a[href="documents.html"]')) return;
+
+    const customersItem = navMenu.querySelector('a[href="customers.html"]')?.closest('.nav-item');
+    const item = document.createElement('li');
+    item.className = 'nav-item';
+    item.innerHTML = `
+        <a href="documents.html" class="nav-link">
+            <i class="fas fa-folder-open"></i>
+            <span>Customer Documents</span>
+        </a>
+    `;
+
+    if (customersItem?.nextElementSibling) {
+        navMenu.insertBefore(item, customersItem.nextElementSibling);
+    } else if (customersItem) {
+        customersItem.insertAdjacentElement('afterend', item);
+    } else {
+        navMenu.appendChild(item);
+    }
+}
+
 function injectUserDropdown(topBar) {
     const userArea = topBar?.querySelector('.user-area');
     const avatar = userArea?.querySelector('.avatar');
@@ -129,6 +154,7 @@ function initializeResponsiveLayout() {
     const topBar = document.querySelector('.top-bar');
 
     if (!sidebar || !topBar) return;
+    injectDocumentsNavLink(sidebar);
     injectSidebarLogout(sidebar);
     injectUserDropdown(topBar);
     syncActiveNavigation();

@@ -2,6 +2,35 @@
 let currentPage = 1;
 let rowsPerPage = 10;
 let filteredLeads = [];
+let draggedLeadId = null;
+let editingLeadId = null;
+let activeLeadViewTabId = 'lead-table-tab';
+let leadRuleEditingId = null;
+
+const leadRules = {
+    qualification: [
+        { id: 1, condition: 'Budget > ₹50,000', outcome: '+30 points', status: 'active' },
+        { id: 2, condition: 'International Destination', outcome: '+25 points', status: 'active' },
+        { id: 3, condition: 'Group Travel (4+ travelers)', outcome: '+20 points', status: 'active' },
+        { id: 4, condition: 'Travel within 30 days', outcome: '+15 points', status: 'active' },
+        { id: 5, condition: 'Referred by existing customer', outcome: '+10 points', status: 'active' }
+    ],
+    assignment: [
+        { id: 101, condition: 'High Score (80+)', outcome: 'Neha Singh / Amit Patel', status: 'active' },
+        { id: 102, condition: 'International Destination', outcome: 'Rajesh Kumar', status: 'active' },
+        { id: 103, condition: 'Low Score', outcome: 'Email Drip Sequence', status: 'active' }
+    ]
+};
+
+const leadKanbanStages = [
+    { key: 'new', label: 'New Leads', color: '#3b82f6', empty: 'Fresh enquiries will appear here.' },
+    { key: 'contacted', label: 'Contacted', color: '#f59e0b', empty: 'First touch and qualification calls.' },
+    { key: 'interested', label: 'Interested', color: '#10b981', empty: 'Requirement freeze and package shaping.' },
+    { key: 'quotation_sent', label: 'Quotation Sent', color: '#8b5cf6', empty: 'Commercials shared with the traveler.' },
+    { key: 'negotiation', label: 'Negotiation', color: '#ec4899', empty: 'Final follow-up and objection handling.' },
+    { key: 'won', label: 'Won / Booked', color: '#059669', empty: 'Closed bookings move here.' },
+    { key: 'lost', label: 'Lost', color: '#ef4444', empty: 'Dropped or cold opportunities.' }
+];
 
 function updateLeadStats() {
     if (typeof state !== 'undefined' && state.leads) {
@@ -18,6 +47,7 @@ function applyFilters() {
     const search = document.getElementById('searchLeads')?.value.toLowerCase() || '';
     const source = document.getElementById('filterSource')?.value || '';
     const status = document.getElementById('filterStatus')?.value || '';
+    const temperature = document.getElementById('filterLeadTemperature')?.value || '';
 
     filteredLeads = state.leads.filter(lead => {
         const matchSearch = lead.name.toLowerCase().includes(search) ||
@@ -25,11 +55,235 @@ function applyFilters() {
             lead.email.toLowerCase().includes(search);
         const matchSource = !source || lead.source === source;
         const matchStatus = !status || lead.status === status;
-        return matchSearch && matchSource && matchStatus;
+        const matchTemperature = !temperature || getLeadTemperature(lead.score).toLowerCase().startsWith(temperature);
+        return matchSearch && matchSource && matchStatus && matchTemperature;
     });
 
+    renderLeadKanban();
     renderLeadsTablePage();
+    syncStaticLeadsTable();
     updatePaginationInfo();
+}
+
+function renderLeadKanban() {
+    const board = document.getElementById('leadKanbanBoard');
+    if (!board) return;
+
+    board.innerHTML = leadKanbanStages.map(stage => {
+        const stageLeads = filteredLeads.filter(lead => lead.status === stage.key);
+
+        return `
+            <section class="kanban-column lead-kanban-column" data-stage="${stage.key}" style="--kanban-accent:${stage.color};">
+                <div class="column-header">
+                    <div class="lead-kanban-title-wrap">
+                        <span class="column-title">${stage.label}</span>
+                        <small>${stage.empty}</small>
+                    </div>
+                    <span class="column-count">${stageLeads.length}</span>
+                </div>
+                <div class="lead-kanban-dropzone" data-stage="${stage.key}">
+                    ${stageLeads.map(lead => `
+                        <article class="kanban-card lead-kanban-card" draggable="true" data-lead-id="${lead.id}" data-lead-status="${lead.status}">
+                            <div class="lead-kanban-card-top">
+                                <div class="lead-kanban-card-head">
+                                    <div>
+                                        <div class="card-title">${escapeHtml(lead.name)}</div>
+                                        <div class="card-detail">${escapeHtml(lead.destination)} | ${formatCurrency(lead.budget)}</div>
+                                    </div>
+                                    <span class="lead-kanban-score">${lead.score}</span>
+                                </div>
+                                <div class="lead-kanban-card-actions">
+                                    <button class="lead-kanban-menu-toggle" type="button" aria-label="Open actions" draggable="false">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <div class="lead-kanban-menu">
+                                        <button class="lead-kanban-menu-item" type="button" data-lead-action="edit" data-lead-id="${lead.id}" draggable="false">
+                                            <i class="fas fa-pen"></i> Edit
+                                        </button>
+                                        <button class="lead-kanban-menu-item is-danger" type="button" data-lead-action="delete" data-lead-id="${lead.id}" draggable="false">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="lead-kanban-meta">
+                                <span class="card-badge">${escapeHtml(lead.source)}</span>
+                                <span class="status-badge status-${getStatusClass(lead.status)}">${escapeHtml(getLeadStatusLabel(lead.status))}</span>
+                            </div>
+                            <div class="lead-kanban-footer">
+                                <span><i class="fas fa-user-tie"></i> ${escapeHtml(getLeadOwnerName(lead))}</span>
+                                <span><i class="fas fa-users"></i> ${lead.travelers}</span>
+                            </div>
+                        </article>
+                    `).join('')}
+                    ${stageLeads.length === 0 ? '<div class="lead-kanban-empty">No leads are currently in this stage.</div>' : ''}
+                </div>
+            </section>
+        `;
+    }).join('');
+
+    attachLeadKanbanEvents();
+}
+
+function attachLeadKanbanEvents() {
+    const cards = document.querySelectorAll('.lead-kanban-card');
+    const columns = document.querySelectorAll('.lead-kanban-column');
+    const dropzones = document.querySelectorAll('.lead-kanban-dropzone');
+
+    cards.forEach(card => {
+        card.addEventListener('click', event => {
+            if (event.target.closest('.lead-kanban-card-actions')) return;
+            if (event.target.closest('[draggable="true"]') !== card) return;
+            const leadId = Number(card.dataset.leadId);
+            if (leadId) viewLead(leadId);
+        });
+
+        card.addEventListener('dragstart', () => {
+            draggedLeadId = Number(card.dataset.leadId);
+            card.classList.add('is-dragging');
+            document.body.classList.add('lead-dragging');
+        });
+
+        card.addEventListener('dragend', () => {
+            draggedLeadId = null;
+            card.classList.remove('is-dragging');
+            document.body.classList.remove('lead-dragging');
+            columns.forEach(column => column.classList.remove('is-drop-target'));
+        });
+
+        const menuToggle = card.querySelector('.lead-kanban-menu-toggle');
+        const menuItems = card.querySelectorAll('[data-lead-action]');
+
+        menuToggle?.addEventListener('click', event => {
+            event.stopPropagation();
+            const isOpen = card.classList.contains('menu-open');
+            closeLeadActionMenus();
+            if (!isOpen) {
+                card.classList.add('menu-open');
+            }
+        });
+
+        menuItems.forEach(item => {
+            item.addEventListener('click', event => {
+                event.stopPropagation();
+                const leadId = Number(item.dataset.leadId);
+                const action = item.dataset.leadAction;
+
+                closeLeadActionMenus();
+                if (!leadId || !action) return;
+
+                if (action === 'edit') {
+                    openEditLeadModal(leadId);
+                    return;
+                }
+
+                if (action === 'delete') {
+                    deleteLead(leadId);
+                }
+            });
+        });
+    });
+
+    dropzones.forEach(zone => {
+        zone.addEventListener('dragover', event => {
+            event.preventDefault();
+            zone.closest('.lead-kanban-column')?.classList.add('is-drop-target');
+        });
+
+        zone.addEventListener('dragleave', event => {
+            if (!zone.contains(event.relatedTarget)) {
+                zone.closest('.lead-kanban-column')?.classList.remove('is-drop-target');
+            }
+        });
+
+        zone.addEventListener('drop', event => {
+            event.preventDefault();
+            const newStatus = zone.dataset.stage;
+            zone.closest('.lead-kanban-column')?.classList.remove('is-drop-target');
+            if (!draggedLeadId || !newStatus) return;
+            moveLeadToStage(draggedLeadId, newStatus);
+        });
+    });
+}
+
+function closeLeadActionMenus() {
+    document.querySelectorAll('.lead-kanban-card.menu-open').forEach(card => {
+        card.classList.remove('menu-open');
+    });
+}
+
+function getLeadViewTabInstance(tabId) {
+    if (typeof bootstrap === 'undefined') return null;
+    const tabButton = document.getElementById(tabId);
+    if (!tabButton) return null;
+    return bootstrap.Tab.getOrCreateInstance(tabButton);
+}
+
+function rememberActiveLeadViewTab() {
+    const activeTab = document.querySelector('#leadViewTabs .nav-link.active');
+    if (activeTab?.id) {
+        activeLeadViewTabId = activeTab.id;
+    }
+    return activeLeadViewTabId;
+}
+
+function restoreActiveLeadViewTab(preferredTabId) {
+    const tabId = preferredTabId || activeLeadViewTabId;
+    if (!tabId) return;
+    const tabInstance = getLeadViewTabInstance(tabId);
+    tabInstance?.show();
+}
+
+function runPreservingLeadViewTab(callback) {
+    const tabId = rememberActiveLeadViewTab();
+    const result = callback();
+    setTimeout(() => restoreActiveLeadViewTab(tabId), 0);
+    return result;
+}
+
+function moveLeadToStage(leadId, newStatus) {
+    const lead = state.leads.find(item => item.id === leadId);
+    if (!lead || lead.status === newStatus) return;
+
+    const previousStatus = lead.status;
+    lead.status = newStatus;
+
+    updateLeadStats();
+    applyFilters();
+    showToast('Lead stage updated', `${lead.name} moved from ${getLeadStatusLabel(previousStatus)} to ${getLeadStatusLabel(newStatus)}.`);
+}
+
+function syncStaticLeadsTable() {
+    const tbody = document.getElementById('leadsTableBody');
+    if (!tbody || tbody.dataset.static !== 'true') return;
+
+    const visibleIds = new Set(filteredLeads.map(lead => String(lead.id)));
+    const rows = tbody.querySelectorAll('tr[data-lead-id]');
+
+    rows.forEach(row => {
+        const leadId = Number(row.dataset.leadId);
+        const lead = state.leads.find(item => item.id === leadId);
+        if (!lead) {
+            row.hidden = true;
+            return;
+        }
+
+        row.hidden = !visibleIds.has(String(leadId));
+
+        const statusCell = row.children[6];
+        const ownerCell = row.children[8];
+        const scoreBadge = row.querySelector('td:nth-child(8) div div');
+
+        if (statusCell) {
+            statusCell.innerHTML = `<span class="status-badge status-${getStatusClass(lead.status)}">${escapeHtml(getLeadStatusLabel(lead.status))}</span>`;
+        }
+        if (ownerCell) {
+            ownerCell.innerHTML = lead.assignedTo !== 'unassigned' ? escapeHtml(lead.assignedTo) : '<span style="color:#94a3b8;">Unassigned</span>';
+        }
+        if (scoreBadge) {
+            scoreBadge.textContent = lead.score;
+        }
+    });
 }
 
 function renderLeadsTablePage() {
@@ -73,6 +327,9 @@ function renderLeadsTablePage() {
                 <button class="btn-outline btn-icon" data-onclick="viewLead(${lead.id})">
                     <i class="fas fa-eye"></i>
                 </button>
+                <button class="btn-outline btn-icon" data-onclick="openEditLeadModal(${lead.id})">
+                    <i class="fas fa-pen"></i>
+                </button>
                 <button class="btn-outline btn-accent btn-icon" data-onclick="sendQuotation(${lead.id})">
                     <i class="fas fa-file-invoice"></i>
                 </button>
@@ -86,6 +343,17 @@ function renderLeadsTablePage() {
 }
 
 function updatePaginationInfo() {
+    const tbody = document.getElementById('leadsTableBody');
+    if (tbody?.dataset.static === 'true') {
+        const visibleRows = Array.from(tbody.querySelectorAll('tr[data-lead-id]')).filter(row => !row.hidden).length;
+        document.getElementById('showingStart').innerText = visibleRows ? 1 : 0;
+        document.getElementById('showingEnd').innerText = visibleRows;
+        document.getElementById('totalRecords').innerText = visibleRows;
+        document.getElementById('prevPage').disabled = true;
+        document.getElementById('nextPage').disabled = true;
+        return;
+    }
+
     const total = filteredLeads.length;
     const start = (currentPage - 1) * rowsPerPage + 1;
     const end = Math.min(currentPage * rowsPerPage, total);
@@ -121,7 +389,148 @@ function escapeHtml(str) {
     });
 }
 
+function parseBudgetInput(value) {
+    return Number(String(value || '').replace(/[^\d]/g, '')) || 0;
+}
+
+function getLeadRuleListId(type) {
+    return type === 'assignment' ? 'assignmentRulesList' : 'qualificationRulesList';
+}
+
+function getLeadRuleTitle(type, isEdit) {
+    const label = type === 'assignment' ? 'Auto-Assignment Rule' : 'Lead Qualification Rule';
+    return `${isEdit ? 'Edit' : 'Add'} ${label}`;
+}
+
+function renderLeadRules() {
+    Object.keys(leadRules).forEach(type => {
+        const list = document.getElementById(getLeadRuleListId(type));
+        if (!list) return;
+
+        list.innerHTML = leadRules[type].map(rule => `
+            <div class="rule-row editable-rule-row">
+                <div class="rule-main">
+                    <span>${escapeHtml(rule.condition)}</span>
+                    <small>${rule.status === 'active' ? 'Running automatically' : 'Paused'}</small>
+                </div>
+                <div class="rule-actions">
+                    <span class="status-badge ${type === 'qualification' ? 'status-won' : 'status-quotation'}">${escapeHtml(rule.outcome)}</span>
+                    <button class="btn-outline btn-icon btn-sm" data-onclick="openLeadRuleModal('${type}', ${rule.id})" aria-label="Edit rule"><i class="fas fa-pen"></i></button>
+                    <button class="btn-outline btn-danger-outline btn-icon btn-sm" data-onclick="deleteLeadRule('${type}', ${rule.id})" aria-label="Delete rule"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+        `).join('');
+    });
+}
+
+function openLeadRuleModal(type = 'qualification', ruleId = null) {
+    const rule = leadRules[type]?.find(item => item.id === ruleId);
+    leadRuleEditingId = rule ? rule.id : null;
+
+    document.getElementById('leadRuleType').value = type;
+    document.getElementById('leadRuleId').value = rule?.id || '';
+    document.getElementById('leadRuleCondition').value = rule?.condition || '';
+    document.getElementById('leadRuleOutcome').value = rule?.outcome || '';
+    document.getElementById('leadRuleStatus').value = rule?.status || 'active';
+    document.getElementById('leadRuleModalTitle').innerHTML = `<i class="fas fa-sliders-h"></i> ${getLeadRuleTitle(type, Boolean(rule))}`;
+    openModal('leadRuleModal');
+}
+
+function saveLeadRule() {
+    const type = document.getElementById('leadRuleType')?.value || 'qualification';
+    const condition = document.getElementById('leadRuleCondition')?.value.trim();
+    const outcome = document.getElementById('leadRuleOutcome')?.value.trim();
+    const status = document.getElementById('leadRuleStatus')?.value || 'active';
+
+    if (!condition || !outcome) {
+        showToast('Rule details missing', 'Please add both condition and outcome.', 'warning');
+        return;
+    }
+
+    const currentRules = leadRules[type] || leadRules.qualification;
+    const existingRule = currentRules.find(item => item.id === leadRuleEditingId);
+
+    if (existingRule) {
+        existingRule.condition = condition;
+        existingRule.outcome = outcome;
+        existingRule.status = status;
+        showToast('Rule Updated', 'Automation rule has been updated.');
+    } else {
+        currentRules.push({ id: Date.now(), condition, outcome, status });
+        showToast('Rule Added', 'New automation rule has been added.');
+    }
+
+    renderLeadRules();
+    closeModal('leadRuleModal');
+}
+
+function deleteLeadRule(type, ruleId) {
+    const currentRules = leadRules[type];
+    if (!currentRules) return;
+
+    const index = currentRules.findIndex(item => item.id === ruleId);
+    if (index === -1) return;
+
+    currentRules.splice(index, 1);
+    renderLeadRules();
+    showToast('Rule Removed', 'Automation rule has been removed.');
+}
+
+function setLeadFormMode(mode = 'add') {
+    const title = document.getElementById('leadModalTitle');
+    const saveButton = document.getElementById('leadModalSaveButton');
+    const isEdit = mode === 'edit';
+
+    if (title) {
+        title.innerHTML = isEdit
+            ? '<i class="fas fa-pen"></i> Edit Lead'
+            : '<i class="fas fa-user-plus"></i> Capture New Lead';
+    }
+
+    if (saveButton) {
+        saveButton.textContent = isEdit ? 'Update Lead' : 'Save Lead';
+    }
+}
+
+function resetLeadForm() {
+    editingLeadId = null;
+    setLeadFormMode('add');
+
+    document.getElementById('addLeadForm')?.reset();
+
+    const categorySelect = document.getElementById('leadCategory');
+    if (categorySelect) {
+        Array.from(categorySelect.options).forEach(option => {
+            option.selected = false;
+        });
+    }
+}
+
+function populateLeadForm(lead) {
+    const categories = Array.isArray(lead.categories) ? lead.categories : [];
+
+    document.getElementById('leadSalutation').value = lead.salutation || '';
+    document.getElementById('leadName').value = lead.name || '';
+    document.getElementById('leadEmail').value = lead.email || '';
+    document.getElementById('leadPhone').value = lead.phone || '';
+    document.getElementById('leadSource').value = lead.source || '';
+    document.getElementById('leadDestination').value = lead.destination || '';
+    document.getElementById('leadTripType').value = lead.tripType || '';
+    document.getElementById('leadDuration').value = lead.duration || '';
+    document.getElementById('leadBudget').value = lead.budget ? formatCurrency(lead.budget) : '';
+    document.getElementById('leadTravelers').value = lead.travelers || '';
+    document.getElementById('leadNotes').value = lead.notes || '';
+
+    const categorySelect = document.getElementById('leadCategory');
+    if (categorySelect) {
+        Array.from(categorySelect.options).forEach(option => {
+            option.selected = categories.includes(option.value || option.textContent);
+        });
+    }
+}
+
 function openAddLeadModal() {
+    resetLeadForm();
     const modal = document.getElementById('addLeadModal');
     if (modal) modal.classList.add('show');
 }
@@ -329,6 +738,87 @@ function getLeadOwnerName(lead, fallback = 'Sales Desk') {
 
 function formatCurrency(value) {
     return `₹${Number(value || 0).toLocaleString('en-IN')}`;
+}
+
+function collectLeadFormData(existingLead = {}) {
+    const categorySelect = document.getElementById('leadCategory');
+    const selectedCategories = categorySelect
+        ? Array.from(categorySelect.selectedOptions)
+            .map(option => option.value || option.textContent)
+            .filter(Boolean)
+        : [];
+
+    const destination = document.getElementById('leadDestination')?.value.trim()
+        || existingLead.destination
+        || selectedCategories[0]
+        || 'Destination Pending';
+    const travelers = Number(document.getElementById('leadTravelers')?.value) || existingLead.travelers || 1;
+    const tripType = document.getElementById('leadTripType')?.value || existingLead.tripType || detectTripType(destination);
+
+    return {
+        salutation: document.getElementById('leadSalutation')?.value || existingLead.salutation || '',
+        name: document.getElementById('leadName')?.value.trim() || existingLead.name || 'Untitled Lead',
+        email: document.getElementById('leadEmail')?.value.trim() || existingLead.email || '',
+        phone: document.getElementById('leadPhone')?.value.trim() || existingLead.phone || '',
+        source: document.getElementById('leadSource')?.value || existingLead.source || 'Website',
+        destination,
+        tripType,
+        categories: selectedCategories,
+        duration: document.getElementById('leadDuration')?.value.trim() || existingLead.duration || '',
+        budget: parseBudgetInput(document.getElementById('leadBudget')?.value) || Number(existingLead.budget || 0),
+        travelers,
+        travelerBreakdown: normalizeTravelerBreakdown({ adults: travelers }),
+        notes: document.getElementById('leadNotes')?.value.trim() || existingLead.notes || '',
+        packageType: existingLead.packageType || 'standard',
+        status: existingLead.status || 'new',
+        score: existingLead.score || Math.floor(Math.random() * 30) + 70,
+        createdAt: existingLead.createdAt || new Date().toISOString().split('T')[0],
+        assignedTo: existingLead.assignedTo || (tripType === 'international' ? 'Rajesh Kumar' : 'Neha Singh'),
+        inclusionNotes: Array.isArray(existingLead.inclusionNotes) ? existingLead.inclusionNotes : [],
+        exclusionNotes: Array.isArray(existingLead.exclusionNotes) ? existingLead.exclusionNotes : []
+    };
+}
+
+function saveLeadForm() {
+    if (typeof state === 'undefined' || !state.leads) return;
+
+    runPreservingLeadViewTab(() => {
+        if (editingLeadId) {
+            const lead = state.leads.find(item => item.id === editingLeadId);
+            if (!lead) return;
+
+            Object.assign(lead, normalizeLead({
+                ...lead,
+                ...collectLeadFormData(lead)
+            }));
+            closeModal('addLeadModal');
+            showToast('Lead Updated', `${lead.name} updated successfully.`);
+        } else {
+            const nextId = state.leads.length ? Math.max(...state.leads.map(item => item.id)) + 1 : 1001;
+            const newLead = normalizeLead({
+                id: nextId,
+                ...collectLeadFormData()
+            });
+            state.leads.push(newLead);
+            closeModal('addLeadModal');
+            showToast('Lead Added', `${newLead.name} captured successfully.`);
+        }
+
+        updateLeadStats();
+        applyFilters();
+        resetLeadForm();
+    });
+}
+
+function openEditLeadModal(leadId) {
+    const lead = state.leads.find(item => item.id === leadId);
+    if (!lead) return;
+
+    resetLeadForm();
+    editingLeadId = leadId;
+    setLeadFormMode('edit');
+    populateLeadForm(lead);
+    openModal('addLeadModal');
 }
 
 function getDaysUntil(dateValue) {
@@ -1260,13 +1750,62 @@ window.renderLeadsTable = function() {
 };
 
 window.viewLead = viewLead;
+window.openEditLeadModal = openEditLeadModal;
+window.saveLeadForm = saveLeadForm;
+window.openLeadRuleModal = openLeadRuleModal;
+window.saveLeadRule = saveLeadRule;
+window.deleteLeadRule = deleteLeadRule;
+
+const originalCloseModal = window.closeModal;
+window.closeModal = function(modalId) {
+    if (typeof originalCloseModal === 'function') {
+        originalCloseModal(modalId);
+    }
+    if (modalId === 'addLeadModal') {
+        resetLeadForm();
+    }
+};
+
+const originalDeleteLead = window.deleteLead;
+window.deleteLead = function(id) {
+    return runPreservingLeadViewTab(() => {
+        closeLeadActionMenus();
+        if (typeof originalDeleteLead === 'function') {
+            return originalDeleteLead(id);
+        }
+        return undefined;
+    });
+};
 
 document.addEventListener('DOMContentLoaded', function() {
     if (getCurrentPage() === 'leads') {
         updateLeadStats();
         applyFilters();
+        renderLeadRules();
+
+        document.addEventListener('click', event => {
+            if (!event.target.closest('.lead-kanban-card-actions')) {
+                closeLeadActionMenus();
+            }
+        });
+
+        document.getElementById('addLeadForm')?.addEventListener('submit', function(event) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            saveLeadForm();
+        }, true);
+
+        document.querySelectorAll('#leadViewTabs .nav-link').forEach(tab => {
+            tab.addEventListener('shown.bs.tab', function() {
+                rememberActiveLeadViewTab();
+            });
+        });
 
         document.getElementById('searchLeads')?.addEventListener('keyup', function() {
+            currentPage = 1;
+            applyFilters();
+        });
+        document.getElementById('filterLeadTemperature')?.addEventListener('change', function() {
             currentPage = 1;
             applyFilters();
         });

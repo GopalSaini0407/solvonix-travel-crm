@@ -33,6 +33,9 @@
                     <a href="customers.html" class="nav-link"><i class="fas fa-address-book"></i><span>Customers</span></a>
                 </li>
                 <li class="nav-item">
+                    <a href="documents.html" class="nav-link"><i class="fas fa-folder-open"></i><span>Customer Documents</span></a>
+                </li>
+                <li class="nav-item">
                     <a href="employee.html" class="nav-link"><i class="fas fa-user-tie"></i><span>Employees</span></a>
                 </li>
                 <li class="nav-item active">
@@ -117,8 +120,10 @@
                                     <th>Booking</th>
                                     <th>Customer</th>
                                     <th>Total</th>
+                                    <th>Advance</th>
                                     <th>Collected</th>
-                                    <th>Balance</th>
+                                    <th>Pending</th>
+                                    <th>Last Payment</th>
                                     <th>Status</th>
                                     <th>Sales Owner</th>
                                     <th>Action</th>
@@ -129,8 +134,10 @@
                                     <td>SOL-BK-001</td>
                                     <td>Anjali Nair<br><small style="color: var(--gray);">Kashmir</small></td>
                                     <td>₹60,900</td>
+                                    <td>₹15,225<br><small style="color: var(--gray);">2024-02-09</small></td>
                                     <td>₹60,900</td>
                                     <td style="color: #10b981;">₹0</td>
+                                    <td>₹45,675<br><small style="color: var(--gray);">2024-02-18</small></td>
                                     <td><span class="status-badge status-won">full</span></td>
                                     <td>Amit Patel</td>
                                     <td><span style="color:#10b981; font-weight:600;">Closed</span></td>
@@ -279,6 +286,16 @@
                     <select id="financeBookingId" class="form-control" data-onchange="loadFinanceBookingDetails()"></select>
                 </div>
                 <div id="financeBookingPreview" class="summary-box mb-15 hidden"></div>
+                <div class="form-group">
+                    <label>Payment Term</label>
+                    <select id="financePaymentTermSelect" class="form-control" data-onchange="applyFinancePaymentTerm()">
+                        <option value="advance">Advance Due</option>
+                        <option value="10">10% Advance</option>
+                        <option value="25">25% Advance</option>
+                        <option value="50">50% Advance</option>
+                        <option value="100">Full / Balance Payment</option>
+                    </select>
+                </div>
                 <div class="form-group">
                     <label>Amount</label>
                     <input type="number" id="financePaymentAmount" class="form-control" step="100">
